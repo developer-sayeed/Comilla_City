@@ -1,5 +1,3 @@
-import { Link } from "react-router";
-
 import { diagnosticCenters } from "./data";
 import { useState } from "react";
 import CustomHeading from "../../components/CustomHeading/CustomHeading";
@@ -94,7 +92,6 @@ const Diagnostic = () => {
       </div>
       {/* diagnostic List  */}
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mb-8"></h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {/* Donor Card 1 */}
           {filteredDiagnostic.length > 0 ? (
@@ -102,12 +99,16 @@ const Diagnostic = () => {
               return (
                 <CustomCrad
                   key={item.id}
-                  name={item.name}
-                  address={item.address}
-                  thana={item.thana}
-                  phone={item.phone}
-                  email={item.email}
                   image={item.image}
+                  name={item.name}
+                  addressHeading={"ঠিকানা"}
+                  address={item.address}
+                  phoneHeading={"ফোন"}
+                  phone={item.phone}
+                  tittel1heading={"থানা"}
+                  tittel1={item.thana}
+                  tittel3heading={"ইমেইল"}
+                  tittel3={item.email}
                 />
               );
             })

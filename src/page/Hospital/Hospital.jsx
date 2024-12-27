@@ -105,12 +105,16 @@ const Hospital = () => {
               return (
                 <CustomCrad
                   key={item.id}
-                  name={item.name}
-                  address={item.address}
-                  thana={item.thana}
-                  phone={item.phone}
-                  email={item.email}
                   image={item.image}
+                  name={item.name}
+                  addressHeading={"ঠিকানা"}
+                  address={item.address}
+                  phoneHeading={"ফোন"}
+                  phone={item.phone}
+                  tittel1heading={"থানা"}
+                  tittel1={item.thana}
+                  tittel3heading={"ইমেইল"}
+                  tittel3={item.email}
                 />
               );
             })

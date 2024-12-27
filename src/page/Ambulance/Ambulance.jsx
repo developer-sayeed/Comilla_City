@@ -1,14 +1,13 @@
 import CustomCrad from "../../components/Card/CustomCrad";
 import CustomHeading from "../../components/CustomHeading/CustomHeading";
-import comillaFireStations from "./data";
-import fire from "../../assets/fire-station.png";
-
-const FireService = () => {
+import comillaAmbulanceServices from "./Data";
+import ambulance from "../../assets/ambulance.png";
+const Ambulance = () => {
   return (
     <>
       <CustomHeading tittel={"পুলিশ সুপার, কুমিল্লা"} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {comillaFireStations.map((item) => {
+        {comillaAmbulanceServices.map((item) => {
           return (
             <CustomCrad
               key={item.id}
@@ -18,11 +17,11 @@ const FireService = () => {
               phone={item.phone}
               addressHeading={"ঠিকানা"}
               address={item.address}
-              tittel1heading={"ইমেইল"}
-              tittel1={item.email}
+              tittel1heading={"হাসপাতাল"}
+              tittel1={item.hospital}
               tittel2heading={"থানা"}
               tittel2={item.thana}
-              image={fire}
+              image={ambulance}
             />
           );
         })}
@@ -30,4 +29,4 @@ const FireService = () => {
     </>
   );
 };
-export default FireService;
+export default Ambulance;

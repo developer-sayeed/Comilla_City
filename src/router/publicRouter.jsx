@@ -1,3 +1,4 @@
+import Ambulance from "../page/Ambulance/Ambulance";
 import AnimalServices from "../page/AnimalServices/AnimalServices";
 import Bank from "../page/Bank/Bank";
 import BeautyParlour from "../page/BeautyParlour/BeautyParlour";
@@ -63,6 +64,10 @@ const publicRouter = [
       {
         element: <Hospital />,
         path: "/hospital",
+      },
+      {
+        element: <Ambulance />,
+        path: "/ambulance",
       },
       {
         element: <Diagnostic />,

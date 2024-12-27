@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import FooterMenu from "../components/FooterMenu";
 
 const Pagelout = () => {
   return (
@@ -11,6 +12,7 @@ const Pagelout = () => {
           <Header />
           <Outlet />
           <Footer />
+          <FooterMenu />
         </div>
       </div>
     </>
