@@ -24,17 +24,20 @@ const CustomCrad = ({
     <>
       <div className={`bg-white shadow-lg rounded-lg overflow-hidden `}>
         <div className={` max-w-full ${className}`}>
-          <div className="imagescetion">
-            <img
-              className="w-full h-32 object-contain group-hover:scale-125 transition-transform duration-300 ease-in-out"
-              src={image || diagnosticimg}
-              alt={name}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = diagnosticimg; // Fallback image if error
-              }}
-            />
-          </div>
+          {image && (
+            <div className="imagescetion">
+              <img
+                className="w-full h-32 object-contain group-hover:scale-125 transition-transform duration-300 ease-in-out"
+                src={image || diagnosticimg}
+                alt={name}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = diagnosticimg; // Fallback image if error
+                }}
+              />
+            </div>
+          )}
+
           <div className="content">
             {/* content */}
             <div className="px-2 pt-3">
@@ -90,21 +93,24 @@ const CustomCrad = ({
         {/* button */}
         <div className="  px-4 pb-4 pt-2">
           <div className="flex space-x-2">
-            <Link
-              to={`https://www.google.com/maps/search/?q=${name},"+"${address}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto rounded-md border border-blue-900  text-blue-900 hover:bg-blue-900 hover:border-blue-900 hover:text-white transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
-            >
-              গুগল ম্যাপ
-            </Link>
-
-            <Link
-              to={`tel:${phone}`}
-              className="w-full sm:w-auto rounded-md border border-blue-900 bg-blue-900 text-white hover:text-blue-950 hover:bg-white hover:border-blue-950 transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
-            >
-              কল করুন
-            </Link>
+            {name && tittel1heading && (
+              <Link
+                to={`https://www.google.com/maps/search/?q=${name},"+"${address}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto rounded-md border border-blue-900  text-blue-900 hover:bg-blue-900 hover:border-blue-900 hover:text-white transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
+              >
+                গুগল ম্যাপ
+              </Link>
+            )}
+            {phone && (
+              <Link
+                to={`tel:${phone}`}
+                className="w-full sm:w-auto rounded-md border border-blue-900 bg-blue-900 text-white hover:text-blue-950 hover:bg-white hover:border-blue-950 transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
+              >
+                কল করুন
+              </Link>
+            )}
           </div>
         </div>
       </div>

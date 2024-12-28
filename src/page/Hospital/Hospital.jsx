@@ -35,7 +35,7 @@ const Hospital = () => {
               htmlFor="name"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              হাসপাতালের নাম লিখুন
+              কুরিয়ার নাম লিখুন
             </label>
             <input
               type="text"
@@ -81,16 +81,6 @@ const Hospital = () => {
               <option value="বরুড়া">বরুড়া</option>
               <option value="কুমিল্লা সদর দক্ষিণ">কুমিল্লা সদর দক্ষিণ</option>
             </select>
-          </div>
-
-          {/* Search Button */}
-          <div className="w-full sm:w-auto">
-            <button
-              type="submit"
-              className="w-full sm:w-auto rounded-md border border-blue-300 bg-blue-300 text-white hover:bg-blue-600 hover:border-blue-600 transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
-            >
-              খুঁজুন
-            </button>
           </div>
         </form>
       </div>
