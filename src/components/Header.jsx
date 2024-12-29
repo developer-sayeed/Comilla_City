@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import logo from "../assets/logo/dijital union logo.png";
+import { navigation } from "./Categories_Menu/CategoriesMenu";
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,18 +49,26 @@ function Header() {
           isOpen ? "translate-x-0" : "-translate-x-full"
         } z-50 overflow-y-auto`}
       >
-        <div className="p-5">
-          <h2 className="text-xl font-bold mb-5">Menu</h2>
-          <ul className="space-y-3">
-            <li>
-              <Link
-                to={`/menu`}
-                className="block text-gray-800 text-lg hover:text-blue-500"
-                onClick={toggleMenu}
-              >
-                Menu Item
-              </Link>
-            </li>
+        <div className="p-5  shadow-lg rounded-xl max-w-sm mx-auto md:max-w-md lg:max-w-lg">
+          <h2 className="text-2xl font-extrabold mb-4 text-center text-blue-900 border-b-2 border-blue-400 pb-2">
+            📋 Menu
+          </h2>
+          <ul className="space-y-4">
+            {navigation.map((item) => (
+              <li key={item.href} className="group">
+                <Link
+                  to={item.href}
+                  className="
+            block text-gray-700 text-lg font-semibold 
+            group-hover:text-white group-hover:bg-blue-600 
+            group-hover:pl-4 transition-all duration-300 
+            rounded-md p-2 shadow-sm"
+                  onClick={toggleMenu}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

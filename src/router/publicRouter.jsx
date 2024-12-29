@@ -10,6 +10,7 @@ import ChildProtection from "../page/ChildProtection/ChildProtection";
 import CitizenServices from "../page/CitizenServices/CitizenServices";
 import CourierService from "../page/CourierService/CourierService";
 import Diagnostic from "../page/Dagnostic/Diagnostic";
+import Disabled from "../page/disabled/Disabled";
 import DocotrList from "../page/Docotors/DocotrList";
 import EducationalInstitutions from "../page/EducationalInstitutions/EducationalInstitutions";
 import ElectricityOffice from "../page/ElectricityOffice/ElectricityOffice";
@@ -245,6 +246,10 @@ const publicRouter = [
       {
         element: <PublicToilet />,
         path: "/public-toilet",
+      },
+      {
+        element: <Disabled />,
+        path: "/disabled",
       },
     ],
   },

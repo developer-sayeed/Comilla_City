@@ -6,7 +6,26 @@ import CustomHeading from "../../components/CustomHeading/CustomHeading";
 import { useState } from "react";
 import CustomCrad from "../../components/Card/CustomCrad";
 import NotFoud from "../../components/Card/NotFoud";
+import { Thana } from "../../components/Static_Data/Thana";
+import banner1 from "../../assets/banner/banner-1.jpg";
+import banner2 from "../../assets/banner/banner-2.jpg";
+import banner3 from "../../assets/banner/banner-3.jpg";
+import banner4 from "../../assets/banner/banner-4.jpg";
 const Hospital = () => {
+  const bannerImages = [
+    {
+      image: banner1,
+    },
+    {
+      image: banner2,
+    },
+    {
+      image: banner3,
+    },
+    {
+      image: banner4,
+    },
+  ];
   const [searchName, setSearchName] = useState("");
   const [searchCategory, setSearchCategory] = useState("");
 
@@ -23,7 +42,7 @@ const Hospital = () => {
   });
   return (
     <>
-      <BannerSlider />
+      <BannerSlider bannerImages={bannerImages} />
       <CustomHeading tittel={"হাসপাতালের তালিকা"} />
 
       {/* Hospital  Serching  */}
@@ -64,22 +83,13 @@ const Hospital = () => {
               onChange={(e) => setSearchCategory(e.target.value)}
             >
               <option value="">থানা নির্বাচন করুন</option>
-              <option value="কুমিল্লা সদর">কুমিল্লা সদর</option>
-              <option value="আদর্শ সদর">আদর্শ সদর</option>
-              <option value="দাউদকান্দি">দাউদকান্দি</option>
-              <option value="বুড়িচং">বুড়িচং</option>
-              <option value="ব্রাহ্মণপাড়া">ব্রাহ্মণপাড়া</option>
-              <option value="চান্দিনা">চান্দিনা</option>
-              <option value="দেবিদ্বার">দেবিদ্বার</option>
-              <option value="হোমনা">হোমনা</option>
-              <option value="লাকসাম">লাকসাম</option>
-              <option value="মেঘনা">মেঘনা</option>
-              <option value="মুরাদনগর">মুরাদনগর</option>
-              <option value="নাঙ্গলকোট">নাঙ্গলকোট</option>
-              <option value="তিতাস">তিতাস</option>
-              <option value="মনোহরগঞ্জ">মনোহরগঞ্জ</option>
-              <option value="বরুড়া">বরুড়া</option>
-              <option value="কুমিল্লা সদর দক্ষিণ">কুমিল্লা সদর দক্ষিণ</option>
+              {Thana.map((item) => {
+                return (
+                  <option key={item.id} value={item.name}>
+                    {item.name}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </form>
@@ -87,7 +97,6 @@ const Hospital = () => {
 
       {/* Doctor List  */}
       <div className="container mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mb-8"></h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {/* Donor Card 1 */}
           {filteredHospital.length > 0 ? (
@@ -95,7 +104,7 @@ const Hospital = () => {
               return (
                 <CustomCrad
                   key={item.id}
-                  image={item.image}
+                  image={hospital}
                   name={item.name}
                   addressHeading={"ঠিকানা"}
                   address={item.address}

@@ -1,8 +1,23 @@
+import Banner from "../../components/Banner/BannerSlider";
+import CustomNotice from "../../components/Card/CustomNotice";
 import CustomHeading from "../../components/CustomHeading/CustomHeading";
+import banner1 from "../../assets/banner/ralaway.jpg";
 
 const TrainSchedule = () => {
+  const bannerImages = [
+    {
+      image: banner1,
+    },
+  ];
   return (
     <>
+      <Banner bannerImages={bannerImages} />
+      <CustomNotice
+        heading={"Notice"}
+        content={
+          "কুমিল্লা স্টেশন ট্রেনের সময়সূচী সকল ডাটা সংগ্রহ করা হচ্ছে amartrain ওয়েবসাইট থেকে"
+        }
+      />
       <CustomHeading tittel={"Comilla Train Schedule"} />
       {/* Train schedule */}
       <div className="container mx-auto px-4 py-8">

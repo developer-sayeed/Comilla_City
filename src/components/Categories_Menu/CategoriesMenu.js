@@ -47,6 +47,7 @@ import smartUP from "../../assets/up-service.png";
 import passport from "../../assets/passport.png";
 import wc from "../../assets/public-toilet.png";
 import masjid from "../../assets/mosque.png";
+import disabled from "../../assets/disabled-person.png";
 
 export const navigation = [
   {
@@ -294,5 +295,10 @@ export const navigation = [
     name: "পাবলিক টয়লেট",
     href: "/public-toilet",
     icon: wc,
+  },
+  {
+    name: "প্রতিবন্ধী সেবা",
+    href: "/disabled",
+    icon: disabled,
   },
 ];

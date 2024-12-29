@@ -3,7 +3,8 @@ import { useState } from "react";
 import CustomHeading from "../../components/CustomHeading/CustomHeading";
 import CustomCrad from "../../components/Card/CustomCrad";
 import NotFoud from "../../components/Card/NotFoud";
-
+import diagnostic from "../../assets/013-diagnostic.png";
+import { Thana } from "../../components/Static_Data/Thana";
 const Diagnostic = () => {
   const [searchName, setSearchName] = useState("");
   const [searchThana, setSearchThana] = useState("");
@@ -41,7 +42,7 @@ const Diagnostic = () => {
               placeholder="ডায়াগনস্টিক নাম লিখুন"
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-4 py-3 bg-gray-50 text-gray-700 outline-none focus:ring-2 focus:ring-red-400"
+              className="w-full rounded-md border border-gray-300 px-4 py-3 bg-gray-50 text-gray-700 outline-none focus:ring-2 focus:ring-blue-900"
             />
           </div>
 
@@ -58,36 +59,20 @@ const Diagnostic = () => {
               name="thana"
               value={searchThana}
               onChange={(e) => setSearchThana(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-4 py-3 bg-gray-50 text-gray-700 outline-none focus:ring-2 focus:ring-red-400"
+              className="w-full rounded-md border border-gray-300 px-4 py-3 bg-gray-50 text-gray-700 outline-none focus:ring-2 focus:ring-blue-900"
             >
               <option value="">থানা নির্বাচন করুন</option>
-              <option value="কুমিল্লা সদর">কুমিল্লা সদর</option>
-              <option value="দাউদকান্দি">দাউদকান্দি</option>
-              <option value="বুড়িচং">বুড়িচং</option>
-              <option value="ব্রাহ্মণপাড়া">ব্রাহ্মণপাড়া</option>
-              <option value="চান্দিনা">চান্দিনা</option>
-              <option value="দেবিদ্বার">দেবিদ্বার</option>
-              <option value="হোমনা">হোমনা</option>
-              <option value="লাকসাম">লাকসাম</option>
-              <option value="মেঘনা">মেঘনা</option>
-              <option value="মুরাদনগর">মুরাদনগর</option>
-              <option value="নাঙ্গলকোট">নাঙ্গলকোট</option>
-              <option value="তিতাস">তিতাস</option>
-              <option value="মনোহরগঞ্জ">মনোহরগঞ্জ</option>
-              <option value="বরুড়া">বরুড়া</option>
-              <option value="কুমিল্লা সদর দক্ষিণ">কুমিল্লা সদর দক্ষিণ</option>
+              {Thana.map((item) => {
+                return (
+                  <option key={item.id} value={item.name}>
+                    {item.name}
+                  </option>
+                );
+              })}
             </select>
           </div>
 
           {/* Search Button */}
-          <div className="w-full sm:w-auto">
-            <button
-              type="submit"
-              className="w-full sm:w-auto rounded-md border border-blue-300 bg-blue-300 text-white hover:bg-blue-600 hover:border-blue-600 transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
-            >
-              খুঁজুন
-            </button>
-          </div>
         </form>
       </div>
       {/* diagnostic List  */}
@@ -99,7 +84,7 @@ const Diagnostic = () => {
               return (
                 <CustomCrad
                   key={item.id}
-                  image={item.image}
+                  image={item.image ? item.image : diagnostic}
                   name={item.name}
                   addressHeading={"ঠিকানা"}
                   address={item.address}

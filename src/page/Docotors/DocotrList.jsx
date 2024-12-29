@@ -5,7 +5,26 @@ import CustomHeading from "../../components/CustomHeading/CustomHeading";
 import { useState } from "react";
 import { doctorData } from "./data";
 import NotFoud from "../../components/Card/NotFoud";
+import { specialists } from "../../components/Static_Data/DoctorCategories";
+import banner1 from "../../assets/banner/banner-1.jpg";
+import banner2 from "../../assets/banner/banner-2.jpg";
+import banner3 from "../../assets/banner/banner-3.jpg";
+import banner4 from "../../assets/banner/banner-4.jpg";
 const DocotrList = () => {
+  const bannerImages = [
+    {
+      image: banner1,
+    },
+    {
+      image: banner2,
+    },
+    {
+      image: banner3,
+    },
+    {
+      image: banner4,
+    },
+  ];
   const [searchName, setSearchName] = useState("");
   const [searchCategory, setSearchCategory] = useState("");
 
@@ -22,7 +41,7 @@ const DocotrList = () => {
   });
   return (
     <>
-      <BannerSlider />
+      <BannerSlider bannerImages={bannerImages} />
       <CustomHeading tittel={"ডাক্তারদের তালিকা"} />
 
       {/* Docotr Serching  */}
@@ -62,45 +81,14 @@ const DocotrList = () => {
               value={searchCategory}
               onChange={(e) => setSearchCategory(e.target.value)}
             >
-              <option value="">ডাক্তার ক্যাটাগরি</option>
-              <option value="মনোরোগ বিশেষজ্ঞ">মনোরোগ বিশেষজ্ঞ</option>
-              <option value="হৃদরোগ বিশেষজ্ঞ">হৃদরোগ বিশেষজ্ঞ</option>
-              <option value="পাইলস বিশেষজ্ঞ">পাইলস বিশেষজ্ঞ</option>
-              <option value="ডেন্টিস্ট">ডেন্টিস্ট</option>
-              <option value="চর্ম ও যৌন রোগ বিশেষজ্ঞ">
-                চর্ম ও যৌন রোগ বিশেষজ্ঞ
-              </option>
-              <option value="ডায়াবেটিস ও হরমোন">ডায়াবেটিস ও হরমোন</option>
-              <option value="নাক, কান ও গলা বিশেষজ্ঞ">
-                নাক, কান ও গলা বিশেষজ্ঞ
-              </option>
-              <option value="চোখ বিশেষজ্ঞ">চোখ বিশেষজ্ঞ</option>
-              <option value="লিভার বিশেষজ্ঞ">লিভার বিশেষজ্ঞ</option>
-              <option value="ইউরোলজি">ইউরোলজি</option>
-              <option value="সার্জারি">সার্জারি</option>
-              <option value="গাইন বিশেষজ্ঞ">গাইন বিশেষজ্ঞ</option>
-              <option value="রক্তরোগ বিশেষজ্ঞ">রক্তরোগ বিশেষজ্ঞ</option>
-              <option value="হোমিওপ্যাথি">হোমিওপ্যাথি</option>
-              <option value="লেজার সার্জারি">লেজার সার্জারি</option>
-              <option value="মেডিসিন বিশেষজ্ঞ">মেডিসিন বিশেষজ্ঞ</option>
-              <option value="কিডনি রোগ বিশেষজ্ঞ">কিডনি রোগ বিশেষজ্ঞ</option>
-              <option value="নিউরো-সার্জারি">নিউরো-সার্জারি</option>
-              <option value="স্বাস্থ্য রোগ বিশেষজ্ঞ">
-                স্বাস্থ্য রোগ বিশেষজ্ঞ
-              </option>
-              <option value="পুষ্টি বিশেষজ্ঞ">পুষ্টি বিশেষজ্ঞ</option>
-              <option value="চর্মরোগ বিশেষজ্ঞ">চর্মরোগ বিশেষজ্ঞ</option>
-              <option value="নিউরোলজিস্ট">নিউরোলজিস্ট</option>
-              <option value="ক্যান্সার বিশেষজ্ঞ">ক্যান্সার বিশেষজ্ঞ</option>
-              <option value="অর্থোপেডিক">অর্থোপেডিক</option>
-              <option value="ব্যথা বিশেষজ্ঞ">ব্যথা বিশেষজ্ঞ</option>
-              <option value="শিশু রোগ বিশেষজ্ঞ">শিশু রোগ বিশেষজ্ঞ</option>
-              <option value="ফিজিকাল মেডিসিন">ফিজিকাল মেডিসিন</option>
-              <option value="ফিজিওথেরাপিস্ট">ফিজিওথেরাপিস্ট</option>
-              <option value="প্লাস্টিক সার্জারি">প্লাস্টিক সার্জারি</option>
-              <option value="অ্যাজমা, ব্রঙ্কাইটিস বিশেষজ্ঞ">
-                অ্যাজমা, ব্রঙ্কাইটিস বিশেষজ্ঞ
-              </option>
+              <option value="">ডাক্তার নির্বাচন করুন</option>
+              {specialists.map((item) => {
+                return (
+                  <option key={item.id} value={item.name}>
+                    {item.name}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </form>

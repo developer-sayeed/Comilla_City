@@ -1,13 +1,29 @@
-import { Link } from "react-router";
 import BannerSlider from "../../components/Banner/BannerSlider";
 import CustomNotice from "../../components/Card/CustomNotice";
 import TableComponents from "../../components/TableComponents";
-import FooterMenu from "../../components/FooterMenu";
+import banner1 from "../../assets/banner/banner-1.jpg";
+import banner2 from "../../assets/banner/banner-2.jpg";
+import banner3 from "../../assets/banner/banner-3.jpg";
+import banner4 from "../../assets/banner/banner-4.jpg";
 
 const Home = () => {
+  const bannerImages = [
+    {
+      image: banner1,
+    },
+    {
+      image: banner2,
+    },
+    {
+      image: banner3,
+    },
+    {
+      image: banner4,
+    },
+  ];
   return (
     <>
-      <BannerSlider />
+      <BannerSlider bannerImages={bannerImages} />
 
       <CustomNotice
         className={"text-blue-800"}
