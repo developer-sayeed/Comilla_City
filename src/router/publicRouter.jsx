@@ -1,9 +1,12 @@
+import { element } from "prop-types";
 import Page404 from "../components/404Page/NotFound";
 import { categoriesMenu } from "../components/Categories_Menu/CategoriesMenu";
 import LoginPage from "../page/Auth/LoginPage";
 import RegisterPage from "../page/Auth/Register";
 import Home from "../page/Home/Home";
 import Pagelout from "../page/Pagelout";
+import Shopping from "../page/Shopping/Shopping";
+import ShoppingCrad from "../page/Shopping/ShoppingCrad";
 
 // create public router
 const publicRouter = [
@@ -25,6 +28,16 @@ const publicRouter = [
       {
         element: <RegisterPage />,
         path: "/register",
+      },
+      {
+        element: <Shopping />,
+        path: "/shopping",
+        children: [
+          {
+            element: <ShoppingCrad />,
+            path: "/shopping/:id",
+          },
+        ],
       },
 
       ...categoriesMenu.map((item) => ({

@@ -145,14 +145,14 @@ const DoctrList = () => {
                 <div className="flex justify-between items-center gap-2">
                   <a
                     href={`tel:${item.phone || "+880123456789"}`}
-                    className="w-full sm:w-auto rounded-md border border-blue-300 bg-blue-300 text-white hover:bg-blue-600 hover:border-blue-600 transition duration-300 py-3 px-4 text-sm font-bold cursor-pointer"
+                    className="w-full sm:w-auto rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
                   >
                     কল করুন
                   </a>
 
                   <button
                     onClick={() => handleViewDoctor(item.id)}
-                    className="w-full sm:w-auto rounded-md border border-blue-900 bg-blue-900 text-white hover:bg-blue-600 hover:border-blue-600 transition duration-300 py-3 px-4 text-sm font-bold cursor-pointer"
+                    className="w-full sm:w-auto rounded-md border border-[#0FABCA]  text-[#0FABCA] hover:bg-[#0FABCA] hover:border-[#0FABCA] hover:text-white transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
                   >
                     আরো জানুন
                   </button>
@@ -189,7 +189,7 @@ const DoctrList = () => {
                         <div className="flex justify-between mt-6">
                           <a
                             href={`mailto:${selectedDoctor.email}`}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                            className="w-full sm:w-auto rounded-md border border-[#0FABCA]  text-[#0FABCA] hover:bg-[#0FABCA] hover:border-[#0FABCA] hover:text-white transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
                           >
                             ইমেইল করুন
                           </a>
@@ -197,7 +197,7 @@ const DoctrList = () => {
                             href={`tel:${
                               selectedDoctor.phone || "+880123456789"
                             }`}
-                            className="px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-600"
+                            className="w-full sm:w-auto rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
                           >
                             সিরিয়াল নিন
                           </a>

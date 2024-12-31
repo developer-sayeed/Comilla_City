@@ -101,6 +101,8 @@ import PublicToilet from "../../page/PublicToilet/PublicToilet";
 import Disabled from "../../page/disabled/Disabled";
 import AnimalServices from "../../page/AnimalServices/AnimalServices";
 import DoctrList from "../../page/Docotors/DoctrList";
+import ShoppingCrad from "../../page/Shopping/ShoppingCrad";
+import ProfilePage from "../../page/Auth/Profile";
 
 // Router configuration
 export const categoriesMenu = [
@@ -175,6 +177,12 @@ export const categoriesMenu = [
     href: "/shopping",
     icon: shoppingIcon,
     component: <Shopping />,
+    children: [
+      {
+        href: "/shopping/:id",
+        component: <ShoppingCrad />,
+      },
+    ],
   },
   {
     name: "ফায়ার সার্ভিস",
@@ -423,5 +431,9 @@ export const categoriesMenu = [
     href: "/disabled",
     icon: disabled,
     component: <Disabled />,
+  },
+  {
+    href: "/me",
+    component: <ProfilePage />,
   },
 ];

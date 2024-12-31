@@ -6,7 +6,7 @@ const CustomNotice = ({ heading, content, className }) => {
       {heading && (
         <div className=" w-full text-black text-center py-3 font-bold shadow-sm z-[5px] flex justify-between items-center">
           {/* <!-- "Notice" Text --> */}
-          <div className="text-lg font-semibold z-10 bg-blue-900 py-1 px-6 text-white rounded-sm">
+          <div className="text-lg font-semibold z-10 bg-[#0FABCA] py-1 px-6 text-white rounded-sm">
             {heading}
           </div>
 

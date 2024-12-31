@@ -46,44 +46,44 @@ const CustomCrad = ({
               </h1>
               {tittel1heading && (
                 <p className="text-[12px] text-gray-600 mb-2">
-                  <strong>{tittel1heading}: </strong>
+                  <strong>{tittel1heading} </strong>
                   {tittel1}
                 </p>
               )}
               {tittel2heading && (
                 <p className="text-[12px] text-gray-600 mb-2">
-                  <strong>{tittel2heading}: </strong>
+                  <strong>{tittel2heading} </strong>
                   {tittel2}
                 </p>
               )}
               {tittel3heading && (
                 <p className="text-[12px] text-gray-600 mb-2">
-                  <strong>{tittel3heading}: </strong>
+                  <strong>{tittel3heading} </strong>
                   {tittel3}
                 </p>
               )}
               {tittel4heading && (
                 <p className="text-[12px] text-gray-600 mb-2">
-                  <strong>{tittel4heading}: </strong>
+                  <strong>{tittel4heading} </strong>
                   {tittel4}
                 </p>
               )}
 
               {tittel5heading && (
                 <p className="text-[12px] text-gray-600 mb-2">
-                  <strong>{tittel5heading}: </strong>
+                  <strong>{tittel5heading} </strong>
                   {tittel5}
                 </p>
               )}
               {phoneHeading && (
                 <p className="text-[12px] text-gray-600 mb-2">
-                  <strong>{phoneHeading}: </strong>
+                  <strong>{phoneHeading} </strong>
                   {phone}
                 </p>
               )}
               {addressHeading && (
                 <p className="text-[12px] text-gray-600 mb-2">
-                  <strong>{addressHeading}: </strong>
+                  <strong>{addressHeading} </strong>
                   {address}
                 </p>
               )}
@@ -98,7 +98,7 @@ const CustomCrad = ({
                 to={`https://www.google.com/maps/search/?q=${name},"+"${address}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto rounded-md border border-blue-900  text-blue-900 hover:bg-blue-900 hover:border-blue-900 hover:text-white transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
+                className="w-full sm:w-auto rounded-md border border-[#0FABCA]  text-[#0FABCA] hover:bg-[#0FABCA] hover:border-[#0FABCA] hover:text-white transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
               >
                 গুগল ম্যাপ
               </Link>
@@ -106,7 +106,7 @@ const CustomCrad = ({
             {phone && (
               <Link
                 to={`tel:${phone}`}
-                className="w-full sm:w-auto rounded-md border border-blue-900 bg-blue-900 text-white hover:text-blue-950 hover:bg-white hover:border-blue-950 transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
+                className="w-full sm:w-auto rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
               >
                 কল করুন
               </Link>

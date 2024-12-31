@@ -1,27 +1,29 @@
 import React from "react";
 
-// react icons
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { Link } from "react-router";
-
 const Page404 = () => {
   return (
-    <div className="boxShadow px-10 w-full  h-screen flex items-center flex-col justify-center py-20  bg-[#00543A]">
-      <img
-        src="https://i.ibb.co/LvLq6d3/Group-29.png"
-        alt="illustration"
-        className="w-full lg:w-[400px]"
-      />
-      <p className="text-[#fff] text-[1.2rem] w-full lg:w-[55%] text-center">
-        Oops it seems you follow backlink
-      </p>
+    <div className="boxShadow bg-white px-10 w-full h-svh lg:flex-row gap-[30px] lg:gap-0 flex-col flex items-center justify-evenly py-20 rounded-xl">
+      <div className="w-[80%] lg:w-[40%]">
+        <img
+          src="https://i.ibb.co/HdHH4Pb/Frame-6.png"
+          alt="illustration"
+          className="w-full"
+        />
+      </div>
 
-      <Link
-        to={"/"}
-        className="py-3 px-6 sm:px-8 rounded-full bg-[#fff] text-black mt-4 flex items-center gap-[10px]"
-      >
-        <FaArrowLeftLong /> Back to home
-      </Link>
+      <div className="w-full lg:w-[30%] text-center lg:text-start">
+        <h1 className="text-[2.5rem] sm:text-[4rem] font-[800] text-[#566FA7] leading-[80px]">
+          OOPS!
+        </h1>
+
+        <h3 className="text-[#8093B8] text-[0.9rem] sm:text-[1.2rem]">
+          Looks like big foot has broken the link
+        </h3>
+
+        <button className="py-3 px-6 sm:px-8 text-[0.9rem] sm:text-[1rem] rounded-full bg-[#566FA7] text-white mt-8">
+          Back to homepage
+        </button>
+      </div>
     </div>
   );
 };
