@@ -1,32 +1,15 @@
 import { Link } from "react-router";
-import CustomHeading from "../../components/CustomHeading/CustomHeading";
-import { categoriesMenu } from "../../components/Categories_Menu/CategoriesMenu";
+import { categoriesMenu } from "./Categories_Menu/CategoriesMenu";
+import CustomHeading from "./CustomHeading/CustomHeading";
 
-const EducationalInstitutions = () => {
-  // রিকার্সিভভাবে Children বের করার ফাংশন
-  function extractChildren(data) {
-    let children = [];
-
-    data.forEach((item) => {
-      if (item.Children) {
-        children.push(...item.Children); // সরাসরি Children অ্যাড
-        children.push(...extractChildren(item.Children)); // Nested Children অ্যাড
-      }
-    });
-
-    return children;
-  }
-
-  // সব Children বের করা
-  const allChildren = extractChildren(categoriesMenu);
-
+const CardComponents = () => {
   return (
     <>
       <section className="container mx-auto px-4 py-8 ">
-        <CustomHeading tittel={"শিক্ষা প্রতিষ্ঠান"} className={""} />
+        <CustomHeading tittel={"সার্ভিসসমূহ"} className={""} />
         <nav>
           <ul className="grid grid-cols-4 md:grid-cols-6 mt-3 z-[-10px] lg:grid-cols-8 gap-4 items-center justify-center">
-            {allChildren.map((item) => {
+            {categoriesMenu.map((item) => {
               return (
                 <li key={item.name}>
                   <Link
@@ -52,4 +35,4 @@ const EducationalInstitutions = () => {
     </>
   );
 };
-export default EducationalInstitutions;
+export default CardComponents;

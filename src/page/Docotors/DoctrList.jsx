@@ -10,7 +10,8 @@ import banner1 from "../../assets/banner/banner-1.jpg";
 import banner2 from "../../assets/banner/banner-2.jpg";
 import banner3 from "../../assets/banner/banner-3.jpg";
 import banner4 from "../../assets/banner/banner-4.jpg";
-const DocotrList = () => {
+import Modal from "../../components/Modal/Modal";
+const DoctrList = () => {
   const bannerImages = [
     {
       image: banner1,
@@ -27,6 +28,8 @@ const DocotrList = () => {
   ];
   const [searchName, setSearchName] = useState("");
   const [searchCategory, setSearchCategory] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
 
   // Filter doctors based on name or specialty
   const filteredDoctors = doctorData.filter((doctor) => {
@@ -39,41 +42,48 @@ const DocotrList = () => {
         : true)
     );
   });
+
+  // Modal ওপেন করার ফাংশন
+  const handleViewDoctor = (id) => {
+    const doctor = doctorData.find((doc) => doc.id === id); // ID দিয়ে ডাক্তার খুঁজুন
+    console.log("Selected Doctor by ID:", doctor); // ✅ Debugging জন্য লগ
+    if (doctor) {
+      setSelectedDoctor(doctor); // ডাক্তার সেট করুন
+      setIsModalOpen(true); // Modal ওপেন করুন
+    } else {
+      console.error("Doctor not found!");
+    }
+  };
   return (
     <>
       <BannerSlider bannerImages={bannerImages} />
       <CustomHeading tittel={"ডাক্তারদের তালিকা"} />
 
       {/* Docotr Serching  */}
-      <div className="w-full  mx-auto p-6 bg-white rounded-lg shadow-md">
+      <div className="w-full  mx-auto mt-1 mb-4 bg-white rounded-lg shadow-md">
         <form className="flex flex-wrap gap-4 items-end w-full sm:p-6 py-8 rounded-md z-[25] overflow-hidden">
           {/* Name Field */}
-          <div className="flex-1 min-w-[200px]">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              ডাক্তারের নাম লিখুন
-            </label>
+
+          <label className="relative w-[45%]">
             <input
               type="text"
-              id="name"
               name="name"
-              placeholder="ডাক্তারের নাম লিখুন"
-              className="w-full rounded-md border border-gray-300 px-4 py-3 bg-gray-50 text-gray-700 outline-none focus:ring-2 focus:ring-blue-900"
+              id="name"
+              placeholder=" " /* placeholder ফাঁকা রাখুন */
+              className="peer border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-[#3B9DF8] transition-colors duration-300"
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
             />
-          </div>
+            <span
+              className={`absolute left-5 px-1 text-[#777777] bg-white transition-all duration-300 
+    ${searchName ? "-top-3 scale-[0.9] left-2 text-[#3B9DF8]" : "top-3.5"}`}
+            >
+              নাম লিখুন
+            </span>
+          </label>
 
           {/* Selected Doctor  Field */}
-          <div className="flex-1 min-w-[200px]">
-            <label
-              htmlFor="doctor-category"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              ডাক্তার ক্যাটাগরি নির্বাচন করুন
-            </label>
+          <div className="flex-1 w-[50%]">
             <select
               id="doctor-category"
               name="doctor-category"
@@ -131,7 +141,7 @@ const DocotrList = () => {
               </div>
 
               <div className="px-4 pb-4">
-                <p className="pb-2">{item.expertOn}</p>
+                <p className="pb-2">{item.summary}</p>
                 <div className="flex justify-between items-center gap-2">
                   <a
                     href={`tel:${item.phone || "+880123456789"}`}
@@ -140,12 +150,63 @@ const DocotrList = () => {
                     কল করুন
                   </a>
 
-                  <Link
-                    to={`/doctor/${item.id}`}
+                  <button
+                    onClick={() => handleViewDoctor(item.id)}
                     className="w-full sm:w-auto rounded-md border border-blue-900 bg-blue-900 text-white hover:bg-blue-600 hover:border-blue-600 transition duration-300 py-3 px-4 text-sm font-bold cursor-pointer"
                   >
                     আরো জানুন
-                  </Link>
+                  </button>
+                  {/* Modal */}
+                  <Modal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                  >
+                    {selectedDoctor ? (
+                      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
+                        <h2 className="text-2xl text-center font-bold mb-4">
+                          {selectedDoctor.name}
+                        </h2>
+                        <ul className="space-y-3">
+                          <li>
+                            <b>বিশেষজ্ঞ :</b> {selectedDoctor.specialty}
+                          </li>
+                          <li>
+                            <b>শিক্ষাগত অভিজ্ঞতা :</b>{" "}
+                            {selectedDoctor.education}
+                          </li>
+                          <li>
+                            <b>বর্তমানে কর্মরত :</b> {selectedDoctor.working}
+                          </li>
+                          <li>
+                            <b>চেম্বার :</b> {selectedDoctor.chamber}
+                          </li>
+                          <li>
+                            <b>রোগী দেখার সময় :</b>{" "}
+                            {selectedDoctor.appointmentTime}
+                          </li>
+                        </ul>
+
+                        <div className="flex justify-between mt-6">
+                          <a
+                            href={`mailto:${selectedDoctor.email}`}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                          >
+                            ইমেইল করুন
+                          </a>
+                          <a
+                            href={`tel:${
+                              selectedDoctor.phone || "+880123456789"
+                            }`}
+                            className="px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-600"
+                          >
+                            সিরিয়াল নিন
+                          </a>
+                        </div>
+                      </div>
+                    ) : (
+                      <p>Loading...</p>
+                    )}
+                  </Modal>
                 </div>
               </div>
             </div>
@@ -157,4 +218,4 @@ const DocotrList = () => {
     </>
   );
 };
-export default DocotrList;
+export default DoctrList;

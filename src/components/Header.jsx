@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import logo from "../assets/logo/dijital union logo.png";
-import { navigation } from "./Categories_Menu/CategoriesMenu";
+import { categoriesMenu } from "./Categories_Menu/CategoriesMenu";
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -12,7 +12,7 @@ function Header() {
   return (
     <div>
       {/* Navbar */}
-      <nav className="py-3 md:py-4 top-0 w-full !bg-[#fff] shadow-lg">
+      <nav className="py-3 fixed z-50 top-0 w-full md:w-[90%] !bg-[#fff] shadow-lg">
         <div className="container mx-auto flex items-center justify-between gap-x-6">
           {/* Logo */}
           <Link to="/">
@@ -54,7 +54,7 @@ function Header() {
             📋 Menu
           </h2>
           <ul className="space-y-4">
-            {navigation.map((item) => (
+            {categoriesMenu.map((item) => (
               <li key={item.href} className="group">
                 <Link
                   to={item.href}

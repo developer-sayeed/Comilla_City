@@ -7,10 +7,9 @@ import { useState } from "react";
 import CustomCrad from "../../components/Card/CustomCrad";
 import NotFoud from "../../components/Card/NotFoud";
 import { Thana } from "../../components/Static_Data/Thana";
-import banner1 from "../../assets/banner/banner-1.jpg";
-import banner2 from "../../assets/banner/banner-2.jpg";
-import banner3 from "../../assets/banner/banner-3.jpg";
-import banner4 from "../../assets/banner/banner-4.jpg";
+import banner1 from "../../assets/banner/Dental-Clinic-Sing-Board-768x316.jpg";
+import banner2 from "../../assets/banner/hospital.jpg";
+
 const Hospital = () => {
   const bannerImages = [
     {
@@ -18,12 +17,6 @@ const Hospital = () => {
     },
     {
       image: banner2,
-    },
-    {
-      image: banner3,
-    },
-    {
-      image: banner4,
     },
   ];
   const [searchName, setSearchName] = useState("");
@@ -49,32 +42,26 @@ const Hospital = () => {
       <div className="w-full  mx-auto p-6 bg-white rounded-lg shadow-md">
         <form className="flex flex-wrap gap-4 items-end w-full sm:p-6 py-8 rounded-md z-[25] overflow-hidden">
           {/* Name Field */}
-          <div className="flex-1 min-w-[200px]">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              কুরিয়ার নাম লিখুন
-            </label>
+          <label className="relative w-[45%]">
             <input
               type="text"
-              id="name"
               name="name"
-              placeholder="হাসপাতালের নাম লিখুন"
-              className="w-full rounded-md border border-gray-300 px-4 py-3 bg-gray-50 text-gray-700 outline-none focus:ring-2 focus:ring-red-400"
+              id="name"
+              placeholder=" " /* placeholder ফাঁকা রাখুন */
+              className="peer border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-[#3B9DF8] transition-colors duration-300"
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
             />
-          </div>
+            <span
+              className={`absolute left-5 px-1 text-[#777777] bg-white transition-all duration-300 
+    ${searchName ? "-top-3 scale-[0.9] left-2 text-[#3B9DF8]" : "top-3.5"}`}
+            >
+              নাম লিখুন
+            </span>
+          </label>
 
           {/* Thana Dropdown */}
-          <div className="flex-1 min-w-[200px]">
-            <label
-              htmlFor="thana"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              থানা নির্বাচন করুন
-            </label>
+          <div className="flex-1 w-[50%]">
             <select
               id="thana"
               name="thana"

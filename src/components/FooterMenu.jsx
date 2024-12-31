@@ -35,7 +35,7 @@ function FooterMenu() {
 
         {/* Profile */}
         <Link
-          to="#"
+          to={"/login"}
           className={`flex flex-col justify-center items-center text-gray-600 hover:text-blue-500 ${
             active === "profile" ? "text-blue-600" : ""
           }`}

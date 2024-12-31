@@ -3,6 +3,7 @@ import CustomCrad from "../../components/Card/CustomCrad";
 import CustomHeading from "../../components/CustomHeading/CustomHeading";
 import { courierServices } from "./Data";
 import NotFoud from "../../components/Card/NotFoud";
+import { Thana } from "../../components/Static_Data/Thana";
 
 const CourierService = () => {
   const [searchName, setSearchName] = useState("");
@@ -23,35 +24,29 @@ const CourierService = () => {
     <>
       <CustomHeading tittel={"কুরিয়ার সার্ভিস"} />
       {/* courier  Serching  */}
-      <div className="w-full  mx-auto p-6 bg-white rounded-lg shadow-md">
+      <div className="w-full  mx-auto mb-2 mt-1 bg-white rounded-lg shadow-md">
         <form className="flex flex-wrap gap-4 items-end w-full sm:p-6 py-8 rounded-md z-[25] overflow-hidden">
           {/* Name Field */}
-          <div className="flex-1 min-w-[200px]">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              কুরিয়ার নাম লিখুন
-            </label>
+          <label className="relative w-[45%]">
             <input
               type="text"
-              id="name"
               name="name"
-              placeholder="হাসপাতালের নাম লিখুন"
-              className="w-full rounded-md border border-gray-300 px-4 py-3 bg-gray-50 text-gray-700 outline-none focus:ring-2 focus:ring-red-400"
+              id="name"
+              placeholder=" " /* placeholder ফাঁকা রাখুন */
+              className="peer border-[#e5eaf2] border rounded-md outline-none px-4 py-3 w-full focus:border-[#3B9DF8] transition-colors duration-300"
               value={searchName}
               onChange={(e) => setSearchName(e.target.value)}
             />
-          </div>
+            <span
+              className={`absolute left-5 px-1 text-[#777777] bg-white transition-all duration-300 
+    ${searchName ? "-top-3 scale-[0.9] left-2 text-[#3B9DF8]" : "top-3.5"}`}
+            >
+              নাম লিখুন
+            </span>
+          </label>
 
           {/* Thana Dropdown */}
-          <div className="flex-1 min-w-[200px]">
-            <label
-              htmlFor="thana"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              থানা নির্বাচন করুন
-            </label>
+          <div className="flex-1 ">
             <select
               id="thana"
               name="thana"
@@ -60,22 +55,13 @@ const CourierService = () => {
               onChange={(e) => setSearchCategory(e.target.value)}
             >
               <option value="">থানা নির্বাচন করুন</option>
-              <option value="কুমিল্লা সদর">কুমিল্লা সদর</option>
-              <option value="আদর্শ সদর">আদর্শ সদর</option>
-              <option value="দাউদকান্দি">দাউদকান্দি</option>
-              <option value="বুড়িচং">বুড়িচং</option>
-              <option value="ব্রাহ্মণপাড়া">ব্রাহ্মণপাড়া</option>
-              <option value="চান্দিনা">চান্দিনা</option>
-              <option value="দেবিদ্বার">দেবিদ্বার</option>
-              <option value="হোমনা">হোমনা</option>
-              <option value="লাকসাম">লাকসাম</option>
-              <option value="মেঘনা">মেঘনা</option>
-              <option value="মুরাদনগর">মুরাদনগর</option>
-              <option value="নাঙ্গলকোট">নাঙ্গলকোট</option>
-              <option value="তিতাস">তিতাস</option>
-              <option value="মনোহরগঞ্জ">মনোহরগঞ্জ</option>
-              <option value="বরুড়া">বরুড়া</option>
-              <option value="কুমিল্লা সদর দক্ষিণ">কুমিল্লা সদর দক্ষিণ</option>
+              {Thana.map((item) => {
+                return (
+                  <option key={item.id} value={item.name}>
+                    {item.name}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </form>

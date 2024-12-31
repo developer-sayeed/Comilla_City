@@ -10,7 +10,10 @@ const Pagelout = () => {
         <div className="max-w-7xl mx-auto p-0 ">
           {/* Your content goes here */}
           <Header />
-          <Outlet />
+          <div className="main-container pt-[75px]">
+            <Outlet />
+          </div>
+
           <Footer />
           <FooterMenu />
         </div>
