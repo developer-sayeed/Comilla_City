@@ -432,8 +432,4 @@ export const categoriesMenu = [
     icon: disabled,
     component: <Disabled />,
   },
-  {
-    href: "/me",
-    component: <ProfilePage />,
-  },
 ];

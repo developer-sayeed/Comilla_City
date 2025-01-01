@@ -1,12 +1,14 @@
-import { element } from "prop-types";
 import Page404 from "../components/404Page/NotFound";
 import { categoriesMenu } from "../components/Categories_Menu/CategoriesMenu";
 import LoginPage from "../page/Auth/LoginPage";
-import RegisterPage from "../page/Auth/Register";
 import Home from "../page/Home/Home";
 import Pagelout from "../page/Pagelout";
-import Shopping from "../page/Shopping/Shopping";
-import ShoppingCrad from "../page/Shopping/ShoppingCrad";
+import ProfilePage from "../page/Auth/Profile";
+import UpdateProfile from "../page/Auth/UpdateProfile";
+import MyShop from "../page/Auth/MyShop";
+import MyCafe from "../page/Auth/MyCafe";
+import Setting from "../page/Auth/Setting";
+import Notifaction from "../page/Auth/Notifaction";
 
 // create public router
 const publicRouter = [
@@ -26,16 +28,28 @@ const publicRouter = [
         path: "/login",
       },
       {
-        element: <RegisterPage />,
-        path: "/register",
-      },
-      {
-        element: <Shopping />,
-        path: "/shopping",
+        path: "/me",
+        element: <ProfilePage />,
         children: [
           {
-            element: <ShoppingCrad />,
-            path: "/shopping/:id",
+            path: "/me/update-profile",
+            element: <UpdateProfile />,
+          },
+          {
+            path: "/me/my-shop",
+            element: <MyShop />,
+          },
+          {
+            path: "/me/my-cafe",
+            element: <MyCafe />,
+          },
+          {
+            path: "/me/Setting",
+            element: <Setting />,
+          },
+          {
+            path: "/me/notification",
+            element: <Notifaction />,
           },
         ],
       },
