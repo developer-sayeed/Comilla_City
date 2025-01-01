@@ -53,6 +53,8 @@ import high_school from "../../assets/school.png";
 import Primary_school from "../../assets/primary.png";
 import madrasa from "../../assets/madrasha.png";
 import money from "../../assets/moneyexchanging.png";
+import coaching from "../../assets/Coaching.png";
+import orphanage from "../../assets/orphanage.png";
 
 // Components
 import HealthConsultation from "../../page/Health-consultation/HealthConsultation";
@@ -75,7 +77,7 @@ import Mechanic from "../../page/Mechanic/Mechanic";
 import EmergencyService from "../../page/EmergencyService/EmergencyService";
 import Jobs from "../../page/Jobs/Jobs";
 import Entrepreneur from "../../page/Entrepreneur/Entrepreneur";
-import Teacher from "../../page/Teacher/Teacher";
+import Teacher from "../../page/EducationalInstitutions/Teacher/Teacher";
 import Bank from "../../page/Bank/Bank";
 import Restaurant from "../../page/Restaurant/Restaurant";
 import FlatLand from "../../page/FlatLand/FlatLand";
@@ -252,12 +254,7 @@ export const categoriesMenu = [
     icon: entrepreneur,
     component: <Entrepreneur />,
   },
-  {
-    name: "শিক্ষক",
-    href: "/teacher",
-    icon: teacher,
-    component: <Teacher />,
-  },
+
   {
     name: "ব্যাংক",
     href: "/bank",
@@ -296,33 +293,51 @@ export const categoriesMenu = [
     Children: [
       {
         name: "প্রাথমিক বিদ্যালয়",
-        href: "/Primary_school",
+        href: "/educational-institutions/Primary_school",
         icon: Primary_school,
         component: <EducationalInstitutions />,
       },
       {
         name: "উচ্চ বিদ্যালয়",
-        href: "/high_school",
+        href: "/educational-institutions/high_school",
         icon: high_school,
         component: <EducationalInstitutions />,
       },
       {
         name: "কলেজ",
-        href: "/college",
+        href: "/educational-institutions/college",
         icon: college,
         component: <EducationalInstitutions />,
       },
       {
         name: "বিশ্ববিদ্যালয়",
-        href: "/university",
+        href: "/educational-institutions/university",
         icon: university,
         component: <EducationalInstitutions />,
       },
       {
         name: "মাদ্রাসা",
-        href: "/madrasa",
+        href: "/educational-institutions/madrasa",
         icon: madrasa,
         component: <EducationalInstitutions />,
+      },
+      {
+        name: "কোচিং সেন্টার",
+        href: "/educational-institutions/Coaching-Centre",
+        icon: coaching,
+        component: <EducationalInstitutions />,
+      },
+      {
+        name: "প্রাইভেট শিক্ষক",
+        href: "/educational-institutions/teacher",
+        icon: teacher,
+        component: <Teacher />,
+      },
+      {
+        name: "এতিমখানা",
+        href: "/educational-institutions/orphanage",
+        icon: orphanage,
+        component: <Teacher />,
       },
     ],
   },

@@ -8,7 +8,6 @@ import NotFoud from "../../components/Card/NotFoud";
 
 const HouseRent = () => {
   const [searchCategory, setSearchCategory] = useState("");
-
   // Filter doctors based on name or specialty
   const filteredHouse = houseRentData.filter((house) => {
     return searchCategory
@@ -127,7 +126,7 @@ const HouseRent = () => {
             );
           })
         ) : (
-          <NotFoud titel={"হাসপাতাল"} />
+          <NotFoud titel={"বাসা "} />
         )}
       </div>
     </>
