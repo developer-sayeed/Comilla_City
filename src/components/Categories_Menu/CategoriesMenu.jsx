@@ -52,6 +52,7 @@ import college from "../../assets/college.png";
 import high_school from "../../assets/school.png";
 import Primary_school from "../../assets/primary.png";
 import madrasa from "../../assets/madrasha.png";
+import money from "../../assets/moneyexchanging.png";
 
 // Components
 import HealthConsultation from "../../page/Health-consultation/HealthConsultation";
@@ -103,6 +104,7 @@ import AnimalServices from "../../page/AnimalServices/AnimalServices";
 import DoctrList from "../../page/Docotors/DoctrList";
 import ShoppingCrad from "../../page/Shopping/ShoppingCrad";
 import ProfilePage from "../../page/Auth/Profile";
+import MoneyExchange from "../../page/MoneyExchange/MoneyExchange";
 
 // Router configuration
 export const categoriesMenu = [
@@ -159,6 +161,12 @@ export const categoriesMenu = [
     href: "/tourist-spots",
     icon: tourist,
     component: <TouristSpots />,
+  },
+  {
+    name: "মানি এক্সচেঞ্জ",
+    href: "/money-exchange",
+    icon: money,
+    component: <MoneyExchange />,
   },
   {
     name: "বাসা ভাড়া",

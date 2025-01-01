@@ -21,3 +21,7 @@
     white-space: nowrap;
   }
 }
+
+body {
+  padding-bottom: 65px; /* Adjust based on footer height */
+}
