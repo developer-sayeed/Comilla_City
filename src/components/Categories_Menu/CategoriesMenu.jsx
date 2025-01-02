@@ -56,7 +56,7 @@ import money from "../../assets/moneyexchanging.png";
 import coaching from "../../assets/Coaching.png";
 import orphanage from "../../assets/orphanage.png";
 
-// Components
+// elements
 import HealthConsultation from "../../page/Health-consultation/HealthConsultation";
 import Ambulance from "../../page/Ambulance/Ambulance";
 import Hospital from "../../page/Hospital/Hospital";
@@ -107,6 +107,11 @@ import DoctrList from "../../page/Docotors/DoctrList";
 import ShoppingCrad from "../../page/Shopping/ShoppingCrad";
 import ProfilePage from "../../page/Auth/Profile";
 import MoneyExchange from "../../page/MoneyExchange/MoneyExchange";
+import PrimarySchool from "../../page/EducationalInstitutions/Primary_school/PrimarySchool";
+import University from "../../page/EducationalInstitutions/University/University";
+import College from "../../page/EducationalInstitutions/College/College";
+import HighSchool from "../../page/EducationalInstitutions/High_school/HighSchool";
+import Madrasa from "../../page/EducationalInstitutions/Madrasa/Madrasa";
 
 // Router configuration
 export const categoriesMenu = [
@@ -114,345 +119,347 @@ export const categoriesMenu = [
     name: "ডাক্তার",
     href: "/doctor",
     icon: doctor,
-    component: <DoctrList />,
+    element: <DoctrList />,
   },
   {
     name: "স্বাস্থ্য পরামর্শ",
     href: "/health-consultation",
     icon: consultation,
-    component: <HealthConsultation />,
+    element: <HealthConsultation />,
   },
   {
     name: "হাসপাতাল",
     href: "/hospital",
     icon: hospitalIcon,
-    component: <Hospital />,
+    element: <Hospital />,
   },
   {
     name: "ডায়াগনস্টিক",
     href: "/diagnostic",
     icon: diagnostic,
-    component: <Diagnostic />,
+    element: <Diagnostic />,
   },
   {
     name: "অ্যাম্বুলেন্স",
     href: "/ambulance",
     icon: ambulance,
-    component: <Ambulance />,
+    element: <Ambulance />,
   },
   {
     name: "রক্ত",
     href: "/blood",
     icon: blood,
-    component: <Blood />,
+    element: <Blood />,
   },
   {
     name: "বাসের সময়সূচি",
     href: "/bus-schedule",
     icon: bus,
-    component: <BusSchedule />,
+    element: <BusSchedule />,
   },
   {
     name: "ট্রেনের সময়সূচি",
     href: "/train-schedule",
     icon: train,
-    component: <TrainSchedule />,
+    element: <TrainSchedule />,
   },
   {
     name: "দর্শনীয় স্থান",
     href: "/tourist-spots",
     icon: tourist,
-    component: <TouristSpots />,
+    element: <TouristSpots />,
   },
   {
     name: "মানি এক্সচেঞ্জ",
     href: "/money-exchange",
     icon: money,
-    component: <MoneyExchange />,
+    element: <MoneyExchange />,
   },
   {
     name: "বাসা ভাড়া",
     href: "/house-rent",
     icon: house,
-    component: <HouseRent />,
+    element: <HouseRent />,
   },
   {
     name: "পাসপোর্ট",
     href: "https://www.epassport.gov.bd/landing",
     icon: pasport,
-    component: "",
+    element: "",
   },
-  {
-    name: "শপিং",
-    href: "/shopping",
-    icon: shoppingIcon,
-    component: <Shopping />,
-    children: [
-      {
-        href: "/shopping/:id",
-        component: <ShoppingCrad />,
-      },
-    ],
-  },
+
   {
     name: "ফায়ার সার্ভিস",
     href: "/fire-service",
     icon: fire,
-    component: <FireService />,
+    element: <FireService />,
   },
   {
     name: "কুরিয়ার সার্ভিস",
     href: "/courier-service",
     icon: courier,
-    component: <CourierService />,
+    element: <CourierService />,
   },
   {
     name: "থানা-পুলিশ",
     href: "/police-station",
     icon: police,
-    component: <PoliceStation />,
+    element: <PoliceStation />,
   },
   {
     name: "বিদ্যুৎ অফিস",
     href: "/electricity-office",
     icon: electricity,
-    component: <ElectricityOffice />,
+    element: <ElectricityOffice />,
   },
   {
     name: "হোটেল",
     href: "/hotel",
     icon: hotel,
-    component: <Hotel />,
+    element: <Hotel />,
   },
   {
     name: "গাড়ি ভাড়া",
     href: "/car-rent",
     icon: carRent,
-    component: <CarRent />,
+    element: <CarRent />,
   },
   {
     name: "মিস্ত্রি",
     href: "/mechanic",
     icon: mechanic,
-    component: <Mechanic />,
+    element: <Mechanic />,
   },
   {
     name: "জরুরি সেবা",
     href: "/emergency-service",
     icon: emergency,
-    component: <EmergencyService />,
+    element: <EmergencyService />,
   },
   {
     name: "চাকরি",
     href: "/jobs",
     icon: jobs,
-    component: <Jobs />,
+    element: <Jobs />,
   },
   {
     name: "উদ্যোক্তা",
     href: "/entrepreneur",
     icon: entrepreneur,
-    component: <Entrepreneur />,
+    element: <Entrepreneur />,
   },
 
   {
     name: "ব্যাংক",
     href: "/bank",
     icon: bank,
-    component: <Bank />,
+    element: <Bank />,
   },
   {
     name: "রেস্টুরেন্ট",
     href: "/restaurant",
     icon: restaurant,
-    component: <Restaurant />,
+    element: <Restaurant />,
   },
   {
     name: "ফ্ল্যাট ও জমি",
     href: "/flat-land",
     icon: flatland,
-    component: <FlatLand />,
+    element: <FlatLand />,
   },
   {
     name: "ভিডিও দেখুন",
     href: "/videos",
     icon: videos,
-    component: <Videos />,
+    element: <Videos />,
   },
   {
     name: "আজকের কুমিল্লা",
     href: "/today-cumilla",
     icon: news,
-    component: <TodayCumilla />,
+    element: <TodayCumilla />,
+  },
+  {
+    name: "শপিং",
+    href: "/shopping",
+    icon: shoppingIcon,
+    element: <Shopping />,
+    children: [
+      {
+        href: "/shopping/:id",
+        element: <ShoppingCrad />,
+      },
+    ],
   },
   {
     name: "শিক্ষা প্রতিষ্ঠান",
     href: "/educational-institutions",
     icon: institutions,
-    component: <EducationalInstitutions />,
-    Children: [
+    element: <EducationalInstitutions />,
+    children: [
       {
         name: "প্রাথমিক বিদ্যালয়",
-        href: "/educational-institutions/Primary_school",
+        href: "/educational-institutions/primary_school",
         icon: Primary_school,
-        component: <EducationalInstitutions />,
+        element: <PrimarySchool />,
       },
       {
         name: "উচ্চ বিদ্যালয়",
         href: "/educational-institutions/high_school",
         icon: high_school,
-        component: <EducationalInstitutions />,
+        element: <HighSchool />,
       },
       {
         name: "কলেজ",
         href: "/educational-institutions/college",
         icon: college,
-        component: <EducationalInstitutions />,
+        element: <College />,
       },
       {
         name: "বিশ্ববিদ্যালয়",
         href: "/educational-institutions/university",
         icon: university,
-        component: <EducationalInstitutions />,
+        element: <University />,
       },
       {
         name: "মাদ্রাসা",
         href: "/educational-institutions/madrasa",
         icon: madrasa,
-        component: <EducationalInstitutions />,
+        element: <Madrasa />,
       },
       {
         name: "কোচিং সেন্টার",
-        href: "/educational-institutions/Coaching-Centre",
+        href: "/educational-institutions/coaching-centre",
         icon: coaching,
-        component: <EducationalInstitutions />,
+        element: <PrimarySchool />,
       },
       {
         name: "প্রাইভেট শিক্ষক",
         href: "/educational-institutions/teacher",
         icon: teacher,
-        component: <Teacher />,
+        element: <Teacher />,
       },
       {
         name: "এতিমখানা",
         href: "/educational-institutions/orphanage",
         icon: orphanage,
-        component: <Teacher />,
+        element: <Teacher />,
       },
     ],
   },
+
   {
     name: "নার্সারি",
     href: "/nursery",
     icon: nursery,
-    component: <Nursery />,
+    element: <Nursery />,
   },
   {
     name: "ইভেন্টস",
     href: "/events",
     icon: events,
-    component: <Events />,
+    element: <Events />,
   },
   {
     name: "আইটি সার্ভিস",
     href: "/it-services",
     icon: itservices,
-    component: <ITServices />,
+    element: <ITServices />,
   },
   {
     name: "ফ্রিল্যান্সার",
     href: "/freelancers",
     icon: freelancers,
-    component: <Freelancers />,
+    element: <Freelancers />,
   },
   {
     name: "ক্যাফে",
     href: "/cafes",
     icon: cafes,
-    component: <Cafes />,
+    element: <Cafes />,
   },
   {
     name: "ফার্মেসি",
     href: "/pharmacy",
     icon: pharmacy,
-    component: <Pharmacy />,
+    element: <Pharmacy />,
   },
   {
     name: "বিউটি পার্লার",
     href: "/beauty-parlour",
     icon: beauty,
-    component: <BeautyParlour />,
+    element: <BeautyParlour />,
   },
   {
     name: "জিম ও ফিটনেস",
     href: "/gym-fitness",
     icon: gym,
-    component: <GymFitness />,
+    element: <GymFitness />,
   },
   {
     name: "ইন্টারনেট সার্ভিস",
     href: "/internet-service",
     icon: internet,
-    component: <InternetService />,
+    element: <InternetService />,
   },
   {
     name: "টেলিকম সার্ভিস",
     href: "/telecom-service",
     icon: telecom,
-    component: <TelecomService />,
+    element: <TelecomService />,
   },
   {
     name: "নাগরিক সেবা",
     href: "/citizen-services",
     icon: citizen,
-    component: <CitizenServices />,
+    element: <CitizenServices />,
   },
   {
     name: "আইনি সহায়তা",
     href: "/legal-aid",
     icon: legal,
-    component: <LegalAid />,
+    element: <LegalAid />,
   },
   {
     name: "সামাজিক কল্যাণ",
     href: "/social-welfare",
     icon: social,
-    component: <SocialWelfare />,
+    element: <SocialWelfare />,
   },
   {
     name: "শিশু সুরক্ষা",
     href: "/child-protection",
     icon: child,
-    component: <ChildProtection />,
+    element: <ChildProtection />,
   },
   {
     name: "পশু সেবা",
     href: "/animal-services",
     icon: animal,
-    component: <AnimalServices />,
+    element: <AnimalServices />,
   },
   {
     name: "পাবলিক লাইব্রেরি",
     href: "/public-library",
     icon: library,
-    component: <PublicLibrary />,
+    element: <PublicLibrary />,
   },
   {
     name: "গ্যাস সরবরাহ",
     href: "/gas-supply",
     icon: gas,
-    component: <GasSupply />,
+    element: <GasSupply />,
   },
   {
     name: "পাবলিক টয়লেট",
     href: "/public-toilet",
     icon: wc,
-    component: <PublicToilet />,
+    element: <PublicToilet />,
   },
   {
     name: "প্রতিবন্ধী সেবা",
     href: "/disabled",
     icon: disabled,
-    component: <Disabled />,
+    element: <Disabled />,
   },
 ];

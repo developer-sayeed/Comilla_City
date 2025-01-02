@@ -8,9 +8,9 @@ const EducationalInstitutions = () => {
     let children = [];
 
     data.forEach((item) => {
-      if (item.Children) {
-        children.push(...item.Children); // সরাসরি Children অ্যাড
-        children.push(...extractChildren(item.Children)); // Nested Children অ্যাড
+      if (item.children) {
+        children.push(...item.children); // সরাসরি Children অ্যাড
+        children.push(...extractChildren(item.children)); // Nested Children অ্যাড
       }
     });
 
@@ -19,6 +19,8 @@ const EducationalInstitutions = () => {
 
   // সব Children বের করা
   const allChildren = extractChildren(categoriesMenu);
+
+  console.log(allChildren);
 
   return (
     <>
@@ -39,10 +41,9 @@ const EducationalInstitutions = () => {
                       className="h-14 w-14 md:h-16 md:w-16 lg:h-16 lg:w-16 object-cover mb-2 sm:mb-0  transition-transform transform hover:scale-110"
                     />
                     <span className="text-xs md:text-sm lg:text-base font-medium text-gray-700 hover:text-blue-600">
-                      {" "}
-                      {item.name}{" "}
-                    </span>{" "}
-                  </Link>{" "}
+                      {item.name}
+                    </span>
+                  </Link>
                 </li>
               );
             })}

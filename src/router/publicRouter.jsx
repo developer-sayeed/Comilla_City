@@ -13,53 +13,52 @@ import Notifaction from "../page/Auth/Notifaction";
 // create public router
 const publicRouter = [
   {
-    element: <Page404 />,
     path: "*",
+    element: <Page404 />,
   },
   {
     element: <Pagelout />,
     children: [
       {
-        element: <Home />,
         path: "/",
+        element: <Home />,
       },
       {
-        element: <LoginPage />,
         path: "/login",
+        element: <LoginPage />,
       },
       {
         path: "/me",
         element: <ProfilePage />,
         children: [
           {
-            path: "/me/update-profile",
+            path: "update-profile",
             element: <UpdateProfile />,
           },
           {
-            path: "/me/my-shop",
+            path: "my-shop",
             element: <MyShop />,
           },
           {
-            path: "/me/my-cafe",
+            path: "my-cafe",
             element: <MyCafe />,
           },
           {
-            path: "/me/Setting",
+            path: "setting",
             element: <Setting />,
           },
           {
-            path: "/me/notification",
+            path: "notification",
             element: <Notifaction />,
           },
         ],
       },
-
       ...categoriesMenu.map((item) => ({
-        element: item.component ? item.component : null,
         path: item.href,
+        element: item.element || <Page404 />,
         children: item.children?.map((subItem) => ({
-          element: subItem.component,
-          path: subItem.href,
+          path: subItem.href.replace(`${item.href}/`, ""),
+          element: subItem.element || <Page404 />,
         })),
       })),
     ],

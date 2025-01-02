@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const Page404 = () => {
   return (
@@ -20,9 +21,12 @@ const Page404 = () => {
           Looks like big foot has broken the link
         </h3>
 
-        <button className="py-3 px-6 sm:px-8 text-[0.9rem] sm:text-[1rem] rounded-full bg-[#566FA7] text-white mt-8">
+        <Link
+          to={"/"}
+          className="py-3 mt-8 inline-block px-6 sm:px-8 text-[0.9rem] sm:text-[1rem] rounded-full bg-[#566FA7] text-white"
+        >
           Back to homepage
-        </button>
+        </Link>
       </div>
     </div>
   );
