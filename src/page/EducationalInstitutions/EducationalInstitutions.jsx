@@ -18,7 +18,11 @@ const EducationalInstitutions = () => {
   }
 
   // সব Children বের করা
-  const allChildren = extractChildren(categoriesMenu);
+  const allChildren = extractChildren(
+    categoriesMenu?.filter((item) => item.href !== "/shopping")
+  );
+
+  console.log(categoriesMenu);
 
   console.log(allChildren);
 

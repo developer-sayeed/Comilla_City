@@ -10,6 +10,28 @@ import MyCafe from "../page/Auth/MyCafe";
 import Setting from "../page/Auth/Setting";
 import Notifaction from "../page/Auth/Notifaction";
 
+const flattenRoutes = (routes) => {
+  return routes.flatMap((item) => {
+    const { children, ...rest } = item;
+    const currentRoute = { ...rest }; // Keep the current route object
+    const childRoutes = children ? flattenRoutes(children) : []; // Recursively flatten children
+    return [currentRoute, ...childRoutes]; // Merge current route with flattened children
+  });
+};
+
+const categoriesRoutes = flattenRoutes(
+  categoriesMenu.map((item) => ({
+    path: item.href,
+    element: item.component,
+    children: item.children
+      ? item.children.map((subItem) => ({
+          path: subItem.href,
+          element: subItem.component,
+        }))
+      : [],
+  }))
+);
+
 // create public router
 const publicRouter = [
   {
@@ -53,14 +75,8 @@ const publicRouter = [
           },
         ],
       },
-      ...categoriesMenu.map((item) => ({
-        path: item.href,
-        element: item.element || <Page404 />,
-        children: item.children?.map((subItem) => ({
-          path: subItem.href.replace(`${item.href}/`, ""),
-          element: subItem.element || <Page404 />,
-        })),
-      })),
+
+      ...categoriesRoutes,
     ],
   },
 ];
