@@ -8,9 +8,9 @@ const EducationalInstitutions = () => {
     let children = [];
 
     data.forEach((item) => {
-      if (item.Children) {
-        children.push(...item.Children); // সরাসরি Children অ্যাড
-        children.push(...extractChildren(item.Children)); // Nested Children অ্যাড
+      if (item.children) {
+        children.push(...item.children); // সরাসরি Children অ্যাড
+        children.push(...extractChildren(item.children)); // Nested Children অ্যাড
       }
     });
 
@@ -18,7 +18,11 @@ const EducationalInstitutions = () => {
   }
 
   // সব Children বের করা
-  const allChildren = extractChildren(categoriesMenu);
+  const allChildren = extractChildren(
+    categoriesMenu?.filter((item) => item.href !== "/shopping")
+  );
+
+  console.log(categoriesMenu);
 
   return (
     <>

@@ -290,7 +290,7 @@ export const categoriesMenu = [
     href: "/educational-institutions",
     icon: institutions,
     component: <EducationalInstitutions />,
-    Children: [
+    children: [
       {
         name: "প্রাথমিক বিদ্যালয়",
         href: "/educational-institutions/Primary_school",
