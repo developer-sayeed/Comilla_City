@@ -22,10 +22,6 @@ const EducationalInstitutions = () => {
     categoriesMenu?.filter((item) => item.href !== "/shopping")
   );
 
-  console.log(categoriesMenu);
-
-  console.log(allChildren);
-
   return (
     <>
       <section className="container mx-auto px-4 py-8 ">

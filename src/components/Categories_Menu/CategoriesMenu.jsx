@@ -182,6 +182,74 @@ export const categoriesMenu = [
     component: <HouseRent />,
   },
   {
+    name: "শপিং",
+    href: "/shopping",
+    icon: shoppingIcon,
+    component: <Shopping />,
+    children: [
+      {
+        href: "/shopping/:id",
+        component: <ShoppingCrad />,
+      },
+    ],
+  },
+  {
+    name: "শিক্ষা প্রতিষ্ঠান",
+    href: "/educational-institutions",
+    icon: institutions,
+    component: <EducationalInstitutions />,
+    children: [
+      {
+        name: "প্রাথমিক বিদ্যালয়",
+        href: "/educational-institutions/primary_school",
+        icon: Primary_school,
+        component: <PrimarySchool />,
+      },
+      {
+        name: "উচ্চ বিদ্যালয়",
+        href: "/educational-institutions/high_school",
+        icon: high_school,
+        component: <HighSchool />,
+      },
+      {
+        name: "কলেজ",
+        href: "/educational-institutions/college",
+        icon: college,
+        component: <College />,
+      },
+      {
+        name: "বিশ্ববিদ্যালয়",
+        href: "/educational-institutions/university",
+        icon: university,
+        component: <University />,
+      },
+      {
+        name: "মাদ্রাসা",
+        href: "/educational-institutions/madrasa",
+        icon: madrasa,
+        component: <Madrasa />,
+      },
+      {
+        name: "কোচিং সেন্টার",
+        href: "/educational-institutions/coaching-centre",
+        icon: coaching,
+        component: <PrimarySchool />,
+      },
+      {
+        name: "প্রাইভেট শিক্ষক",
+        href: "/educational-institutions/teacher",
+        icon: teacher,
+        component: <Teacher />,
+      },
+      {
+        name: "এতিমখানা",
+        href: "/educational-institutions/orphanage",
+        icon: orphanage,
+        component: <Teacher />,
+      },
+    ],
+  },
+  {
     name: "পাসপোর্ট",
     href: "https://www.epassport.gov.bd/landing",
     icon: pasport,
@@ -236,6 +304,7 @@ export const categoriesMenu = [
     icon: emergency,
     component: <EmergencyService />,
   },
+
   {
     name: "চাকরি",
     href: "/jobs",
@@ -248,7 +317,6 @@ export const categoriesMenu = [
     icon: entrepreneur,
     component: <Entrepreneur />,
   },
-
   {
     name: "ব্যাংক",
     href: "/bank",
@@ -278,76 +346,6 @@ export const categoriesMenu = [
     href: "/today-cumilla",
     icon: news,
     component: <TodayCumilla />,
-  },
-  {
-    name: "শপিং",
-    href: "/shopping",
-    icon: shoppingIcon,
-    component: <Shopping />,
-    children: [
-      {
-        href: "/shopping/:id",
-        component: <ShoppingCrad />,
-      },
-    ],
-  },
-  {
-    name: "শিক্ষা প্রতিষ্ঠান",
-    href: "/educational-institutions",
-    icon: institutions,
-
-    component: <EducationalInstitutions />,
-
-    children: [
-      {
-        name: "প্রাথমিক বিদ্যালয়",
-        href: "/educational-institutions/primary_school",
-        icon: Primary_school,
-        component: <PrimarySchool />,
-      },
-      {
-        name: "উচ্চ বিদ্যালয়",
-        href: "/educational-institutions/high_school",
-        icon: high_school,
-        component: <HighSchool />,
-      },
-      {
-        name: "কলেজ",
-        href: "/educational-institutions/college",
-        icon: college,
-        component: <College />,
-      },
-      {
-        name: "বিশ্ববিদ্যালয়",
-        href: "/educational-institutions/university",
-        icon: university,
-        component: <University />,
-      },
-      {
-        name: "মাদ্রাসা",
-        href: "/educational-institutions/madrasa",
-        icon: madrasa,
-        component: <Madrasa />,
-      },
-      {
-        name: "কোচিং সেন্টার",
-        href: "/educational-institutions/coaching-centre",
-        icon: coaching,
-        component: <PrimarySchool />,
-      },
-      {
-        name: "প্রাইভেট শিক্ষক",
-        href: "/educational-institutions/teacher",
-        icon: teacher,
-        component: <Teacher />,
-      },
-      {
-        name: "এতিমখানা",
-        href: "/educational-institutions/orphanage",
-        icon: orphanage,
-        component: <Teacher />,
-      },
-    ],
   },
 
   {
