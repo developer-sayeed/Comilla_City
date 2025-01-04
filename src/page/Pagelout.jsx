@@ -6,7 +6,7 @@ import FooterMenu from "../components/FooterMenu";
 const Pagelout = () => {
   return (
     <>
-      <div className="w-full xl:w-[90%] m-auto bg-slate-100 min-h-screen h-full overflow-hidden">
+      <div className="w-full xl:max-w-[1200px] m-auto bg-slate-100 min-h-screen h-full overflow-hidden">
         <div className="max-w-7xl mx-auto p-0 ">
           {/* Your content goes here */}
           <Header />

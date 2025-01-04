@@ -12,7 +12,7 @@ function Header() {
   return (
     <div>
       {/* Navbar */}
-      <nav className="py-3 fixed z-50 top-0 w-full md:w-[90%] mx-auto !bg-[#fff] shadow-lg">
+      <nav className="py-3 fixed z-50 top-0 w-full md:w-[1200px] mx-auto !bg-[#fff] shadow-lg">
         <div className="container mx-auto flex items-center justify-between gap-x-6">
           {/* Logo */}
           <Link to="/">
