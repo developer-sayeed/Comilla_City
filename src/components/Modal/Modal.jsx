@@ -15,7 +15,7 @@ const Modal = ({ isOpen, onClose, children }) => {
     <div
       id="modal-overlay"
       onClick={handleOutsideClick}
-      className="w-full h-screen fixed top-0 left-0 z-50 bg-[#0000002a] flex items-center justify-center transition-all duration-300"
+      className="w-full h-screen fixed top-0 left-0 z-50 bg-[#0000002a] flex items-center justify-center transition-all duration-300 backdrop-blur-sm"
     >
       <div
         onClick={(e) => e.stopPropagation()} // Modal Content এ ক্লিক করলে ইভেন্ট বন্ধ হবে

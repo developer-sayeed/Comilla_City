@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router";
+import Skeleton from "react-loading-skeleton";
 import diagnosticimg from "../../assets/013-diagnostic.png";
 const CustomCrad = ({
   className,

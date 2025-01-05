@@ -7,8 +7,4 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
