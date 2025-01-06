@@ -5,26 +5,27 @@ import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import CustomHeading from "../../../components/CustomHeading/CustomHeading";
 import { IoEyeOutline } from "react-icons/io5";
 import { createToast } from "../../../utils/Toastify";
+import { DoctorInitialData } from "./Data";
+import doctor from "../../../assets/001-doctor.png";
 
 // 📌 Initial Data
-const initialData = [
-  { id: 1, name: "দেবিদ্বার", status: "Active" },
-  { id: 2, name: "বরুড়া", status: "Inactive" },
-  { id: 3, name: "ব্রাহ্মণপাড়া", status: "Active" },
-  { id: 4, name: "চান্দিনা", status: "Inactive" },
-  { id: 5, name: "চৌদ্দগ্রাম", status: "Active" },
-  { id: 6, name: "দাউদকান্দি", status: "Inactive" },
-  { id: 7, name: "হোমনা", status: "Active" },
-  { id: 8, name: "লাকসাম", status: "Inactive" },
-  { id: 9, name: "মুরাদনগর", status: "Active" },
-  { id: 10, name: "নাঙ্গলকোট", status: "Inactive" },
-];
 
 // 📌 Main Component
-const Upzilla = () => {
+const Doctors = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({ name: "", status: "Active" });
-  const [data, setData] = useState(initialData);
+  const [formData, setFormData] = useState({
+    name: "",
+    specialty: "",
+    education: "",
+    status: "Active",
+    rogiDekharSomoy: "",
+    personalPhone: "",
+    serialPhone: "",
+    email: "",
+    hospitalName: "",
+    photoLink: "",
+  });
+  const [data, setData] = useState(DoctorInitialData);
   const [editMode, setEditMode] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState("");
@@ -71,8 +72,11 @@ const Upzilla = () => {
       // Check if data has changed before updating
       if (
         formData.name !== "" &&
+        formData.specialty !== "" &&
         formData.status !== "" &&
         (formData.name !== data.find((item) => item.id === editingId).name ||
+          formData.specialty !==
+            data.find((item) => item.id === editingId).specialty ||
           formData.status !== data.find((item) => item.id === editingId).status)
       ) {
         // Edit the data
@@ -94,13 +98,17 @@ const Upzilla = () => {
       ]);
       createToast("Data Added successfully!", "success"); // Toast notification for successful add
     }
-    setFormData({ name: "", status: "Active" }); // Reset form data
+    setFormData({ name: "", specialty: "", status: "Active" }); // Reset form data
     setIsModalOpen(false); // Close the modal
   };
 
   // 📌 Handle Edit (Set Data in Form for Editing)
   const handleEdit = (item) => {
-    setFormData({ name: item.name, status: item.status });
+    setFormData({
+      name: item.name,
+      specialty: item.specialty,
+      status: item.status,
+    });
     setEditMode(true);
     setEditingId(item.id);
     setIsModalOpen(true);
@@ -124,14 +132,14 @@ const Upzilla = () => {
 
   return (
     <div className="w-full mx-auto p-4 bg-gray-50 rounded-md shadow-md overflow-hidden">
-      <CustomHeading tittel={"Thana & Upzilla List"} className={"py-[7px]"} />
+      <CustomHeading tittel={"ডাক্তার তালিকা"} className={"py-[7px]"} />
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 my-4">
         {/* Add Button */}
         <button
           onClick={() => setIsModalOpen(true)}
           className="w-full md:w-auto rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-6 py-2 text-sm font-bold"
         >
-          Add Thana & Upzilla
+          ডাক্তার যোগ করুন
         </button>
         {/* 📌 Search Bar */}
         <input
@@ -164,6 +172,32 @@ const Upzilla = () => {
               </th>
               <th
                 className="p-3 text-center font-medium cursor-pointer"
+                onClick={() => handleSort("specialty")}
+              >
+                <div className="flex items-center gap-1 justify-center">
+                  Specialty
+                  <HiOutlineArrowsUpDown
+                    className={`text-[1.2rem] ${
+                      sortConfig.key === "specialty" ? "text-blue-500" : ""
+                    }`}
+                  />
+                </div>
+              </th>
+              <th
+                className="p-3 text-center font-medium cursor-pointer"
+                onClick={() => handleSort("specialty")}
+              >
+                <div className="flex items-center gap-1 justify-center">
+                  Education
+                  <HiOutlineArrowsUpDown
+                    className={`text-[1.2rem] ${
+                      sortConfig.key === "education" ? "text-blue-500" : ""
+                    }`}
+                  />
+                </div>
+              </th>
+              <th
+                className="p-3 text-center font-medium cursor-pointer"
                 onClick={() => handleSort("status")}
               >
                 <div className="flex items-center gap-1 justify-center">
@@ -189,7 +223,22 @@ const Upzilla = () => {
                 } hover:bg-gray-100 border-t border-gray-200`}
               >
                 <td className="p-3 text-center text-gray-700">{index + 1}</td>
-                <td className="p-3 text-lrft text-gray-700">{item.name}</td>
+                <td className="p-3 text-left text-gray-700 flex items-center gap-3">
+                  <img
+                    src={item.photo && doctor} // Replace with the actual image URL
+                    alt={item.name}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-gray-300" // Circle the image, and add a border for aesthetics
+                  />
+                  <span>{item.name}</span>
+                  {/* Display the doctor's name next to the photo */}
+                </td>
+
+                <td className="p-3 text-center text-gray-700">
+                  {item.specialty}
+                </td>
+                <td className="p-3 text-center text-gray-700">
+                  {item.education}
+                </td>
                 <td
                   className={`p-3 text-center font-medium ${
                     item.status === "Active" ? "text-green-600" : "text-red-600"
@@ -229,9 +278,9 @@ const Upzilla = () => {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        heading={`${editMode ? "Edit" : "Add"} Data`}
+        heading={`${editMode ? "Edit" : "Add"} Doctor`}
       >
-        <div className="p-4 bg-white rounded-md  w-full ">
+        <div className="p-4 bg-white rounded-md w-full">
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="block mb-1">Name</label>
@@ -244,19 +293,118 @@ const Upzilla = () => {
                 required
               />
             </div>
+
             <div className="mb-4">
-              <label className="block mb-1">Status</label>
+              <label className="block mb-1">Education</label>
+              <input
+                type="text"
+                name="education"
+                value={formData.education}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block mb-1">Specialty</label>
               <select
-                name="status"
-                value={formData.status}
+                name="specialty"
+                value={formData.specialty}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-md"
                 required
               >
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
+                <option value="Cardiology">Cardiology</option>
+                <option value="General Medicine">General Medicine</option>
+                <option value="Gynecology">Gynecology</option>
+                <option value="Orthopedics">Orthopedics</option>
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="Pathology">Pathology</option>
+                <option value="Surgery">Surgery</option>
+                <option value="ENT">ENT</option>
+                <option value="Radiology">Radiology</option>
+                <option value="Neurosurgery">Neurosurgery</option>
+                {/* Add more specialties as needed */}
               </select>
             </div>
+
+            <div className="mb-4">
+              <label className="block mb-1">Time to See Patient</label>
+              <input
+                type="time"
+                name="rogiDekharSomoy"
+                value={formData.rogiDekharSomoy}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block mb-1">Personal Phone</label>
+              <input
+                type="text"
+                name="personalPhone"
+                value={formData.personalPhone}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block mb-1">Serial Phone</label>
+              <input
+                type="text"
+                name="serialPhone"
+                value={formData.serialPhone}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block mb-1">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                required
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block mb-1">Hospital Name Where Working</label>
+              <select
+                name="hospitalName"
+                value={formData.hospitalName}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                required
+              >
+                <option value="Hospital A">Hospital A</option>
+                <option value="Hospital B">Hospital B</option>
+                <option value="Hospital C">Hospital C</option>
+                {/* Add more hospitals as needed */}
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label className="block mb-1">Photo Link</label>
+              <input
+                type="url"
+                name="photoLink"
+                value={formData.photoLink}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                required
+              />
+            </div>
+
             <div className="flex justify-end">
               <button
                 type="submit"
@@ -272,4 +420,4 @@ const Upzilla = () => {
   );
 };
 
-export default Upzilla;
+export default Doctors;
