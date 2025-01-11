@@ -8,16 +8,76 @@ import { createToast } from "../../../utils/Toastify";
 
 // 📌 Initial Data
 const initialData = [
-  { id: 1, name: "দেবিদ্বার", status: "Active" },
-  { id: 2, name: "বরুড়া", status: "Inactive" },
-  { id: 3, name: "ব্রাহ্মণপাড়া", status: "Active" },
-  { id: 4, name: "চান্দিনা", status: "Inactive" },
-  { id: 5, name: "চৌদ্দগ্রাম", status: "Active" },
-  { id: 6, name: "দাউদকান্দি", status: "Inactive" },
-  { id: 7, name: "হোমনা", status: "Active" },
-  { id: 8, name: "লাকসাম", status: "Inactive" },
-  { id: 9, name: "মুরাদনগর", status: "Active" },
-  { id: 10, name: "নাঙ্গলকোট", status: "Inactive" },
+  {
+    id: 1,
+    name: "দেবিদ্বার",
+    status: "Active",
+    image: "https://via.placeholder.com/150",
+    fullAddress: "দেবিদ্বার, কুমিল্লা, বাংলাদেশ",
+  },
+  {
+    id: 2,
+    name: "বরুড়া",
+    status: "Inactive",
+    image: "https://via.placeholder.com/150",
+    fullAddress: "বরুড়া, কুমিল্লা, বাংলাদেশ",
+  },
+  {
+    id: 3,
+    name: "ব্রাহ্মণপাড়া",
+    status: "Active",
+    image: "https://via.placeholder.com/150",
+    fullAddress: "ব্রাহ্মণপাড়া, কুমিল্লা, বাংলাদেশ",
+  },
+  {
+    id: 4,
+    name: "চান্দিনা",
+    status: "Inactive",
+    image: "https://via.placeholder.com/150",
+    fullAddress: "চান্দিনা, কুমিল্লা, বাংলাদেশ",
+  },
+  {
+    id: 5,
+    name: "চৌদ্দগ্রাম",
+    status: "Active",
+    image: "https://via.placeholder.com/150",
+    fullAddress: "চৌদ্দগ্রাম, কুমিল্লা, বাংলাদেশ",
+  },
+  {
+    id: 6,
+    name: "দাউদকান্দি",
+    status: "Inactive",
+    image: "https://via.placeholder.com/150",
+    fullAddress: "দাউদকান্দি, কুমিল্লা, বাংলাদেশ",
+  },
+  {
+    id: 7,
+    name: "হোমনা",
+    status: "Active",
+    image: "https://via.placeholder.com/150",
+    fullAddress: "হোমনা, কুমিল্লা, বাংলাদেশ",
+  },
+  {
+    id: 8,
+    name: "লাকসাম",
+    status: "Inactive",
+    image: "https://via.placeholder.com/150",
+    fullAddress: "লাকসাম, কুমিল্লা, বাংলাদেশ",
+  },
+  {
+    id: 9,
+    name: "মুরাদনগর",
+    status: "Active",
+    image: "https://via.placeholder.com/150",
+    fullAddress: "মুরাদনগর, কুমিল্লা, বাংলাদেশ",
+  },
+  {
+    id: 10,
+    name: "নাঙ্গলকোট",
+    status: "Inactive",
+    image: "https://via.placeholder.com/150",
+    fullAddress: "নাঙ্গলকোট, কুমিল্লা, বাংলাদেশ",
+  },
 ];
 
 // 📌 Main Component
@@ -162,6 +222,7 @@ const Upzilla = () => {
                   />
                 </div>
               </th>
+              <th className="p-3 text-center font-medium">Location</th>
               <th
                 className="p-3 text-center font-medium cursor-pointer"
                 onClick={() => handleSort("status")}
@@ -175,6 +236,7 @@ const Upzilla = () => {
                   />
                 </div>
               </th>
+
               <th className="p-3 text-center font-medium">Actions</th>
             </tr>
           </thead>
@@ -189,7 +251,10 @@ const Upzilla = () => {
                 } hover:bg-gray-100 border-t border-gray-200`}
               >
                 <td className="p-3 text-center text-gray-700">{index + 1}</td>
-                <td className="p-3 text-lrft text-gray-700">{item.name}</td>
+                <td className="p-3 text-left text-gray-700">{item.name}</td>
+                <td className="p-3 text-center text-gray-700">
+                  {item.fullAddress}
+                </td>
                 <td
                   className={`p-3 text-center font-medium ${
                     item.status === "Active" ? "text-green-600" : "text-red-600"
@@ -239,6 +304,28 @@ const Upzilla = () => {
                 type="text"
                 name="name"
                 value={formData.name}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-1">Full Address</label>
+              <input
+                type="text"
+                name="address"
+                value={formData.fullAddress}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2 border rounded-md"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-1">Thana Photo</label>
+              <input
+                type="text"
+                name="address"
+                value={formData.fullAddress}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-md"
                 required

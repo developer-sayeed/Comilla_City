@@ -82,9 +82,9 @@ const AdminSideBar = () => {
             <DashboardMenuItem
               icon={GoHomeFill}
               title="Dashboard"
-              link="/admin"
-              isActive={activeMenu === "/admin"}
-              onClick={() => setActiveMenu("/admin")}
+              link="/admin/overview"
+              isActive={activeMenu === "/admin/overview"}
+              onClick={() => setActiveMenu("/admin/overview")}
             />
             <DashboardMenuItem
               icon={IoLocationOutline}
@@ -159,7 +159,7 @@ const AdminSideBar = () => {
         </aside>
 
         {/* Outlet (Desktop Only) */}
-        <div className="mt-6 px-[20px] w-full h-lvh bg-white ml-[20%]">
+        <div className="mt-6 px-[20px] w-full h-lvh bg-[#f9f9f9] ml-[20%] shadow-lg">
           <Outlet />
         </div>
       </div>

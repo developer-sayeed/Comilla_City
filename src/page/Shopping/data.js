@@ -1,12 +1,32 @@
 export const shopsData = [
   {
-    id: 1, // Static ID
+    id: 1,
     name: "Fashion World Store",
     image:
       "https://static.vecteezy.com/system/resources/previews/036/061/700/non_2x/online-shop-logo-design-creative-mobile-phone-concept-food-delivery-social-media-vector.jpg",
     address: "ঢাকা সিটি, বাংলামোটর, গোলাপবাগ, ধানমন্ডি, বাংলাদেশ",
     phone: "123-456-7890",
+    description:
+      "Comfortable cotton t-shirt with modern design. Comfortable cotton t-shirt with modern design.Comfortable cotton t-shirt with modern design.",
     email: "shop1@example.com",
+    banner: [
+      {
+        image:
+          "https://img.freepik.com/free-vector/paper-style-podium-horizontal-banner_23-2150956911.jpg",
+      },
+      {
+        image:
+          "https://images.remotehub.com/d42c62669a7711eb91397e038280fee0/original_thumb/ec1eb042.jpg",
+      },
+      {
+        image:
+          "https://img.freepik.com/free-vector/paper-style-podium-horizontal-banner_23-2150956904.jpg",
+      },
+      {
+        image:
+          "https://img.freepik.com/free-psd/black-friday-super-sale-web-banner-template_106176-1672.jpg",
+      },
+    ],
     socialMedia: {
       facebook: "https://facebook.com/shop1",
       instagram: "https://instagram.com/shop1",
@@ -33,6 +53,125 @@ export const shopsData = [
         price: 2500,
         description: "Warm winter jacket with trendy design.",
         image: "https://example.com/jacket.jpg",
+      },
+      {
+        id: 4,
+        name: "Sweater",
+        price: 1500,
+        description: "Cozy sweater for winter.",
+        image: "https://example.com/sweater.jpg",
+      },
+      {
+        id: 5,
+        name: "Cap",
+        price: 300,
+        description: "Fashionable baseball cap.",
+        image: "https://example.com/cap.jpg",
+      },
+      {
+        id: 6,
+        name: "Sunglasses",
+        price: 700,
+        description: "Stylish sunglasses with UV protection.",
+        image: "https://example.com/sunglasses.jpg",
+      },
+      {
+        id: 7,
+        name: "Shorts",
+        price: 600,
+        description: "Comfortable summer shorts.",
+        image: "https://example.com/shorts.jpg",
+      },
+      {
+        id: 8,
+        name: "Boots",
+        price: 1800,
+        description: "Durable leather boots.",
+        image: "https://example.com/boots.jpg",
+      },
+      {
+        id: 9,
+        name: "Dress",
+        price: 2000,
+        description: "Elegant dress for formal occasions.",
+        image: "https://example.com/dress.jpg",
+      },
+      {
+        id: 10,
+        name: "Shirt",
+        price: 1200,
+        description: "Casual shirt in various colors.",
+        image: "https://example.com/shirt.jpg",
+      },
+      {
+        id: 11,
+        name: "Blazer",
+        price: 3500,
+        description: "Classy blazer for office wear.",
+        image: "https://example.com/blazer.jpg",
+      },
+      {
+        id: 12,
+        name: "Sweatpants",
+        price: 900,
+        description: "Comfy sweatpants for relaxing.",
+        image: "https://example.com/sweatpants.jpg",
+      },
+      {
+        id: 13,
+        name: "Hoodie",
+        price: 1400,
+        description: "Comfy hoodie for cold weather.",
+        image: "https://example.com/hoodie.jpg",
+      },
+      {
+        id: 14,
+        name: "Skirt",
+        price: 1100,
+        description: "Trendy skirt for any season.",
+        image: "https://example.com/skirt.jpg",
+      },
+      {
+        id: 15,
+        name: "Scarf",
+        price: 350,
+        description: "Stylish scarf for winter.",
+        image: "https://example.com/scarf.jpg",
+      },
+      {
+        id: 16,
+        name: "Gloves",
+        price: 400,
+        description: "Warm gloves for the winter season.",
+        image: "https://example.com/gloves.jpg",
+      },
+      {
+        id: 17,
+        name: "Belt",
+        price: 500,
+        description: "Leather belt with a modern design.",
+        image: "https://example.com/belt.jpg",
+      },
+      {
+        id: 18,
+        name: "Watch",
+        price: 2500,
+        description: "Classic watch for all occasions.",
+        image: "https://example.com/watch.jpg",
+      },
+      {
+        id: 19,
+        name: "Bag",
+        price: 1500,
+        description: "Trendy leather bag.",
+        image: "https://example.com/bag.jpg",
+      },
+      {
+        id: 20,
+        name: "Sweatshirt",
+        price: 1000,
+        description: "Cozy sweatshirt for casual wear.",
+        image: "https://example.com/sweatshirt.jpg",
       },
     ],
   },
@@ -295,6 +434,16 @@ export const shopsData = [
     address: "টাঙ্গাইল, কালিহাতী, মধুপুর, সখীপুর, বাংলাদেশ",
     phone: "901-234-5678",
     email: "shop9@example.com",
+    banner: [
+      {
+        image:
+          "https://img.freepik.com/free-vector/paper-style-podium-horizontal-banner_23-2150956911.jpg",
+      },
+      {
+        image:
+          "https://images.remotehub.com/d42c62669a7711eb91397e038280fee0/original_thumb/ec1eb042.jpg",
+      },
+    ],
     socialMedia: {
       facebook: "https://facebook.com/shop9",
       instagram: "https://instagram.com/shop9",

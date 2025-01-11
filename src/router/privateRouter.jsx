@@ -1,3 +1,4 @@
+import AdminDashboard from "../page/Admin/Dashboard/AdminDashboard";
 import Doctors from "../page/Admin/Heath/Doctors";
 import Hospital from "../page/Admin/Heath/Hospital";
 import AdminSideBar from "../page/Admin/SideBar/AdminSideBar";
@@ -9,6 +10,10 @@ const privateRouter = [
     path: "admin",
     element: <AdminSideBar />,
     children: [
+      {
+        path: "/admin/overview",
+        element: <AdminDashboard />,
+      },
       {
         path: "/admin/upzilla",
         element: <Upzilla />,

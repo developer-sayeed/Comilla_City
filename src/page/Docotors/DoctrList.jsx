@@ -162,7 +162,7 @@ const DoctrList = () => {
                     onClose={() => setIsModalOpen(false)}
                   >
                     {selectedDoctor ? (
-                      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
+                      <div className="bg-white p-6 rounded-lg max-w-md mx-auto">
                         <h2 className="text-2xl text-center font-bold mb-4">
                           {selectedDoctor.name}
                         </h2>
