@@ -14,7 +14,7 @@ import { CiLogout } from "react-icons/ci";
 
 import { Outlet, useLocation } from "react-router";
 
-import DashboardMenuItem from "../../../components/DashboardMenuItem/DAshboardMenuItem";
+import DashboardMenuItem from "../../../components/DashboardMenuItem/DashboardMenuItem";
 import { GoHomeFill, GoProjectSymlink } from "react-icons/go";
 import { PiStudentLight } from "react-icons/pi";
 import { FaFireExtinguisher, FaHospital } from "react-icons/fa";
