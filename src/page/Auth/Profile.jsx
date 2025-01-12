@@ -12,7 +12,7 @@ import { Outlet, Link } from "react-router-dom";
 
 const ProfilePage = () => {
   return (
-    <aside className="bg-white boxShadow rounded-md ">
+    <aside className="bg-white boxShadow rounded-md " id="update-profile">
       {/* Top Section with User Info */}
       <div className="bg-gray-100 p-4 flex items-center justify-between rounded-t-md">
         <div className="flex items-center gap-3">
@@ -40,7 +40,8 @@ const ProfilePage = () => {
             <div className="flex items-center gap-2 hover:bg-gray-50 p-2 rounded-md cursor-pointer">
               <FaRegUser className="text-xl text-gray-500" />
               <Link
-                to={"/me/update-profile"}
+                smooth
+                to={"/me/update-profile#updateProfile"}
                 className="text-lg font-medium text-gray-500"
               >
                 Update Profile
@@ -113,7 +114,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Outlet (Desktop Only) */}
-        <div className="mt-6 px-[20px] w-full sm:w-[80%]">
+        <div className=" mt-6 px-[20px] w-full sm:w-[80%] transition-all duration-500 ease-in-out">
           <Outlet />
         </div>
       </div>

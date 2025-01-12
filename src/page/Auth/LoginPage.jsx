@@ -12,19 +12,21 @@ const LoginPage = () => {
   const [active, setActive] = useState(false);
 
   return (
-    <main className="w-full h-auto sm:h-[100vh] bg-blue-500 flex items-center justify-center sm:p-0 p-6">
+    <main className="w-full h-auto sm:h-[110vh] bg-[#0FABCA] flex items-center justify-center sm:p-0 p-6">
       <form className="w-full sm:w-[40%] bg-white rounded-lg sm:py-6 sm:px-8 p-4 flex items-center justify-center flex-col gap-5">
-        <h3 className="text-[1.8rem] font-[700] text-gray-900">Sign in</h3>
+        <h3 className="text-[1.8rem] font-[700] text-gray-900 uppercase">
+          Login
+        </h3>
         <input
           type="email"
           placeholder="Email"
-          className="py-3 px-4 border focus:outline-blue-500 border-gray-300 mt-5 rounded-lg w-full"
+          className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 mt-5 rounded-lg w-full"
         />
         <div className="w-full relative">
           <input
             type={active ? "text" : "password"}
             placeholder="Password"
-            className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
+            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 rounded-lg w-full"
           />
           {active ? (
             <BsEyeSlash
@@ -38,14 +40,17 @@ const LoginPage = () => {
             />
           )}
         </div>
-        <a href="#" className="text-[1rem] text-blue-500 font-[500]">
+        <Link
+          to="/forgot-password"
+          className="text-[1rem] text-[#0FABCA] font-[500]"
+        >
           Forget password
-        </a>
+        </Link>
         <button
           type="submit"
-          className="w-full py-3 px-4 bg-blue-500 text-white border-none outline-none rounded-lg mt-3"
+          className="w-full py-3 px-4 bg-[#0FABCA] text-white border-none outline-none rounded-lg mt-3"
         >
-          Login
+          Login Your Account
         </button>
         <div className="flex items-center justify-center w-full gap-1">
           <span className="text-[1rem] text-gray-600 font-[500]">
@@ -54,7 +59,7 @@ const LoginPage = () => {
           <span>
             <Link
               to={"/register"}
-              className="text-[1rem] text-blue-500 font-[500]"
+              className="text-[1rem] text-[#0FABCA] font-[500]"
             >
               Signup
             </Link>

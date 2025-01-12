@@ -9,6 +9,8 @@ import MyShop from "../page/Auth/MyShop";
 import MyCafe from "../page/Auth/MyCafe";
 import Setting from "../page/Auth/Setting";
 import Notifaction from "../page/Auth/Notifaction";
+import RegisterPage from "../page/Auth/Register";
+import LostPassword from "../page/Auth/LostPassword";
 
 const flattenRoutes = (routes) => {
   return routes.flatMap((item) => {
@@ -48,6 +50,14 @@ const publicRouter = [
       {
         path: "/login",
         element: <LoginPage />,
+      },
+      {
+        path: "/register",
+        element: <RegisterPage />,
+      },
+      {
+        path: "/forgot-password",
+        element: <LostPassword />,
       },
       {
         path: "/me",

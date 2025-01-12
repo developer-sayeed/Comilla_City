@@ -11,49 +11,56 @@ const RegisterPage = () => {
   const [active, setActive] = useState(false);
 
   return (
-    <main className="w-full min-h-[100vh] h-auto bg-blue-500 flex items-center justify-center sm:py-12 p-6">
+    <main className="w-full min-h-[100vh] h-auto bg-[#0FABCA] flex items-center justify-center sm:py-12 p-6">
       <form className="w-full sm:w-[900px] sm:max-w-[1000px]: bg-white rounded-lg sm:py-6 sm:px-8 p-4 flex flex-col gap-5">
-        <h3 className="text-[1.8rem] font-[700] text-gray-900 text-center">
-          Sign Up
+        <h3 className="text-[1.8rem] font-[700] text-gray-900 text-center uppercase">
+          Create a New Account
         </h3>
         <div className="flex items-center justify-between gap-4 w-full mt-5 sm:flex-row flex-col">
           <input
-            type="email"
-            placeholder="First name"
-            className="py-3 px-4 border focus:outline-blue-500 border-gray-300  rounded-lg w-full"
+            type="text"
+            placeholder="Full name"
+            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
           />
           <input
-            type="email"
-            placeholder="Last name"
-            className="py-3 px-4 border focus:outline-blue-500 border-gray-300  rounded-lg w-full"
+            type="text"
+            placeholder="username"
+            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
+          />
+        </div>
+
+        <div className="flex items-center justify-between gap-4 w-full sm:flex-row flex-col">
+          <input
+            type="text"
+            placeholder="Phone number"
+            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
+          />
+          <input
+            type="text"
+            placeholder="Occupation"
+            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
           />
         </div>
 
         <div className="flex items-center justify-between gap-4 w-full sm:flex-row flex-col">
           <input
             type="email"
-            placeholder="Phone number"
-            className="py-3 px-4 border focus:outline-blue-500 border-gray-300  rounded-lg w-full"
+            placeholder="Email"
+            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
           />
           <input
             type="email"
-            placeholder="Zip code"
-            className="py-3 px-4 border focus:outline-blue-500 border-gray-300  rounded-lg w-full"
+            placeholder="Confirm Email"
+            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
           />
         </div>
-
-        <input
-          type="email"
-          placeholder="Email"
-          className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
-        />
 
         <div className="w-full flex items-center gap-4 justify-between sm:flex-row flex-col">
           <div className="w-full relative">
             <input
               type={active ? "text" : "password"}
               placeholder="Password"
-              className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
+              className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 rounded-lg w-full"
             />
             {active ? (
               <BsEyeSlash
@@ -71,7 +78,7 @@ const RegisterPage = () => {
             <input
               type={active ? "text" : "password"}
               placeholder="Confirm password"
-              className="py-3 px-4 border focus:outline-blue-500 border-gray-300 rounded-lg w-full"
+              className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 rounded-lg w-full"
             />
             {active ? (
               <BsEyeSlash
@@ -91,11 +98,11 @@ const RegisterPage = () => {
           <input type="checkbox" name="checkbox" id="checkbox" />{" "}
           <label htmlFor="checkbox" className="cursor-pointer">
             By clicking, I agree to signup{" "}
-            <Link href="#" className=" text-blue-500">
+            <Link href="#" className=" text-[#0FABCA]">
               Terms of Use
             </Link>{" "}
             and{" "}
-            <Link href="#" className=" text-blue-500">
+            <Link href="#" className=" text-[#0FABCA]">
               Privacy Policy
             </Link>
           </label>
@@ -104,21 +111,21 @@ const RegisterPage = () => {
         <div className="w-full flex items-center justify-center">
           <button
             type="submit"
-            className="w-full sm:w-[50%] py-3 px-4 bg-blue-500 text-white border-none outline-none rounded-lg mt-3"
+            className="rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer w-full sm:w-[50%]"
           >
-            Sign up
+            Create a New Account
           </button>
         </div>
-        <div className="flex items-center justify-center w-full gap-1">
+        <div className="flex items-center justify-center w-full gap-1 flex-col sm:flex-row ">
           <span className="text-[1rem] text-gray-600 font-[500]">
             have already an account?{" "}
           </span>
           <span>
             <Link
               to={"/login"}
-              className="text-[1rem] text-blue-500 font-[500]"
+              className="text-[1rem] text-[#0FABCA] font-[500]"
             >
-              Signin
+              Login Your Account
             </Link>
           </span>
         </div>

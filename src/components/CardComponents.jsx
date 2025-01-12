@@ -14,7 +14,7 @@ const CardComponents = () => {
                 <li key={item.name}>
                   <Link
                     to={item.href}
-                    className="w-full h-36 bg-slate-100 text-center flex flex-col justify-center items-center shadow-md rounded-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl sm:py-4"
+                    className="w-full h-36 bg-white text-center flex flex-col justify-center items-center shadow-md rounded-md overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl sm:py-4"
                   >
                     <img
                       src={item.icon}

@@ -5,10 +5,11 @@ import { Link, useLocation } from "react-router-dom";
 function FooterMenu() {
   // Get current location
   const location = useLocation();
+  const isLogin = true;
 
   // Determine active menu based on route
   const getActiveClass = (path) =>
-    location.pathname === path ? "text-blue-600" : "text-gray-600";
+    location.pathname === path ? "text-[#0FABCA]" : "text-gray-600";
 
   return (
     <div className="footer-menu fixed bottom-0 left-0 w-full bg-slate-100 shadow-lg z-50 sm:hidden">
@@ -34,17 +35,28 @@ function FooterMenu() {
           <FaPhoneAlt className="text-2xl" />
           <div className="text-xs mt-1">Contact</div>
         </Link>
-
         {/* Profile */}
-        <Link
-          to="/me"
-          className={`flex flex-col justify-center items-center hover:text-blue-500 ${getActiveClass(
-            "/me"
-          )}`}
-        >
-          <FaUser className="text-2xl" />
-          <div className="text-xs mt-1">Profile</div>
-        </Link>
+        {isLogin ? (
+          <Link
+            to="/me"
+            className={`flex flex-col justify-center items-center hover:text-blue-500 ${getActiveClass(
+              "/me"
+            )}`}
+          >
+            <FaUser className="text-2xl" />
+            <div className="text-xs mt-1">Profile</div>
+          </Link>
+        ) : (
+          <Link
+            to="/login"
+            className={`flex flex-col justify-center items-center hover:text-blue-500 ${getActiveClass(
+              "/login"
+            )}`}
+          >
+            <FaUser className="text-2xl" />
+            <div className="text-xs mt-1">Account</div>
+          </Link>
+        )}
       </div>
     </div>
   );

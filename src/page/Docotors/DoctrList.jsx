@@ -11,6 +11,7 @@ import banner2 from "../../assets/banner/banner-2.jpg";
 import banner3 from "../../assets/banner/banner-3.jpg";
 import banner4 from "../../assets/banner/banner-4.jpg";
 import Modal from "../../components/Modal/Modal";
+import SEO from "../../components/RecatHelmate/SEO";
 const DoctrList = () => {
   const bannerImages = [
     {
@@ -56,6 +57,11 @@ const DoctrList = () => {
   };
   return (
     <>
+      <SEO
+        title={"Comilla city All Doctor List"}
+        description={"All Doctors"}
+        keywords={"doctor, comilla doctor, best doctor comilla, "}
+      />
       <BannerSlider bannerImages={bannerImages} />
       <CustomHeading tittel={"ডাক্তারদের তালিকা"} />
 

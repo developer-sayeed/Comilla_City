@@ -32,7 +32,7 @@ const ShoppingCrad = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
         {/* Left Side - Shop Info */}
-        <div className="bg-white  p-6 rounded-lg shadow-lg sticky top-0 ">
+        <div className="bg-white  p-6 rounded-lg shadow-lg sticky top-10 ">
           {/* Shop Logo or Image */}
           <div className="flex justify-center">
             <img
