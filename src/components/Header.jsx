@@ -1,15 +1,33 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logo/dijital union logo.png";
 import { categoriesMenu } from "./Categories_Menu/CategoriesMenu";
 import { CiMenuFries } from "react-icons/ci";
 function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  // Toggle Menu Function
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const isLogin = true;
 
-  const isLogin = false;
+  const location = useLocation(); // Get the current location
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
+  // Toggle Menu Function
+  // const toggleMenu = () => setIsOpen(!isOpen);
+  // Close sidebar when clicking outside
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target) &&
+        mobileSidebarOpen
+      ) {
+        setMobileSidebarOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [mobileSidebarOpen]);
 
   const primarymenu = [
     {
@@ -63,11 +81,13 @@ function Header() {
       {isLogin && (
         <div className={`items-center gap-[10px] sm:flex hidden`}>
           <div className="flex items-center gap-[10px]">
-            <img
-              src="https://img.freepik.com/free-photo/indoor-picture-cheerful-handsome-young-man-having-folded-hands-looking-directly-smiling-sincerely-wearing-casual-clothes_176532-10257.jpg?"
-              alt="avatar"
-              className="w-[30px] h-[30px] cursor-pointer rounded-full object-cover"
-            />
+            <div className="relative">
+              <img
+                src="https://img.freepik.com/free-photo/portrait-young-man-with-green-hoodie_23-2148514952.jpg"
+                alt="Profile Picture"
+                className="w-[50px] object-cover h-[50px] rounded-full border-2 border-[#0FABCA] shadow-lg"
+              />
+            </div>
             <Link
               to={"/me"}
               className={` text-[0.9rem] text-gray-800 font-[500]`}
@@ -76,7 +96,7 @@ function Header() {
             </Link>
           </div>
           <CiMenuFries
-            className="text-[1.8rem] mr-1 text-[#424242]c cursor-pointer lg:hidden flex"
+            className="text-[1.8rem] mr-1 text-[#424242] cursor-pointer lg:hidden flex"
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
           />
         </div>
@@ -107,6 +127,7 @@ function Header() {
 
       {/* Off canvus */}
       <div
+        ref={sidebarRef}
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-all duration-300 ease-in-out ${
           mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } z-50 overflow-y-auto`}
@@ -116,21 +137,29 @@ function Header() {
             📋 Categories
           </h2>
           <ul className="space-y-4">
-            {categoriesMenu.map((item) => (
-              <li key={item.href} className="group">
-                <Link
-                  to={item.href}
-                  className="
-            block text-gray-700 text-lg font-semibold
-            group-hover:text-white group-hover:bg-[#0FABCA]
-            group-hover:pl-4 transition-all duration-300
-             p-2 shadow-sm border-b-[1px] border-[#eee]"
-                  onClick={toggleMenu}
-                >
-                  {item.name}
-                </Link>
-              </li>
-            ))}
+            {categoriesMenu.map((item) => {
+              // Check if the current item is active
+              const isActive = location.pathname === item.href;
+
+              return (
+                <li key={item.href} className="group">
+                  <Link
+                    to={item.href}
+                    className={`
+                block text-lg font-semibold p-2 shadow-sm border-b-[1px] border-[#eee] transition-all duration-300
+                ${
+                  isActive
+                    ? "text-white bg-[#0FABCA]" // Active link styles
+                    : "text-gray-700 group-hover:text-white group-hover:bg-[#0FABCA]"
+                }
+              `}
+                    onClick={() => setMobileSidebarOpen(false)} // Close sidebar on link click
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

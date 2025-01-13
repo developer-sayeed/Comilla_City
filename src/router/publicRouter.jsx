@@ -11,6 +11,7 @@ import Setting from "../page/Auth/Setting";
 import Notifaction from "../page/Auth/Notifaction";
 import RegisterPage from "../page/Auth/Register";
 import LostPassword from "../page/Auth/LostPassword";
+import OverView from "../page/Auth/OverView";
 
 const flattenRoutes = (routes) => {
   return routes.flatMap((item) => {
@@ -63,6 +64,10 @@ const publicRouter = [
         path: "/me",
         element: <ProfilePage />,
         children: [
+          {
+            path: "/me",
+            element: <OverView />,
+          },
           {
             path: "update-profile",
             element: <UpdateProfile />,

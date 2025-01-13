@@ -105,6 +105,12 @@ const ShoppingCrad = () => {
               >
                 {/* Product Image */}
                 <div className="relative">
+                  {/* Discount Tag */}
+
+                  <div className="absolute top-2 left-2 bg-[#0FABCA] text-white text-xs font-semibold py-1 px-2 rounded-sm shadow-lg">
+                    New
+                  </div>
+
                   <img
                     alt="product/image"
                     src={
@@ -156,7 +162,7 @@ const ShoppingCrad = () => {
                         Price:-
                       </span>
                       <p className="text-[1.150rem] font-semibold text-[#0FABCA]">
-                        ৳ 52.00
+                        ৳ {product.price}
                       </p>
                     </div>
 

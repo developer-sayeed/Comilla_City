@@ -3,26 +3,36 @@ import { useNavigate } from "react-router-dom";
 import {
   FaUser,
   FaEnvelope,
-  FaMapMarkerAlt,
+  FaPhoneAlt,
+  FaUniversity,
   FaBriefcase,
   FaGenderless,
-  FaPhoneAlt,
+  FaMapMarkerAlt,
   FaLock,
   FaEye,
   FaEyeSlash,
+  FaBuilding,
+  FaTint,
+  FaCalendarAlt,
+  FaCity,
 } from "react-icons/fa";
 
 function UpdateProfile() {
   // State to store user profile data
   const [userData, setUserData] = useState({
     username: "",
-    name: "",
+    fullName: "",
     email: "",
     phone: "",
-    profilePicture: "",
+    education: "",
     occupation: "",
     gender: "",
-    location: "",
+    bloodGroup: "",
+    dob: "",
+    city: "",
+    thana: "",
+    fullAddress: "",
+    profilePicture: "",
     password: "",
   });
 
@@ -70,13 +80,18 @@ function UpdateProfile() {
   useEffect(() => {
     setUserData({
       username: "abusayeed0325", // Example username
-      name: "Abu Sayeed Riday",
+      fullName: "Abu Sayeed Riday",
       email: "riday@example.com",
       phone: "0123456789",
-      profilePicture: "https://example.com/profile.jpg",
+      education: "Bachelor's in Computer Science",
       occupation: "Software Developer",
       gender: "Male",
-      location: "Dhaka, Bangladesh",
+      bloodGroup: "O+",
+      dob: "1995-12-25",
+      city: "Dhaka",
+      thana: "Uttara",
+      fullAddress: "Uttara, Dhaka, Bangladesh",
+      profilePicture: "https://example.com/profile.jpg",
       password: "123456", // Default password (can be kept empty or null)
     });
   }, []);
@@ -87,55 +102,40 @@ function UpdateProfile() {
   };
 
   return (
-    <div className="container mx-auto  px-4 ">
+    <div className="container mx-auto px-4">
       <h2 className="text-xl font-bold mb-4">Update Your Profile</h2>
       <form onSubmit={handleSubmit} className="space-y-4" id="updateProfile">
         {/* Full-width inputs on mobile and two-column layout on larger screens */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Username (Disabled) */}
+          {/* Full Name */}
           <div className="relative">
             <input
               type="text"
-              name="username"
-              value={userData.username}
+              name="fullName"
+              value={userData.fullName}
               onChange={handleInputChange}
-              className=" disabled:opacity-75 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:border-[#3B9DF8] focus:ring-[#3B9DF8] bg-gray-200"
-              placeholder="Enter your username"
-              disabled
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:border-[#3B9DF8] focus:ring-[#3B9DF8] text-gray-700"
+              placeholder="Enter your full name"
+              required
             />
             <FaUser className="absolute left-3 top-3 text-gray-400" />
           </div>
 
-          {/* Email (Disabled) */}
+          {/* Email Address */}
           <div className="relative">
             <input
               type="email"
               name="email"
               value={userData.email}
               onChange={handleInputChange}
-              className=" disabled:opacity-75 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:border-[#3B9DF8] focus:ring-[#3B9DF8] bg-gray-200"
-              placeholder="Enter your email"
-              disabled
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:border-[#3B9DF8] focus:ring-[#3B9DF8] text-gray-700"
+              placeholder="Enter your email address"
               required
             />
             <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
           </div>
 
-          {/* Name */}
-          <div className="relative">
-            <input
-              type="text"
-              name="name"
-              value={userData.name}
-              onChange={handleInputChange}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:border-[#3B9DF8] focus:ring-[#3B9DF8] text-gray-700"
-              placeholder="Enter your name"
-              required
-            />
-            <FaUser className="absolute left-3 top-3 text-gray-400" />
-          </div>
-
-          {/* Phone */}
+          {/* Phone Number */}
           <div className="relative">
             <input
               type="text"
@@ -147,6 +147,20 @@ function UpdateProfile() {
               required
             />
             <FaPhoneAlt className="absolute left-3 top-3 text-gray-400" />
+          </div>
+
+          {/* Education */}
+          <div className="relative">
+            <input
+              type="text"
+              name="education"
+              value={userData.education}
+              onChange={handleInputChange}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:border-[#3B9DF8] focus:ring-[#3B9DF8] text-gray-700"
+              placeholder="Enter your education"
+              required
+            />
+            <FaUniversity className="absolute left-3 top-3 text-gray-400" />
           </div>
 
           {/* Occupation */}
@@ -180,18 +194,81 @@ function UpdateProfile() {
             <FaGenderless className="absolute left-3 top-3 text-gray-400" />
           </div>
 
-          {/* Location */}
+          {/* Blood Group */}
+          <div className="relative">
+            <select
+              name="bloodGroup"
+              value={userData.bloodGroup}
+              onChange={handleInputChange}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:border-[#3B9DF8] focus:ring-[#3B9DF8] text-gray-700"
+              required
+            >
+              <option value="">Select your blood group</option>
+              <option value="A+">A+</option>
+              <option value="B+">B+</option>
+              <option value="O+">O+</option>
+              <option value="AB+">AB+</option>
+              <option value="O-">O-</option>
+              <option value="A-">A-</option>
+              <option value="B-">B-</option>
+              <option value="AB-">AB-</option>
+            </select>
+            <FaTint className="absolute left-3 top-3 text-gray-400" />
+          </div>
+
+          {/* Date of Birth */}
+          <div className="relative">
+            <input
+              type="date"
+              name="dob"
+              value={userData.dob}
+              onChange={handleInputChange}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:border-[#3B9DF8] focus:ring-[#3B9DF8] text-gray-700"
+              required
+            />
+            <FaCalendarAlt className="absolute left-3 top-3 text-gray-400" />
+          </div>
+
+          {/* City */}
           <div className="relative">
             <input
               type="text"
-              name="location"
-              value={userData.location}
+              name="city"
+              value={userData.city}
               onChange={handleInputChange}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:border-[#3B9DF8] focus:ring-[#3B9DF8] text-gray-700"
-              placeholder="Enter your location"
+              placeholder="Enter your city"
               required
             />
             <FaMapMarkerAlt className="absolute left-3 top-3 text-gray-400" />
+          </div>
+
+          {/* Thana */}
+          <div className="relative">
+            <input
+              type="text"
+              name="thana"
+              value={userData.thana}
+              onChange={handleInputChange}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:border-[#3B9DF8] focus:ring-[#3B9DF8] text-gray-700"
+              placeholder="Enter your thana"
+              required
+            />
+            <FaCity className="absolute left-3 top-3 text-gray-400" />
+          </div>
+
+          {/* Full Address */}
+          <div className="relative">
+            <input
+              type="text"
+              name="fullAddress"
+              value={userData.fullAddress}
+              onChange={handleInputChange}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:border-[#3B9DF8] focus:ring-[#3B9DF8] text-gray-700"
+              placeholder="Enter your full address"
+              required
+            />
+            <FaBuilding className="absolute left-3 top-3 text-gray-400" />
           </div>
 
           {/* Password */}
