@@ -3,8 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logo/dijital union logo.png";
 import { categoriesMenu } from "./Categories_Menu/CategoriesMenu";
 import { CiMenuFries } from "react-icons/ci";
+import { useSelector } from "react-redux";
 function Header() {
-  const isLogin = true;
+  const { user } = useSelector((state) => state.auth);
 
   const location = useLocation(); // Get the current location
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -78,12 +79,16 @@ function Header() {
       </ul>
 
       {/* Login User Avater */}
-      {isLogin && (
+      {user && (
         <div className={`items-center gap-[10px] sm:flex hidden`}>
           <div className="flex items-center gap-[10px]">
             <div className="relative">
               <img
-                src="https://img.freepik.com/free-photo/portrait-young-man-with-green-hoodie_23-2148514952.jpg"
+                src={
+                  user?.user?.photo
+                    ? user.user.photo
+                    : "https://img.freepik.com/free-photo/portrait-young-man-with-green-hoodie_23-2148514952.jpg"
+                }
                 alt="Profile Picture"
                 className="w-[50px] object-cover h-[50px] rounded-full border-2 border-[#0FABCA] shadow-lg"
               />
@@ -92,7 +97,7 @@ function Header() {
               to={"/me"}
               className={` text-[0.9rem] text-gray-800 font-[500]`}
             >
-              Abu Sayeed riday
+              {user?.user?.name}
             </Link>
           </div>
           <CiMenuFries
@@ -103,7 +108,7 @@ function Header() {
       )}
 
       {/* Logout User Button */}
-      {!isLogin && (
+      {!user && (
         <div className="items-center gap-[10px] flex">
           <Link
             to={"/login"}

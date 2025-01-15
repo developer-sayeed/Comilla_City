@@ -1,42 +1,96 @@
-import React, { useState } from "react";
-
-// icons
+import React, { useEffect, useState } from "react";
 import { FaFacebook } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
-
-// react router dom
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createToast } from "../../utils/Toastify";
+import { setMessageEmpty } from "../../features/auth/authSlice";
+import { loginUser } from "../../features/auth/authSliceApi";
 
 const LoginPage = () => {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(false); // Password visibility toggle state
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user, error, message } = useSelector((state) => state.auth);
+
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (e) => {
+    setInput((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleUserLogin = (e) => {
+    e.preventDefault();
+    if (!input.password || !input.email) {
+      createToast("All Fields are required", "warn"); // If fields are empty, show warning
+    } else {
+      dispatch(loginUser(input)); // Dispatch login action
+    }
+  };
+
+  useEffect(() => {
+    // Error handling
+    if (error) {
+      createToast(error, "error");
+      dispatch(setMessageEmpty()); // Clear error message after showing toast
+    } else if (message) {
+      createToast(message, "success");
+      dispatch(setMessageEmpty()); // Clear success message after showing toast
+    }
+
+    // Redirect after login success
+    if (user) {
+      if (user.isAdmin) {
+        navigate("/admin/overview", { replace: true }); // Redirect to admin dashboard if admin
+      } else {
+        navigate("/me", { replace: true }); // Redirect to user dashboard if normal user
+      }
+    }
+  }, [error, message, dispatch, user, navigate]);
 
   return (
     <main className="w-full h-auto sm:h-[110vh] bg-[#0FABCA] flex items-center justify-center sm:p-0 p-6">
-      <form className="w-full sm:w-[40%] bg-white rounded-lg sm:py-6 sm:px-8 p-4 flex items-center justify-center flex-col gap-5">
+      <form
+        onSubmit={handleUserLogin}
+        className="w-full sm:w-[40%] bg-white rounded-lg sm:py-6 sm:px-8 p-4 flex items-center justify-center flex-col gap-5"
+      >
         <h3 className="text-[1.8rem] font-[700] text-gray-900 uppercase">
           Login
         </h3>
         <input
           type="email"
           placeholder="Email"
+          name="email"
+          value={input.email}
+          onChange={handleInputChange}
           className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 mt-5 rounded-lg w-full"
         />
         <div className="w-full relative">
           <input
             type={active ? "text" : "password"}
             placeholder="Password"
+            name="password"
+            value={input.password}
+            onChange={handleInputChange}
             className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 rounded-lg w-full"
           />
           {active ? (
             <BsEyeSlash
               className=" absolute top-[30%] right-[5%] text-[1.2rem] text-gray-500 cursor-pointer"
-              onClick={() => setActive(false)}
+              onClick={() => setActive(false)} // Hide password
             />
           ) : (
             <BsEye
               className=" absolute top-[30%] right-[5%] text-[1.2rem] text-gray-500 cursor-pointer"
-              onClick={() => setActive(true)}
+              onClick={() => setActive(true)} // Show password
             />
           )}
         </div>
@@ -65,21 +119,6 @@ const LoginPage = () => {
             </Link>
           </span>
         </div>
-
-        <div className="w-full my-1 flex items-center gap-3">
-          <hr className="w-[45%] bg-gray-500 h-[2px]" />
-          <p>or</p>
-          <hr className="w-[45%] bg-gray-500 h-[2px]" />
-        </div>
-
-        <button className="flex items-center justify-center py-2.5 px-4 gap-4 bg-[#4267b2] rounded-lg w-full text-[1rem] font-[500] text-white">
-          <FaFacebook className="text-[1.8rem] text-white" />
-          Login with Facebook
-        </button>
-        <button className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
-          <FcGoogle className="text-[2rem]" />
-          Login with Google
-        </button>
       </form>
     </main>
   );

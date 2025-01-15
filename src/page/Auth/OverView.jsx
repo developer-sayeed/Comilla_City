@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getLoggedInUser, logOutUser } from "../../features/auth/authSliceApi";
+import UseAuthUserState from "../../hooks/UseAuthUserState";
 
 const OverView = () => {
+  const dispatch = useDispatch();
+  // Handle Logout
+  const handleUserLogout = (e) => {
+    e.preventDefault();
+    dispatch(logOutUser());
+  };
+
+  const { user } = UseAuthUserState(); // Get user from custom hook
+
+  const { error } = useSelector((state) => state.auth);
+
+  // useeffects
+  useEffect(() => {
+    // If user is not available and it's not loading, dispatch getLoggedInUser
+    if (!user) {
+      dispatch(getLoggedInUser());
+    }
+  }, [user, dispatch]);
+
   return (
     <div className="min-h-screen bg-gray-50  sm:py-0 ">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8">
@@ -30,7 +52,7 @@ const OverView = () => {
             <div className="flex justify-between flex-col">
               <span className="text-gray-700 font-semibold">Full Name</span>
               <span className="text-gray-600 capitalize">
-                Md abu sayeed riday
+                {user?.user?.name}
               </span>
             </div>
             {/* Email */}
@@ -39,41 +61,41 @@ const OverView = () => {
                 Email Address
               </span>
               <span className="text-gray-600 lowercase">
-                abusayeedriday@gmail.com
+                {user?.user?.email}
               </span>
             </div>
             {/* Phone */}
             <div className="flex justify-between flex-col">
               <span className="text-gray-700 font-semibold">Phone Number</span>
-              <span className="text-gray-600">+966-571858601</span>
+              <span className="text-gray-600">{user?.user?.phone}</span>
             </div>
             {/* Education */}
             <div className="flex justify-between flex-col">
               <span className="text-gray-700 font-semibold">Education</span>
               <span className="text-gray-600">
-                Bachelor's in Computer Science
+                {user?.user?.education || ""}
               </span>
             </div>
             {/* Occupation */}
             <div className="flex justify-between flex-col">
               <span className="text-gray-700 font-semibold">Occupation</span>
-              <span className="text-gray-600">Software Developer</span>
+              <span className="text-gray-600">{user?.user?.occpation}</span>
             </div>
             {/* Gender */}
             <div className="flex justify-between flex-col">
               <span className="text-gray-700 font-semibold">Gender</span>
-              <span className="text-gray-600">Male</span>
+              <span className="text-gray-600">{user?.user?.gender}</span>
             </div>
             {/* Blood Group */}
             <div className="flex justify-between flex-col">
               <span className="text-gray-700 font-semibold">Blood Group</span>
-              <span className="text-gray-600">O+</span>
+              <span className="text-gray-600">{user?.user?.blood}</span>
             </div>
             {/* Date of Birth */}
             <div className="flex justify-between flex-col">
               <span className="text-gray-700 font-semibold">Date of Birth</span>
               <span className="text-gray-600 capitalize">
-                december 30, 1996
+                {user?.user?.dob}
               </span>
             </div>
           </div>
@@ -93,13 +115,15 @@ const OverView = () => {
             {/* Thana */}
             <div className="flex justify-between flex-col">
               <span className="text-gray-700 font-semibold">Thana</span>
-              <span className="text-gray-600 capitalize">Adarsha Sadar</span>
+              <span className="text-gray-600 capitalize">
+                {user?.user?.thana}
+              </span>
             </div>
             {/* Full Address */}
             <div className="flex justify-between flex-col sm:col-span-2">
               <span className="text-gray-700 font-semibold">Full Address</span>
               <span className="text-gray-600 capitalize">
-                1234 Elm St, Springfield, IL
+                {user?.user?.address}
               </span>
             </div>
           </div>
@@ -121,7 +145,10 @@ const OverView = () => {
             {/* Logout Button */}
             <div className="flex justify-between ">
               <span className="text-gray-700 font-semibold">Logout</span>
-              <button className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300">
+              <button
+                className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300"
+                onClick={handleUserLogout}
+              >
                 Logout
               </button>
             </div>

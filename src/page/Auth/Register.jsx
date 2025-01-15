@@ -2,17 +2,111 @@
 import { FaFacebook } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
 
 // react router dom
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createToast } from "../../utils/Toastify";
+import { createUser } from "../../features/auth/authSliceApi";
+import { setMessageEmpty } from "../../features/auth/authSlice";
 
 const RegisterPage = () => {
+  // Show hide password
   const [active, setActive] = useState(false);
+  // dispatch events
+  const dispatch = useDispatch();
+  // Auth handler
+  const { error, message } = useSelector((state) => state.auth);
 
+  const [input, SetInput] = useState({
+    name: "",
+    username: "",
+    occupation: "",
+    email: "",
+    phone: "",
+    cemail: "",
+    password: "",
+    cpassword: "",
+  });
+  // Handle Input Chnage
+
+  const handleInputChange = (e) => {
+    SetInput((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleUserRegister = (e) => {
+    e.preventDefault();
+
+    if (
+      !input.name ||
+      !input.username ||
+      !input.phone ||
+      !input.email ||
+      !input.cemail ||
+      !input.occupation ||
+      !input.password ||
+      !input.cpassword
+    ) {
+      createToast("All Fields Required", "warning");
+    } else if (input.password !== input.cpassword) {
+      createToast("Password Doesn't Match", "warn");
+    } else if (input.email !== input.cemail) {
+      createToast("Email Doesn't Match", "warn");
+    } else {
+      // Dispatch createUser action
+      dispatch(
+        createUser({
+          name: input.name,
+          username: input.username,
+          phone: input.phone,
+          occupation: input.occupation,
+          email: input.email,
+          password: input.password,
+        })
+      )
+        .then((result) => {
+          // Check if registration was successful
+          if (result.type === "createUser/fulfilled") {
+            // Reset form input only on success
+            createToast("Registration Successful!", "success");
+            SetInput({
+              name: "",
+              username: "",
+              phone: "",
+              occupation: "",
+              email: "",
+              cemail: "",
+              password: "",
+              cpassword: "",
+            });
+          }
+        })
+        .catch((error) => {
+          createToast("Registration Failed: " + error.message, "error");
+        });
+    }
+  };
+
+  // useEffect
+  useEffect(() => {
+    if (error) {
+      createToast(error, "error");
+      dispatch(setMessageEmpty());
+    } else if (message) {
+      createToast(message, "success");
+      dispatch(setMessageEmpty());
+    }
+  }, [error, message]);
   return (
     <main className="w-full min-h-[100vh] h-auto bg-[#0FABCA] flex items-center justify-center sm:py-12 p-6">
-      <form className="w-full sm:w-[900px] sm:max-w-[1000px]: bg-white rounded-lg sm:py-6 sm:px-8 p-4 flex flex-col gap-5">
+      <form
+        onSubmit={handleUserRegister}
+        className="w-full sm:w-[900px] sm:max-w-[1000px]: bg-white rounded-lg sm:py-6 sm:px-8 p-4 flex flex-col gap-5"
+      >
         <h3 className="text-[1.8rem] font-[700] text-gray-900 text-center uppercase">
           Create a New Account
         </h3>
@@ -20,11 +114,17 @@ const RegisterPage = () => {
           <input
             type="text"
             placeholder="Full name"
+            name="name"
+            value={input.name}
+            onChange={handleInputChange}
             className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
           />
           <input
             type="text"
             placeholder="username"
+            name="username"
+            value={input.username}
+            onChange={handleInputChange}
             className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
           />
         </div>
@@ -33,11 +133,17 @@ const RegisterPage = () => {
           <input
             type="text"
             placeholder="Phone number"
+            name="phone"
+            value={input.phone}
+            onChange={handleInputChange}
             className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
           />
           <input
             type="text"
             placeholder="Occupation"
+            name="occupation"
+            value={input.occupation}
+            onChange={handleInputChange}
             className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
           />
         </div>
@@ -46,11 +152,17 @@ const RegisterPage = () => {
           <input
             type="email"
             placeholder="Email"
+            name="email"
+            value={input.email}
+            onChange={handleInputChange}
             className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
           />
           <input
             type="email"
             placeholder="Confirm Email"
+            name="cemail"
+            value={input.cemail}
+            onChange={handleInputChange}
             className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
           />
         </div>
@@ -60,6 +172,9 @@ const RegisterPage = () => {
             <input
               type={active ? "text" : "password"}
               placeholder="Password"
+              name="password"
+              value={input.password}
+              onChange={handleInputChange}
               className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 rounded-lg w-full"
             />
             {active ? (
@@ -78,6 +193,9 @@ const RegisterPage = () => {
             <input
               type={active ? "text" : "password"}
               placeholder="Confirm password"
+              name="cpassword"
+              value={input.cpassword}
+              onChange={handleInputChange}
               className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 rounded-lg w-full"
             />
             {active ? (
@@ -130,7 +248,7 @@ const RegisterPage = () => {
           </span>
         </div>
 
-        <div className="w-full my-1 flex items-center justify-center gap-3">
+        {/* <div className="w-full my-1 flex items-center justify-center gap-3">
           <hr className="w-[45%] bg-gray-400 h-[2px]" />
           <p>or</p>
           <hr className="w-[45%] bg-gray-400 h-[2px]" />
@@ -145,7 +263,7 @@ const RegisterPage = () => {
             <FcGoogle className="text-[2rem]" />
             Signup with Google
           </button>
-        </div>
+        </div> */}
       </form>
     </main>
   );

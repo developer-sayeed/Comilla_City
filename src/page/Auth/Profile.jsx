@@ -5,6 +5,8 @@ import user from "../../assets/men.png";
 import { IoIosRestaurant } from "react-icons/io";
 import { FaRegUser, FaRegUserCircle } from "react-icons/fa";
 import { Outlet, Link, useLocation } from "react-router-dom";
+import UseAuthUserState from "../../hooks/UseAuthUserState";
+import { formatDate } from "../../hooks/FormateDate";
 
 const ProfilePage = () => {
   const menuItems = [
@@ -19,6 +21,7 @@ const ProfilePage = () => {
     { icon: IoCafeOutline, name: "My Cafe", path: "/me/my-cafe" },
     { icon: IoSettingsOutline, name: "Setting", path: "/me/setting" },
   ];
+  const { user } = UseAuthUserState();
   const location = useLocation();
   return (
     <aside className="bg-white boxShadow rounded-md " id="update-profile">
@@ -33,10 +36,18 @@ const ProfilePage = () => {
         />
         <div className="text-center sm:text-left">
           <h2 className="sm:text-3xl text-2xl font-semibold text-gray-900 uppercase">
-            Abu Sayeed Riday
+            {user?.user?.name}
+
+            {user.user.isAdmin && (
+              <span className="lowercase">
+                ({user && user.user && user.user.isAdmin ? "Admin" : "user"})
+              </span>
+            )}
           </h2>
-          <p className="text-lg text-[#0FABCA]">@abusayeed0022</p>
-          <p className="text-sm text-gray-400">Joined on: January 1, 2022</p>
+          <p className="text-lg text-[#0FABCA]">@{user?.user?.username}</p>
+          <p className="text-sm text-gray-400">
+            Joined on: {formatDate(user?.user?.createdAt)}
+          </p>
         </div>
       </div>
 

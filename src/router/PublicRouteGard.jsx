@@ -1,13 +1,11 @@
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
-const PublicRouteGard = () => {
+const PublicRouteGuard = () => {
   const { user } = useSelector((state) => state.auth);
 
-  if (localStorage.getItem("user")) {
-    return user ? <Navigate to="/" /> : <Outlet />;
-  }
+  // Jodi user login na kore tahole sudhu Public Routes access korbe
   return <Outlet />;
 };
 
-export default PublicRouteGard;
+export default PublicRouteGuard;

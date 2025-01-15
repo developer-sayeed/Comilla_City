@@ -12,7 +12,7 @@ import { RiAccountCircleLine } from "react-icons/ri";
 
 import { CiLogout } from "react-icons/ci";
 
-import { Outlet, useLocation } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 
 import DashboardMenuItem from "../../../components/DashboardMenuItem/DashboardMenuItem";
 import { GoHomeFill, GoProjectSymlink } from "react-icons/go";
@@ -20,8 +20,18 @@ import { PiStudentLight } from "react-icons/pi";
 import { FaFireExtinguisher, FaHospital } from "react-icons/fa";
 import { MdDirectionsBike, MdOutlineHotel } from "react-icons/md";
 import { FaUserDoctor } from "react-icons/fa6";
+import UseAuthUserState from "../../../hooks/UseAuthUserState";
+import { useDispatch } from "react-redux";
+import { logOutUser } from "../../../features/auth/authSliceApi";
 
 const AdminSideBar = () => {
+  const { user } = UseAuthUserState();
+  const dispatch = useDispatch();
+  // Handle Logout
+  const handleUserLogout = (e) => {
+    e.preventDefault();
+    dispatch(logOutUser());
+  };
   // Separate state for each dropdown
   const [activeMenu, setActiveMenu] = useState(null); // Track active menu
   const location = useLocation(); // Get current route location
@@ -50,22 +60,27 @@ const AdminSideBar = () => {
         <div className="flex items-center gap-4">
           <IoNotificationsOutline className="text-[1.5rem] text-gray-500 cursor-pointer" />
           <div className="relative group">
-            <div className="flex items-center gap-[10px]">
-              <img
-                src="https://img.freepik.com/free-photo/indoor-picture-cheerful-handsome-young-man-having-folded-hands-looking-directly-smiling-sincerely-wearing-casual-clothes_176532-10257.jpg?t=st=1724478146~exp=1724481746~hmac=7de91a5b9271ecb4309974122ae6f47d71c01f7fff840c69755f781a03d9e340&w=996"
-                alt="avatar"
-                className="w-[30px] h-[30px] cursor-pointer rounded-full object-cover"
-              />
-              <h3 className="text-[0.9rem] text-gray-800 font-[500]">
-                Jhon Deo
-              </h3>
-            </div>
-            <ul className="absolute right-0 mt-2 w-[150px] bg-white shadow-lg rounded-md hidden group-hover:block">
+            <Link to="/me">
+              <div className="flex items-center gap-[10px]">
+                <img
+                  src="https://img.freepik.com/free-photo/indoor-picture-cheerful-handsome-young-man-having-folded-hands-looking-directly-smiling-sincerely-wearing-casual-clothes_176532-10257.jpg?t=st=1724478146~exp=1724481746~hmac=7de91a5b9271ecb4309974122ae6f47d71c01f7fff840c69755f781a03d9e340&w=996"
+                  alt="avatar"
+                  className="w-[30px] h-[30px] cursor-pointer rounded-full object-cover"
+                />
+                <h3 className="text-[0.9rem] text-gray-800 font-[500]">
+                  {user?.user?.name}
+                </h3>
+              </div>
+            </Link>
+            <ul className="absolute right-0  w-[150px] bg-white shadow-lg rounded-md hidden group-hover:block">
               <li className="flex items-center gap-2 p-2 hover:bg-gray-100 cursor-pointer">
                 <RiAccountCircleLine />
-                Profile
+                <Link to="/me">Profile</Link>
               </li>
-              <li className="flex items-center gap-2 p-2 text-red-500 hover:bg-gray-100 cursor-pointer">
+              <li
+                className="flex items-center gap-2 p-2 text-red-500 hover:bg-gray-100 cursor-pointer"
+                onClick={handleUserLogout}
+              >
                 <CiLogout />
                 Logout
               </li>

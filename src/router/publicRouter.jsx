@@ -3,15 +3,11 @@ import { categoriesMenu } from "../components/Categories_Menu/CategoriesMenu";
 import LoginPage from "../page/Auth/LoginPage";
 import Home from "../page/Home/Home";
 import Pagelout from "../page/Pagelout";
-import ProfilePage from "../page/Auth/Profile";
-import UpdateProfile from "../page/Auth/UpdateProfile";
-import MyShop from "../page/Auth/MyShop";
-import MyCafe from "../page/Auth/MyCafe";
-import Setting from "../page/Auth/Setting";
-import Notifaction from "../page/Auth/Notifaction";
+
 import RegisterPage from "../page/Auth/Register";
 import LostPassword from "../page/Auth/LostPassword";
-import OverView from "../page/Auth/OverView";
+
+import PublicRouteGard from "./PublicRouteGard";
 
 const flattenRoutes = (routes) => {
   return routes.flatMap((item) => {
@@ -42,56 +38,31 @@ const publicRouter = [
     element: <Page404 />,
   },
   {
-    element: <Pagelout />,
+    element: <PublicRouteGard />,
     children: [
       {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/login",
-        element: <LoginPage />,
-      },
-      {
-        path: "/register",
-        element: <RegisterPage />,
-      },
-      {
-        path: "/forgot-password",
-        element: <LostPassword />,
-      },
-      {
-        path: "/me",
-        element: <ProfilePage />,
+        element: <Pagelout />,
         children: [
           {
-            path: "/me",
-            element: <OverView />,
+            path: "/",
+            element: <Home />,
           },
           {
-            path: "update-profile",
-            element: <UpdateProfile />,
+            path: "/login",
+            element: <LoginPage />,
           },
           {
-            path: "my-shop",
-            element: <MyShop />,
+            path: "/register",
+            element: <RegisterPage />,
           },
           {
-            path: "my-cafe",
-            element: <MyCafe />,
+            path: "/forgot-password",
+            element: <LostPassword />,
           },
-          {
-            path: "setting",
-            element: <Setting />,
-          },
-          {
-            path: "notification",
-            element: <Notifaction />,
-          },
+
+          ...categoriesRoutes,
         ],
       },
-
-      ...categoriesRoutes,
     ],
   },
 ];
