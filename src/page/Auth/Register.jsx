@@ -1,36 +1,38 @@
-// icons
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom"; // Import navigate hook
 import { FaFacebook } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
-
-// react router dom
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { createToast } from "../../utils/Toastify";
-import { createUser } from "../../features/auth/authSliceApi";
-import { setMessageEmpty } from "../../features/auth/authSlice";
+import {
+  activateAccount,
+  createUser,
+  resendOtp,
+} from "../../features/auth/authSliceApi";
+import UseAuthUserState from "../../hooks/UseAuthUserState";
 
 const RegisterPage = () => {
-  // Show hide password
-  const [active, setActive] = useState(false);
-  // dispatch events
+  const { user } = UseAuthUserState();
+  const [active, setActive] = useState();
+  const navigate = useNavigate(); // Initialize navigate
   const dispatch = useDispatch();
-  // Auth handler
-  const { error, message } = useSelector((state) => state.auth);
 
   const [input, SetInput] = useState({
     name: "",
     username: "",
-    occupation: "",
     email: "",
-    phone: "",
     cemail: "",
     password: "",
     cpassword: "",
   });
-  // Handle Input Chnage
+  const [otp, setOtp] = useState("");
 
+  const { message, error, loading, isAuthenticated } = useSelector(
+    (state) => state.auth
+  ); // isAuthenticated added
+
+  // handle input change
   const handleInputChange = (e) => {
     SetInput((prevState) => ({
       ...prevState,
@@ -38,69 +40,87 @@ const RegisterPage = () => {
     }));
   };
 
-  const handleUserRegister = (e) => {
+  // handle user register
+  const handleUserRegister = async (e) => {
     e.preventDefault();
 
     if (
       !input.name ||
       !input.username ||
-      !input.phone ||
       !input.email ||
       !input.cemail ||
-      !input.occupation ||
       !input.password ||
       !input.cpassword
     ) {
       createToast("All Fields Required", "warning");
-    } else if (input.password !== input.cpassword) {
-      createToast("Password Doesn't Match", "warn");
     } else if (input.email !== input.cemail) {
-      createToast("Email Doesn't Match", "warn");
+      createToast("Email Don't Match", "warning");
+    } else if (input.password !== input.cpassword) {
+      createToast("Passwords Don't Match", "warning");
     } else {
-      // Dispatch createUser action
-      dispatch(
-        createUser({
+      try {
+        const userData = {
           name: input.name,
-          username: input.username,
-          phone: input.phone,
-          occupation: input.occupation,
           email: input.email,
           password: input.password,
-        })
-      )
-        .then((result) => {
-          // Check if registration was successful
-          if (result.type === "createUser/fulfilled") {
-            // Reset form input only on success
-            createToast("Registration Successful!", "success");
-            SetInput({
-              name: "",
-              username: "",
-              phone: "",
-              occupation: "",
-              email: "",
-              cemail: "",
-              password: "",
-              cpassword: "",
-            });
-          }
-        })
-        .catch((error) => {
-          createToast("Registration Failed: " + error.message, "error");
-        });
+          username: input.username,
+        };
+        dispatch(createUser(userData)); // Register and trigger OTP email
+        createToast("Please check your email for OTP", "success");
+      } catch (err) {
+        createToast("Error registering user: " + err.message, "error");
+      }
     }
   };
 
-  // useEffect
-  useEffect(() => {
-    if (error) {
-      createToast(error, "error");
-      dispatch(setMessageEmpty());
-    } else if (message) {
-      createToast(message, "success");
-      dispatch(setMessageEmpty());
+  // Handle OTP Submit and Auto Login after OTP verification
+  const handleOtpSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!otp) {
+      createToast("Please enter the OTP", "warning");
+      return;
     }
-  }, [error, message]);
+
+    try {
+      // Dispatch action to activate account
+      const response = await dispatch(activateAccount({ otp })).unwrap(); // unwrap() ব্যবহার করলে সরাসরি response পাওয়া যায়
+
+      if (response.success) {
+        createToast("Account successfully activated", "success");
+
+        // Navigate to login page after successful OTP verification
+        navigate("/login");
+      } else {
+        createToast("Invalid OTP! Please try again", "error");
+      }
+    } catch (err) {
+      createToast("OTP Verification Failed: " + err.message, "error");
+    }
+  };
+
+  //   Handle Resend OTP Verification
+  const handleResendOtp = async () => {
+    if (!input.email) {
+      createToast("Email is required to resend OTP", "warning");
+      return;
+    }
+
+    try {
+      // Dispatch action to resend OTP
+      dispatch(resendOtp(input.email));
+      createToast("OTP has been resent to your email", "success");
+    } catch (err) {
+      createToast("Error resending OTP: " + err.message, "error");
+    }
+  };
+  // Redirect if already authenticated
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     navigate("/login"); // Redirect if the user is already authenticated
+  //   }
+  // }, [isAuthenticated, navigate]);
+
   return (
     <main className="w-full min-h-[100vh] h-auto bg-[#0FABCA] flex items-center justify-center sm:py-12 p-6">
       <form
@@ -117,7 +137,7 @@ const RegisterPage = () => {
             name="name"
             value={input.name}
             onChange={handleInputChange}
-            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
+            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 rounded-lg w-full"
           />
           <input
             type="text"
@@ -125,26 +145,7 @@ const RegisterPage = () => {
             name="username"
             value={input.username}
             onChange={handleInputChange}
-            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
-          />
-        </div>
-
-        <div className="flex items-center justify-between gap-4 w-full sm:flex-row flex-col">
-          <input
-            type="text"
-            placeholder="Phone number"
-            name="phone"
-            value={input.phone}
-            onChange={handleInputChange}
-            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
-          />
-          <input
-            type="text"
-            placeholder="Occupation"
-            name="occupation"
-            value={input.occupation}
-            onChange={handleInputChange}
-            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
+            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 rounded-lg w-full"
           />
         </div>
 
@@ -155,7 +156,7 @@ const RegisterPage = () => {
             name="email"
             value={input.email}
             onChange={handleInputChange}
-            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
+            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 rounded-lg w-full"
           />
           <input
             type="email"
@@ -163,7 +164,7 @@ const RegisterPage = () => {
             name="cemail"
             value={input.cemail}
             onChange={handleInputChange}
-            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300  rounded-lg w-full"
+            className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 rounded-lg w-full"
           />
         </div>
 
@@ -211,11 +212,38 @@ const RegisterPage = () => {
             )}
           </div>
         </div>
+        {error && createToast(error, "error")}
+        {/* {message && createToast(message, "success")} */}
+        {!user?.isActive && otp && (
+          <>
+            <input
+              type="text"
+              placeholder="Enter OTP 6 digit number"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              className="py-3 px-4 border focus:outline-[#0FABCA] border-gray-300 rounded-lg w-full"
+            />
+            <button
+              type="submit"
+              onClick={handleOtpSubmit}
+              className="rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer w-full sm:w-[50%]"
+            >
+              Verify OTP
+            </button>
+            <button
+              type="button"
+              onClick={handleResendOtp}
+              className="rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer w-full sm:w-[50%]"
+            >
+              Resend OTP
+            </button>
+          </>
+        )}
 
         <div className="text-[1rem] ">
-          <input type="checkbox" name="checkbox" id="checkbox" />{" "}
+          <input type="checkbox" name="checkbox" id="checkbox" required />{" "}
           <label htmlFor="checkbox" className="cursor-pointer">
-            By clicking, I agree to signup{" "}
+            By clicking, I agree to signup
             <Link href="#" className=" text-[#0FABCA]">
               Terms of Use
             </Link>{" "}
@@ -248,21 +276,26 @@ const RegisterPage = () => {
           </span>
         </div>
 
-        {/* <div className="w-full my-1 flex items-center justify-center gap-3">
-          <hr className="w-[45%] bg-gray-400 h-[2px]" />
-          <p>or</p>
-          <hr className="w-[45%] bg-gray-400 h-[2px]" />
+        {/* <div className="w-full my-1 flex items-center gap-5">
+          <div className="border-b border-[#0FABCA] w-[50%]"></div>
+          <span className="text-gray-400">Or</span>
+          <div className="border-b border-[#0FABCA] w-[50%]"></div>
         </div>
-
-        <div className="flex items-center justify-between w-full gap-5 sm:flex-row flex-col">
-          <button className="flex items-center justify-center py-2.5 px-4 gap-4 bg-[#4267b2] rounded-lg w-full text-[1rem] font-[500] text-white">
-            <FaFacebook className="text-[1.8rem] text-white" />
-            Signup with Facebook
-          </button>
-          <button className="flex items-center justify-center py-2 px-4 gap-4 border border-gray-300 rounded-lg w-full text-[1rem] font-[500] text-gray-600">
-            <FcGoogle className="text-[2rem]" />
-            Signup with Google
-          </button>
+        <div className="flex items-center justify-between gap-5 mt-5">
+          <div
+            className="flex items-center justify-center gap-3 cursor-pointer px-6 py-3 border-[1px] border-gray-300 rounded-lg"
+            onClick={() => handleGoogleAuth()}
+          >
+            <FcGoogle className="text-[2.2rem]" />
+            <span className="font-[600]">Google</span>
+          </div>
+          <div
+            className="flex items-center justify-center gap-3 cursor-pointer px-6 py-3 border-[1px] border-gray-300 rounded-lg"
+            onClick={() => handleFacebookAuth()}
+          >
+            <FaFacebook className="text-[2.2rem] text-[#4267B2]" />
+            <span className="font-[600]">Facebook</span>
+          </div>
         </div> */}
       </form>
     </main>

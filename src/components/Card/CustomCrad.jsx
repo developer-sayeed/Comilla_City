@@ -28,7 +28,7 @@ const CustomCrad = ({
           {image && (
             <div className="imagescetion">
               <img
-                className="w-full h-32 object-contain group-hover:scale-125 transition-transform duration-300 ease-in-out"
+                className="w-full h-32 object-cover group-hover:scale-125 transition-transform duration-300 ease-in-out"
                 src={image || diagnosticimg}
                 alt={name}
                 onError={(e) => {

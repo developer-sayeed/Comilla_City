@@ -1,19 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoggedInUser, logOutUser } from "../../features/auth/authSliceApi";
 import UseAuthUserState from "../../hooks/UseAuthUserState";
+import { FaRegEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { userAuth } from "../../features/auth/authSlice";
 
 const OverView = () => {
   const dispatch = useDispatch();
+  const { user, error } = useSelector(userAuth);
+  const [editInput, setEditInput] = useState({});
+
+  // Handle Permission Data Edit and Update
+  const handleUserEdit = (id) => {
+    const editData = user.find((data) => data._id == id);
+    setEditInput(editData);
+  };
   // Handle Logout
   const handleUserLogout = (e) => {
     e.preventDefault();
     dispatch(logOutUser());
   };
-
-  const { user } = UseAuthUserState(); // Get user from custom hook
-
-  const { error } = useSelector((state) => state.auth);
 
   // useeffects
   useEffect(() => {
@@ -26,27 +33,19 @@ const OverView = () => {
   return (
     <div className="min-h-screen bg-gray-50  sm:py-0 ">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8">
-        {/* Profile Header */}
-        {/* <div className="flex items-center flex-col sm:flex-row space-x-4 mb-3 ">
-          <img
-            src="https://img.freepik.com/free-photo/portrait-young-man-with-green-hoodie_23-2148514952.jpg"
-            alt="Profile Picture"
-            className="w-28 object-cover h-28 rounded-full border-4 border-[#0FABCA] shadow-lg"
-          />
-          <div className="text-center sm:text-left">
-            <h2 className="sm:text-3xl text-2xl font-semibold text-[#0FABCA] uppercase">
-              Abu Sayeed Riday
-            </h2>
-            <p className="text-lg text-gray-500">@abusayeed0022</p>
-            <p className="text-sm text-gray-400">Joined on: January 1, 2022</p>
-          </div>
-        </div> */}
-
         {/* Personal Information Section */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-[#0FABCA] mb-4">
-            Personal Information
-          </h2>
+          <div className="flex justify-between">
+            <h2 className="text-2xl font-semibold text-[#0FABCA] mb-4">
+              Personal Information
+            </h2>
+            <Link
+              to={"/me/update-profile"}
+              className="text-xl font-semibold text-[#0FABCA] mb-4"
+            >
+              <FaRegEdit />
+            </Link>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
             {/* Name */}
             <div className="flex justify-between flex-col">

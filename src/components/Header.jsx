@@ -81,25 +81,23 @@ function Header() {
       {/* Login User Avater */}
       {user && (
         <div className={`items-center gap-[10px] sm:flex hidden`}>
-          <div className="flex items-center gap-[10px]">
-            <div className="relative">
-              <img
-                src={
-                  user?.user?.photo
-                    ? user.user.photo
-                    : "https://img.freepik.com/free-photo/portrait-young-man-with-green-hoodie_23-2148514952.jpg"
-                }
-                alt="Profile Picture"
-                className="w-[50px] object-cover h-[50px] rounded-full border-2 border-[#0FABCA] shadow-lg"
-              />
-            </div>
-            <Link
-              to={"/me"}
-              className={` text-[0.9rem] text-gray-800 font-[500]`}
-            >
-              {user?.user?.name}
-            </Link>
-          </div>
+          <Link
+            to={"/me"}
+            className={` text-[0.9rem] text-gray-800 font-[500] flex items-center  gap-[10px]`}
+          >
+            <img
+              src={
+                user?.user?.photo
+                  ? user.user?.photo
+                  : "https://img.freepik.com/free-photo/portrait-young-man-with-green-hoodie_23-2148514952.jpg"
+              }
+              alt="Profile Picture"
+              className="w-[50px] object-cover h-[50px] rounded-full border-2 border-[#0FABCA] shadow-lg"
+            />
+
+            {user?.user?.username}
+          </Link>
+
           <CiMenuFries
             className="text-[1.8rem] mr-1 text-[#424242] cursor-pointer lg:hidden flex"
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}

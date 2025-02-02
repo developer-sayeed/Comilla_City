@@ -6,20 +6,25 @@ import router from "./router/router";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getLoggedInUser } from "./features/auth/authSliceApi";
-import { getUsers } from "./features/user/userApiSlice";
+import { getAllThana, getUsers } from "./features/user/userApiSlice";
+import {
+  getAllDoctor,
+  getAllDoctorSpecialist,
+  getAllHospital,
+} from "./features/health/helathSliceApi";
 
 export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (localStorage.getItem("user")) {
       dispatch(getLoggedInUser());
+      dispatch(getAllDoctor());
+      dispatch(getAllDoctorSpecialist());
+      dispatch(getAllHospital());
+      dispatch(getAllThana());
     }
   }, [dispatch]);
 
-  // useeffects
-  useEffect(() => {
-    dispatch(getLoggedInUser());
-  }, [dispatch]);
   return (
     <>
       <ToastContainer

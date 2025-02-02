@@ -7,9 +7,9 @@ const PrivateRouteGuard = () => {
   // User login চেক এবং রুট নির্ধারণ
   if (user) {
     // যদি user অ্যাডমিন হয়
-    if (user.isAdmin == true) {
+    if (user?.isAdmin == true) {
       return <Navigate to="/admin/overview" />;
-    } else if (user.isAdmin === false) {
+    } else if (user?.isAdmin === false) {
       return <Navigate to="/me" />;
     }
     // যদি সাধারণ ব্যবহারকারী হয়

@@ -1,18 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  DdeletePermission,
-  DdeleteRole,
-  createPermission,
-  createRole,
   createUser,
   deleteUser,
-  getPermission,
-  getRole,
+  getAllThana,
   getUsers,
-  updatePermission,
-  updatePermissionStatus,
-  updateRole,
-  updateRoleStatus,
+  updateUser,
 } from "./userApiSlice";
 
 // Create a user Slice
@@ -20,9 +12,8 @@ import {
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    permission: null,
-    role: null,
     user: null,
+    thana: null,
     error: null,
     message: null,
     loader: null,
@@ -33,96 +24,6 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(getPermission.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-      .addCase(getPermission.fulfilled, (state, action) => {
-        state.permission = action.payload;
-      })
-      .addCase(createPermission.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-      .addCase(createPermission.fulfilled, (state, action) => {
-        state.permission = state.permission ?? [];
-        state.permission.push(action.payload.permission);
-        state.message = action.payload.message;
-      })
-      .addCase(DdeletePermission.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-      .addCase(DdeletePermission.fulfilled, (state, action) => {
-        state.permission = state.permission.filter(
-          (data) => data._id !== action.payload.permission._id
-        );
-        state.message = action.payload.message;
-      })
-      .addCase(updatePermissionStatus.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-      .addCase(updatePermissionStatus.fulfilled, (state, action) => {
-        state.permission[
-          state.permission.findIndex(
-            (data) => data._id == action.payload.permission._id
-          )
-        ] = action.payload.permission;
-        state.message = action.payload.message;
-      })
-      .addCase(updatePermission.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-      .addCase(updatePermission.fulfilled, (state, action) => {
-        state.message = action.payload.message;
-        state.permission[
-          state.permission.findIndex(
-            (data) => data._id == action.payload.permission._id
-          )
-        ] = action.payload.permission;
-      });
-    // Role Section
-    builder
-      .addCase(getRole.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-      .addCase(getRole.fulfilled, (state, action) => {
-        state.message = action.payload.message;
-        state.role = action.payload;
-      })
-      .addCase(createRole.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-      .addCase(createRole.fulfilled, (state, action) => {
-        state.role = state.role ?? [];
-        state.role.push(action.payload.role);
-        state.message = action.payload.message;
-      })
-      .addCase(DdeleteRole.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-      .addCase(DdeleteRole.fulfilled, (state, action) => {
-        state.role = state.role.filter(
-          (data) => data._id !== action.payload.role._id
-        );
-        state.message = action.payload.message;
-      })
-      .addCase(updateRoleStatus.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-      .addCase(updateRoleStatus.fulfilled, (state, action) => {
-        state.role[
-          state.role.findIndex((data) => data._id == action.payload.role._id)
-        ] = action.payload.role;
-        state.message = action.payload.message;
-      })
-      .addCase(updateRole.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-      .addCase(updateRole.fulfilled, (state, action) => {
-        state.message = action.payload.message;
-        state.role[
-          state.role.findIndex((data) => data._id == action.payload.role._id)
-        ] = action.payload.role;
-      });
     // User Section
     builder
       .addCase(getUsers.pending, (state, action) => {
@@ -160,6 +61,32 @@ const userSlice = createSlice({
       })
       .addCase(deleteUser.rejected, (state, action) => {
         state.error = action.error.message;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.message = action.payload.message;
+        state.user = action.payload.payload;
+        state.error = null;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
+    // All Hospital  Splist Here
+    builder
+      .addCase(getAllThana.pending, (state) => {
+        state.loader = true;
+      })
+      .addCase(getAllThana.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.loader = false;
+      })
+      .addCase(getAllThana.fulfilled, (state, action) => {
+        state.thana = action.payload.payload; // Redux State Update
       });
   },
 });

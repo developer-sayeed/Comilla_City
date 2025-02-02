@@ -15,7 +15,7 @@ const Doctors = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    specialty: "",
+    specialization: "",
     education: "",
     status: "Active",
     rogiDekharSomoy: "",
@@ -72,11 +72,11 @@ const Doctors = () => {
       // Check if data has changed before updating
       if (
         formData.name !== "" &&
-        formData.specialty !== "" &&
+        formData.specialization !== "" &&
         formData.status !== "" &&
         (formData.name !== data.find((item) => item.id === editingId).name ||
-          formData.specialty !==
-            data.find((item) => item.id === editingId).specialty ||
+          formData.specialization !==
+            data.find((item) => item.id === editingId).specialization ||
           formData.status !== data.find((item) => item.id === editingId).status)
       ) {
         // Edit the data
@@ -98,7 +98,7 @@ const Doctors = () => {
       ]);
       createToast("Data Added successfully!", "success"); // Toast notification for successful add
     }
-    setFormData({ name: "", specialty: "", status: "Active" }); // Reset form data
+    setFormData({ name: "", specialization: "", status: "Active" }); // Reset form data
     setIsModalOpen(false); // Close the modal
   };
 
@@ -106,7 +106,7 @@ const Doctors = () => {
   const handleEdit = (item) => {
     setFormData({
       name: item.name,
-      specialty: item.specialty,
+      specialization: item.specialization,
       status: item.status,
     });
     setEditMode(true);
@@ -172,20 +172,20 @@ const Doctors = () => {
               </th>
               <th
                 className="p-3 text-center font-medium cursor-pointer"
-                onClick={() => handleSort("specialty")}
+                onClick={() => handleSort("specialization")}
               >
                 <div className="flex items-center gap-1 justify-center">
-                  Specialty
+                  specialization
                   <HiOutlineArrowsUpDown
                     className={`text-[1.2rem] ${
-                      sortConfig.key === "specialty" ? "text-blue-500" : ""
+                      sortConfig.key === "specialization" ? "text-blue-500" : ""
                     }`}
                   />
                 </div>
               </th>
               <th
                 className="p-3 text-center font-medium cursor-pointer"
-                onClick={() => handleSort("specialty")}
+                onClick={() => handleSort("specialization")}
               >
                 <div className="flex items-center gap-1 justify-center">
                   Education
@@ -234,7 +234,7 @@ const Doctors = () => {
                 </td>
 
                 <td className="p-3 text-center text-gray-700">
-                  {item.specialty}
+                  {item.specialization}
                 </td>
                 <td className="p-3 text-center text-gray-700">
                   {item.education}
@@ -307,10 +307,10 @@ const Doctors = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block mb-1">Specialty</label>
+              <label className="block mb-1">specialization</label>
               <select
-                name="specialty"
-                value={formData.specialty}
+                name="specialization"
+                value={formData.specialization}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-md"
                 required

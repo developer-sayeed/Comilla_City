@@ -22,32 +22,68 @@ const ProfilePage = () => {
     { icon: IoSettingsOutline, name: "Setting", path: "/me/setting" },
   ];
   const { user } = UseAuthUserState();
+  console.log(user.user);
+
   const location = useLocation();
   return (
     <aside className="bg-white boxShadow rounded-md " id="update-profile">
       {/* Top Section with User Info */}
 
       {/* Profile Header */}
-      <div className="flex items-center flex-col sm:flex-row space-x-2 bg-gray-50 p-3 shadow-sm ">
-        <img
-          src="https://img.freepik.com/free-photo/portrait-young-man-with-green-hoodie_23-2148514952.jpg"
-          alt="Profile Picture"
-          className="w-20 object-cover h-20 rounded-full border-4 border-[#0FABCA] shadow-lg"
-        />
-        <div className="text-center sm:text-left">
-          <h2 className="sm:text-3xl text-2xl font-semibold text-gray-900 uppercase">
-            {user?.user?.name}
+      <div className="relative w-full">
+        {/* Cover Photo */}
+        <div
+          className="h-[350px] bg-center bg-no-repeat bg-cover"
+          style={{
+            backgroundImage:
+              "url(https://codilime.com/img/an-introduction-to-low-level-programming.jpg)",
+          }}
+        ></div>
 
-            {user.user.isAdmin && (
-              <span className="lowercase">
-                ({user && user.user && user.user.isAdmin ? "Admin" : "user"})
-              </span>
-            )}
-          </h2>
-          <p className="text-lg text-[#0FABCA]">@{user?.user?.username}</p>
-          <p className="text-sm text-gray-400">
-            Joined on: {formatDate(user?.user?.createdAt)}
-          </p>
+        {/* Auth User Information */}
+        <div className="absolute left-1/2 top-[65%] sm:top-[75%] transform -translate-x-1/2 -translate-y-1/2 w-[90%]   text-white p-6 rounded-lg shadow-lg flex flex-col sm:flex-row justify-between items-center">
+          {/* Left Section: Profile Photo & Details */}
+          <div className="flex items-center space-x-4">
+            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
+              <img
+                src="https://srdreamit.com/front/custom/img/profile.png"
+                alt={user?.user?.name || "user"}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <h5 className="text-lg sm:text-xl font-semibold">
+                {user?.user?.name || "Full Name"}
+              </h5>
+              <ul className="mt-2 space-y-1 text-gray-300 text-sm">
+                <li className="flex items-center">
+                  <i className="feather-user mr-2"></i> @
+                  {user?.user?.username || "username"}
+                </li>
+                <li className="flex items-center">
+                  <i className="feather-inbox mr-2"></i>{" "}
+                  {user?.user?.email || "email@example.com"}
+                </li>
+                <li className="flex items-center">
+                  <i className="feather-phone mr-2"></i>{" "}
+                  {user?.user?.phone || "000-000-0000"}
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Right Section: Additional Details */}
+          <div className="mt-4 sm:mt-0">
+            <ul className="text-gray-300 text-sm">
+              <li>IP Address: </li>
+              <li>
+                User Type:{" "}
+                <span className="capitalize">
+                  {user?.user?.isAdmin ? "Admin" : "User"}
+                </span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
