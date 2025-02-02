@@ -3,7 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./router/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getLoggedInUser } from "./features/auth/authSliceApi";
 import { getAllThana, getUsers } from "./features/user/userApiSlice";
@@ -12,17 +12,22 @@ import {
   getAllDoctorSpecialist,
   getAllHospital,
 } from "./features/health/helathSliceApi";
+import { setCredentials } from "./features/auth/authSlice";
 
 export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    if (localStorage.getItem("user")) {
-      dispatch(getLoggedInUser());
-      dispatch(getAllDoctor());
-      dispatch(getAllDoctorSpecialist());
-      dispatch(getAllHospital());
-      dispatch(getAllThana());
+    const accessToken = localStorage.getItem("accessToken");
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (accessToken && user) {
+      dispatch(setCredentials({ accessToken, user }));
     }
+
+    dispatch(getLoggedInUser());
+    dispatch(getAllDoctor());
+    dispatch(getAllDoctorSpecialist());
+    dispatch(getAllHospital());
+    dispatch(getAllThana());
   }, [dispatch]);
 
   return (

@@ -12,27 +12,31 @@ import {
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: (() => {
-      try {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser && storedUser !== "undefined") {
-          return JSON.parse(storedUser);
-        }
-        return null;
-      } catch (error) {
-        console.error("Error parsing user data from localStorage:", error);
-        return null;
-      }
-    })(),
+    user: JSON.parse(localStorage.getItem("user")) || null,
+    accessToken: localStorage.getItem("accessToken") || null,
+    isAuthenticated: !!localStorage.getItem("accessToken"),
     message: null,
     error: null,
     loading: null,
-    isAuthenticated: !!localStorage.getItem("user"),
   },
   reducers: {
     setMessageEmpty: (state) => {
       state.message = null;
       state.error = null;
+    },
+    setCredentials: (state, action) => {
+      state.user = action.payload.user;
+      state.accessToken = action.payload.accessToken;
+      state.isAuthenticated = true;
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      localStorage.setItem("accessToken", action.payload.accessToken);
+    },
+    logout: (state) => {
+      state.user = null;
+      state.accessToken = null;
+      state.isAuthenticated = false;
+      localStorage.removeItem("user");
+      localStorage.removeItem("accessToken");
     },
   },
   extraReducers: (builder) => {
@@ -76,14 +80,25 @@ const authSlice = createSlice({
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
       })
+      // authSlice.js
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         const { userId, email, name } =
           action.payload.payload.userWithoutPassword;
-        state.message = action.payload.message;
-        state.user = { userId, email, name };
+
+        // ✅ accessToken রেসপন্স থেকে নিন
+        const accessToken = action.payload.payload.accessToken; // Updated path
+
+        // Redux স্টেট ও localStorage-এ সেভ করুন
+        state.accessToken = accessToken;
+        localStorage.setItem("accessToken", accessToken);
+
+        // ইউজার ডেটা সেভ করুন
+        state.user = { userId, email, name }; // ✅ নতুন অবজেক্ট তৈরি করুন
         state.isAuthenticated = true;
         localStorage.setItem("user", JSON.stringify({ userId, email, name }));
+
+        state.message = action.payload.message;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -126,6 +141,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setMessageEmpty } = authSlice.actions;
+export const { setMessageEmpty, setCredentials, logout } = authSlice.actions;
 export const userAuth = (state) => state.auth;
 export default authSlice.reducer;

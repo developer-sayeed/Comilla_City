@@ -11,10 +11,14 @@ import banner4 from "../../assets/banner/banner-4.jpg";
 import Modal from "../../components/Modal/Modal";
 import SEO from "../../components/RecatHelmate/SEO";
 import { FaPlus } from "react-icons/fa";
-import { createDoctor } from "../../features/health/helathSliceApi";
+import {
+  createDoctor,
+  getAllDoctor,
+} from "../../features/health/helathSliceApi";
 import { createToast } from "../../utils/Toastify";
 import { setMessageEmpty } from "../../features/health/healthSlice";
 import Tooltip from "../../components/Tooltip/Tooltip";
+import { ShortText } from "../../hooks/shortText";
 const DoctrList = () => {
   const bannerImages = [
     {
@@ -117,8 +121,45 @@ const DoctrList = () => {
   // Form Submit Handler
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createDoctor(doctorsData));
+
+    dispatch(createDoctor(doctorsData))
+      .unwrap()
+      .then(() => {
+        dispatch(getAllDoctor()); // ✅ নতুন ডাটা ফেচ করো
+
+        // ✅ সফল হলে ইনপুট ফিল্ড খালি করো
+        setDoctorsData({
+          name: "",
+          email: "",
+          photo: "",
+          gender: "",
+          workplace: "",
+          designation: "",
+          thana: "",
+          chambers: [
+            {
+              name: "",
+              address: "",
+              hospital: "",
+              availableHours: "",
+              consultationFee: "",
+              phone: "",
+            },
+          ],
+          qualifications: "",
+          specialization: "",
+          licenseNumber: "",
+          profileDescription: "",
+        });
+
+        // ✅ মডাল বন্ধ করো
+        setIsPopupOpen(false);
+      })
+      .catch((error) => {
+        console.error("Doctor Create Failed", error);
+      });
   };
+
   // Filter doctors based on name or specialty
   const filteredDoctors = Array.isArray(doctor)
     ? doctor?.filter((doctor) => {
@@ -198,8 +239,8 @@ const DoctrList = () => {
               <option value="">ডাক্তার নির্বাচন করুন</option>
               {doctor_specialists.map((item) => {
                 return (
-                  <option key={item.id} value={item.name}>
-                    {item.name}
+                  <option key={item?.id} value={item?.name}>
+                    {item?.name}
                   </option>
                 );
               })}
@@ -213,14 +254,14 @@ const DoctrList = () => {
         {filteredDoctors?.length > 0 ? (
           filteredDoctors?.map((item) => (
             <div
-              key={`${item.id}  ${item.name}`}
+              key={`${item?.id}  ${item?.name}`}
               className="bg-white shadow-lg rounded-lg overflow-hidden"
             >
               <div className="max-w-full flex items-center justify-center">
                 <img
                   className="w-32 h-40 object-cover"
-                  src={item.photo ? item.photo : `${doctorimg}`}
-                  alt={item.name || "Doctor"}
+                  src={item?.photo ? item?.photo : `${doctorimg}`}
+                  alt={item?.name || "Doctor"}
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = doctorimg;
@@ -228,70 +269,73 @@ const DoctrList = () => {
                 />
                 <div className="px-2 pt-3">
                   <h1 className="text-sm font-bold text-gray-800 mb-2 flex gap-2 items-center">
-                    {item.name}
+                    {item?.name}
                   </h1>
                   <p className="text-[12px] text-gray-600 mb-2">
                     <strong>বিশেষজ্ঞ: </strong>
-                    {item.specializationDetails?.[0]?.name}
+                    {item?.specializationDetails?.[0]?.name}
                   </p>
                   <p className="text-[12px] text-gray-600 mb-2">
                     <strong>শিক্ষাগত অভিজ্ঞতা: </strong>
-                    {item.qualifications}
+                    {item?.qualifications}
                   </p>
                   <p className="text-[12px] text-gray-600 mb-2">
                     <strong>চেম্বার: </strong>
-                    {item.chember}
+                    {item?.chember?.hospital?.name}
                   </p>
                   <p className="text-[12px] text-gray-600 mb-4">
                     <strong>বর্তমানে কর্মরত: </strong>{" "}
-                    {item.hospitalDetails?.[0]?.name || "N/A"}
+                    {item?.workplace || "N/A"}
                   </p>
                 </div>
               </div>
 
               <div className="px-4 pb-4">
-                <p className="pb-2">{item.profileDescription}</p>
+                <p className="pb-2">
+                  {ShortText(item?.profileDescription, 20)}
+                </p>
                 <div className="flex justify-between items-center gap-2">
                   <a
-                    href={`tel:${item.phone}`}
+                    href={`tel:${item?.phone}`}
                     className="w-full sm:w-auto rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
                   >
                     কল করুন
                   </a>
 
                   <button
-                    onClick={() => handleViewDoctor(item._id)}
+                    onClick={() => handleViewDoctor(item?._id)}
                     className="w-full sm:w-auto rounded-md border border-[#0FABCA]  text-[#0FABCA] hover:bg-[#0FABCA] hover:border-[#0FABCA] hover:text-white transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
                   >
                     আরো জানুন
                   </button>
                   {/* Modal */}
 
-                  {isModalOpen && selectedDoctor._id === item._id && (
+                  {isModalOpen && selectedDoctor._id === item?._id && (
                     <Modal
                       isOpen={isModalOpen}
                       onClose={() => setIsModalOpen(false)}
                       heading={item?.name}
                     >
-                      <div className="bg-white  sm:p-0 rounded-lg max-w-md mx-auto">
+                      <div className="bg-white  sm:p-0 rounded-lg max-w-xl mx-auto">
                         {/* Hospital Photo */}
-                        <div className="mb-6 flex justify-center">
+                        <div className="mb-0 flex justify-center">
                           <img
                             src={item?.photo}
                             alt={item?.name}
-                            className="w-full h-48 object-fill rounded-lg border-2 border-gray-300"
+                            className="w-48 h-48 object-fill rounded-lg border-2 border-gray-300"
                           />
                         </div>
-                        <div className="space-y-6">
-                          <div className="flex justify-between border-b border-[#0fabca76] pb-4">
-                            <span className="font-semibold text-gray-700">
-                              বিশেষজ্ঞ
-                            </span>
-                            <span className="text-gray-600">
-                              {item?.specializationDetails?.[0]?.name}
-                            </span>
-                          </div>
-                          <div className="flex justify-between border-b border-[#0fabca76] pb-4">
+                        {/*  About Doctors */}
+                        <div className="border-b-2 py-3 border-cyan-500">
+                          <h2 className="text-center font-semibold text-cyan-400 xl">
+                            About {item.name}
+                          </h2>
+                          <p className="py-1 text-center text-md ">
+                            {item?.profileDescription}
+                          </p>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="flex justify-between border-b border-[#0fabca76] py-2">
                             <span className="font-semibold text-gray-700">
                               শিক্ষাগত অভিজ্ঞতা
                             </span>
@@ -299,62 +343,130 @@ const DoctrList = () => {
                               {item?.qualifications}
                             </span>
                           </div>
-                          <div className="flex justify-between border-b border-[#0fabca76] pb-4">
+
+                          <div className="flex justify-between border-b border-[#0fabca76] py-2">
+                            <span className="font-semibold text-gray-700">
+                              পদবী
+                            </span>
+                            <span className="text-gray-600">
+                              {item?.designation}
+                            </span>
+                          </div>
+                          <div className="flex justify-between border-b border-[#0fabca76] py-2">
                             <span className="font-semibold text-gray-700">
                               বর্তমানে কর্মরত
                             </span>
                             <span className="text-gray-600">
-                              {item?.hospitalDetails?.[0]?.name}
+                              {item?.workplace || "N/A"}
                             </span>
                           </div>
-                          <div className="flex justify-between border-b border-[#0fabca76] pb-4">
+                          <div className="flex justify-between border-b border-[#0fabca76] py-2 ">
                             <span className="font-semibold text-gray-700">
-                              চেম্বার
+                              বিশেষজ্ঞ
                             </span>
                             <span className="text-gray-600">
-                              {item.chember}
+                              {item?.specializationDetails?.[0]?.name}
                             </span>
                           </div>
-                          <div className="flex justify-between border-b border-[#0fabca76] pb-4">
+                          {item?.email && (
+                            <div className="flex justify-between border-b border-[#0fabca76] py-2">
+                              <span className="font-semibold text-gray-700">
+                                ইমেইল
+                              </span>
+                              <span className="text-gray-600">
+                                {item?.email}
+                              </span>
+                            </div>
+                          )}
+                          {item?.licenseNumber && (
+                            <div className="flex justify-between border-b border-[#0fabca76] py-2">
+                              <span className="font-semibold text-gray-700">
+                                লাইসেন্স নম্বর
+                              </span>
+                              <span className="text-gray-600">
+                                {item?.licenseNumber}
+                              </span>
+                            </div>
+                          )}
+
+                          <div className="flex justify-between border-b border-[#0fabca76] py-2">
                             <span className="font-semibold text-gray-700">
-                              রোগী দেখার সময়
+                              উপজেলা
                             </span>
                             <span className="text-gray-600">
-                              {item?.availableHours}
-                            </span>
-                          </div>
-                          <div className="flex justify-between border-b border-[#0fabca76] pb-4">
-                            <span className="font-semibold text-gray-700">
-                              পরামর্শ ফি
-                            </span>
-                            <span className="text-gray-600">
-                              {item?.consultationFee} টাকা মাত্র
-                            </span>
-                          </div>
-                          <div className="flex justify-between border-b border-[#0fabca76] pb-4">
-                            <span className="font-semibold text-gray-700">
-                              থানা
-                            </span>
-                            <span className="text-gray-600">
-                              {item?.thanaDetails?.[0]?.name} থানা
+                              {item?.thanaDetails?.[0]?.name} উপজেলা
                             </span>
                           </div>
                         </div>
 
-                        <div className="flex justify-between mt-6">
-                          <a
-                            href={`mailto:${item?.email}`}
-                            className="w-full sm:w-auto rounded-md border border-[#0FABCA]  text-[#0FABCA] hover:bg-[#0FABCA] hover:border-[#0FABCA] hover:text-white transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
-                          >
-                            ইমেইল করুন
-                          </a>
-                          <a
-                            href={`tel:${item?.phone || "+880123456789"}`}
-                            className="w-full sm:w-auto rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
-                          >
-                            সিরিয়াল নিন
-                          </a>
-                        </div>
+                        {/* Chambers data loop */}
+                        {item.chambers && item.chambers.length > 0 ? (
+                          item?.chambers?.map((chamber, index) => {
+                            console.log(chamber.hospital?.name);
+
+                            return (
+                              <div
+                                key={index + 1}
+                                className="border-t-2 py-3 border-cyan-500"
+                              >
+                                <h2 className="text-center py-2 text-blue-500 font-semibold text-xl">
+                                  Chamber & Appointment - {index + 1}
+                                </h2>
+
+                                <div className="flex justify-between border-b border-[#0fabca76] py-2">
+                                  <span className="font-semibold text-gray-700">
+                                    চেম্বার
+                                  </span>
+                                  <span className="text-gray-600">
+                                    {chamber?.hospital}
+                                  </span>
+                                </div>
+                                <div className="flex justify-between border-b border-[#0fabca76] py-2">
+                                  <span className="font-semibold text-gray-700">
+                                    চেম্বারের ঠিকানা
+                                  </span>
+                                  <span className="text-gray-600">
+                                    {chamber?.address}
+                                  </span>
+                                </div>
+                                <div className="flex justify-between border-b border-[#0fabca76] py-2">
+                                  <span className="font-semibold text-gray-700">
+                                    রোগী দেখার সময়
+                                  </span>
+                                  <span className="text-gray-600">
+                                    {chamber?.availableHours}
+                                  </span>
+                                </div>
+                                <div className="flex justify-between border-b border-[#0fabca76] py-2">
+                                  <span className="font-semibold text-gray-700">
+                                    পরামর্শ ফি
+                                  </span>
+                                  <span className="text-gray-600">
+                                    {chamber?.consultationFee} TAKA Only
+                                  </span>
+                                </div>
+                                <div className="flex justify-between ] mb-2 py-2 border-b border-[#0fabca76] ">
+                                  <span className="font-semibold text-gray-700">
+                                    এপয়েন্টমেন্ট
+                                  </span>
+                                  <span className="text-gray-600">
+                                    {chamber?.phone}
+                                  </span>
+                                </div>
+                                <div className="flex justify-center">
+                                  <a
+                                    href={`tel:${chamber?.phone}`}
+                                    className="  rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-10 py-3 text-sm font-bold cursor-pointer"
+                                  >
+                                    সিরিয়াল নিন
+                                  </a>
+                                </div>
+                              </div>
+                            );
+                          })
+                        ) : (
+                          <p>কোন চেম্বার তথ্য পাওয়া যায়নি।</p>
+                        )}
                       </div>
                     </Modal>
                   )}
@@ -469,8 +581,8 @@ const DoctrList = () => {
                 <option value="">বিশেষজ্ঞ নির্বাচন করুন</option>
                 {doctor_specialists?.map((item, index) => {
                   return (
-                    <option key={index.id} value={item._id}>
-                      {item.name}
+                    <option key={index.id} value={item?._id}>
+                      {item?.name}
                     </option>
                   );
                 })}
@@ -488,8 +600,8 @@ const DoctrList = () => {
                 <option value="">থানা নির্বাচন করুন</option>
                 {thana?.map((item) => {
                   return (
-                    <option key={item._id} value={item._id}>
-                      {item.name}
+                    <option key={item?._id} value={item?._id}>
+                      {item?.name}
                     </option>
                   );
                 })}
@@ -531,8 +643,8 @@ const DoctrList = () => {
                       <option value="">হাসপাতাল নির্বাচন করুন</option>
                       {hospital?.map((item) => {
                         return (
-                          <option key={item._id} value={item._id}>
-                            {item.name}
+                          <option key={item?._id} value={item?._id}>
+                            {item?.name}
                           </option>
                         );
                       })}
@@ -650,7 +762,7 @@ const DoctrList = () => {
             <div className="col-span-2 mt-6 flex justify-center gap-4">
               <button
                 type="button"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setIsPopupOpen(false)}
                 className="px-6 py-2 bg-gray-300 text-black rounded-md"
               >
                 Cancel

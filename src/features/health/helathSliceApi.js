@@ -15,7 +15,7 @@ export const createDoctor = createAsyncThunk(
   async (doctorData, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(`/doctor`, doctorData);
-      console.log(response);
+      console.log(response.data);
 
       return response.data.payload;
     } catch (error) {

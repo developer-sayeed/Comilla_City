@@ -37,19 +37,24 @@ const healthSlice = createSlice({
         state.error = null;
       })
       .addCase(createDoctor.rejected, (state, action) => {
-        const error = (state.error = action.payload);
+        state.error = action.payload;
         state.loader = false;
-        console.log(error);
       })
       .addCase(createDoctor.fulfilled, (state, action) => {
-        state.doctor = action.payload.payload ?? []; // Ensure state.doctor is an array
-        state.doctor.push(action.payload.doctor); // Correctly update the array
+        if (!state.doctor) {
+          state.doctor = []; // যদি state.doctor না থাকে তাহলে Empty Array সেট করো
+        }
 
-        console.log("Updated doctors list:", state.doctor); // Log the updated array
+        if (action.payload?.doctor) {
+          // ✅ **Immutable ভাবে state update**
+          state.doctor = [...state.doctor, action.payload];
+          // state.doctor.push(action.payload.doctor);
+        }
 
-        state.message = action.payload.message;
+        state.message = action.payload?.message || "Doctor added successfully!";
         state.loader = false;
       })
+
       .addCase(getAllDoctor.pending, (state) => {
         state.loader = true;
       })
@@ -114,9 +119,16 @@ const healthSlice = createSlice({
         state.loading = true;
       })
       .addCase(createHospital.fulfilled, (state, action) => {
-        state.loading = false;
-        const data = state.hospital.push(action.payload);
-        console.log(data);
+        if (!state.hospital) {
+          state.hospital = []; // যদি state.doctor না থাকে তাহলে Empty Array সেট করো
+        }
+        if (action.payload?.hospital) {
+          // ✅ **Immutable ভাবে state update**
+          state.hospital = [...state.hospital, action.payload];
+        }
+        state.message =
+          action.payload?.message || "hospital added successfully!";
+        state.loader = false;
       })
       .addCase(createHospital.rejected, (state, action) => {
         state.loading = false;

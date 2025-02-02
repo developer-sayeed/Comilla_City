@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 
 //   Registration User
 export const createUser = createAsyncThunk("auth/createUser", async (data) => {
@@ -47,21 +48,36 @@ export const resendOtp = createAsyncThunk(
   }
 );
 //   Login User
-export const loginUser = createAsyncThunk("auth/loginUser", async (data) => {
-  try {
-    const response = await axios.post(
-      `http://localhost:5050/api/v1/auth/login`,
-      data,
-      {
-        withCredentials: true,
-      }
-    );
-    return response?.data;
-  } catch (error) {
-    throw new Error(error.response?.data.message);
-  }
-});
+// export const loginUser = createAsyncThunk("auth/loginUser", async (data) => {
+//   try {
+//     const response = await axios.post(
+//       `http://localhost:5050/api/v1/auth/login`,
+//       data,
+//       {
+//         withCredentials: true,
+//       }
+//     );
+//     return response?.data;
+//   } catch (error) {
+//     throw new Error(error.response?.data.message);
+//   }
+// });
 
+// Redux Thunk (authSlice.js)
+export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/auth/login", data, {
+        withCredentials: true, // Cookies থেকে Access Token পাওয়ার জন্য
+      });
+      console.log("Login API Response:", response.data); // Debugging
+      return response.data; // ✅ সঠিক রেসপন্স রিটার্ন করুন
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 //  LogOut User
 export const logOutUser = createAsyncThunk("auth/logOutUser", async () => {
   try {

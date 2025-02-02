@@ -7,6 +7,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { createToast } from "../../../utils/Toastify";
 import { HospitalInitialData } from "./Data";
 import doctor from "../../../assets/001-doctor.png";
+import { useSelector } from "react-redux";
 
 const Hospital = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,6 +27,9 @@ const Hospital = () => {
   const [viewingHospital, setViewingHospital] = useState(null); // Store the hospital for view mode
   const [search, setSearch] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+
+  const Allhospital = useSelector((state) => state.health.hospital);
+  const { thana } = useSelector((state) => state.user);
 
   // Handle Search
   const filteredData = data.filter((item) =>
@@ -89,11 +93,11 @@ const Hospital = () => {
   // Handle Edit
   const handleEdit = (item) => {
     setFormData({
-      hospitalName: item.hospitalName,
+      hospitalName: item.name,
       than: item.than,
-      fullAddress: item.fullAddress,
+      fullAddress: item.address,
       status: item.status,
-      photoLink: item.photoLink,
+      photoLink: item.photo,
       phone: item.phone,
       email: item.email,
     });
@@ -126,16 +130,19 @@ const Hospital = () => {
 
   return (
     <div className="w-full mx-auto p-4 bg-gray-50 rounded-md shadow-md overflow-hidden">
-      <CustomHeading tittel={"হাসপাতাল তালিকা"} className={"py-[7px]"} />
+      <CustomHeading
+        tittel={"Hospital List Of Comilla"}
+        className={"py-[7px]"}
+      />
       <div className="flex flex-col md:flex-row justify-between items-center gap-4 my-4">
         <button
           onClick={() => setIsModalOpen(true)}
           className="w-full md:w-auto rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-6 py-2 text-sm font-bold"
         >
-          হাসপাতাল যোগ করুন
+          Add Hospital
         </button>
         <input
-          placeholder="অনুসন্ধান করুন..."
+          placeholder="Searching..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full md:w-1/3 py-2.5 px-4 border border-gray-300 rounded-md outline-none focus:border-blue-400"
@@ -204,7 +211,7 @@ const Hospital = () => {
           </thead>
 
           <tbody>
-            {sortedData.map((item, index) => (
+            {Allhospital.map((item, index) => (
               <tr
                 key={item.id}
                 className={`${
@@ -212,20 +219,18 @@ const Hospital = () => {
                 } hover:bg-gray-100 border-t border-gray-200`}
               >
                 <td className="p-3 text-center text-gray-700">{index + 1}</td>
-                <td className="p-3 text-left text-gray-700">
-                  {item.hospitalName}
-                </td>
+                <td className="p-3 text-left text-gray-700">{item.name}</td>
                 <td className="p-3 text-center text-gray-700">{item.phone}</td>
                 <td className="p-3 text-center text-gray-700">
-                  {item.fullAddress}
+                  {item.address}
                 </td>
 
                 <td
                   className={`p-3 text-center font-medium  ${
-                    item.status === "Active" ? "text-green-600" : "text-red-600"
+                    item.status ? "text-green-600" : "text-red-600"
                   }`}
                 >
-                  {item.status}
+                  {item.status ? "Active" : "Unactive"}
                 </td>
                 <td className="p-3 text-center flex">
                   <button
@@ -257,7 +262,7 @@ const Hospital = () => {
           </p>
         )}
       </div>
-
+      {/* Add New Hospital Modal  */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -286,13 +291,14 @@ const Hospital = () => {
                 className="w-full px-4 py-2 border rounded-md"
                 required
               >
-                <option value="Dhaka">Dhaka</option>
-                <option value="Mymensingh">Mymensingh</option>
-                <option value="Rajshahi">Rajshahi</option>
-                <option value="Chattogram">Chattogram</option>
-                <option value="Barisal">Barisal</option>
-                <option value="Tangail">Tangail</option>
-                <option value="Pabna">Pabna</option>
+                <option selected>Select Thana</option>
+                {thana?.map((item, index) => {
+                  return (
+                    <option key={index + 1} value={item._id}>
+                      {item.name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
@@ -367,17 +373,23 @@ const Hospital = () => {
         <Modal
           isOpen={isViewModalOpen}
           onClose={() => setIsViewModalOpen(false)}
-          heading={viewingHospital.hospitalName}
+          heading={viewingHospital.name}
         >
           <div className="p-6 bg-white rounded-md w-full max-w-2xl mx-auto ">
             {/* Hospital Photo */}
             <div className="mb-6 flex justify-center">
               <img
-                src={
-                  "https://static.vecteezy.com/system/resources/previews/038/252/707/non_2x/hospital-building-illustration-medical-clinic-isolated-on-white-background-vector.jpg"
-                }
-                alt="Hospital"
                 className="w-full h-48 object-fill rounded-lg border-2 border-gray-300"
+                src={
+                  viewingHospital.photo
+                    ? viewingHospital.photo
+                    : `https://static.vecteezy.com/system/resources/previews/038/252/707/non_2x/hospital-building-illustration-medical-clinic-isolated-on-white-background-vector.jpg`
+                }
+                alt={viewingHospital.name || "Doctor"}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `https://static.vecteezy.com/system/resources/previews/038/252/707/non_2x/hospital-building-illustration-medical-clinic-isolated-on-white-background-vector.jpg`;
+                }}
               />
             </div>
 
@@ -390,7 +402,7 @@ const Hospital = () => {
                       Hospital Name
                     </td>
                     <td className="px-4 py-2 text-gray-600">
-                      {viewingHospital.hospitalName}
+                      {viewingHospital.name}
                     </td>
                   </tr>
                   <tr className="border-b">
@@ -401,44 +413,45 @@ const Hospital = () => {
                       {viewingHospital.phone}
                     </td>
                   </tr>
-                  <tr className="border-b">
-                    <td className="px-4 py-2 font-semibold text-gray-700">
-                      Email
-                    </td>
-                    <td className="px-4 py-2 text-gray-600">
-                      {viewingHospital.email}
-                    </td>
-                  </tr>
+                  {viewingHospital.email && (
+                    <tr className="border-b">
+                      <td className="px-4 py-2 font-semibold text-gray-700">
+                        Email
+                      </td>
+
+                      <td className="px-4 py-2 text-gray-600">
+                        {viewingHospital.email}
+                      </td>
+                    </tr>
+                  )}
                   <tr className="border-b">
                     <td className="px-4 py-2 font-semibold text-gray-700">
                       Full Address
                     </td>
                     <td className="px-4 py-2 text-gray-600">
-                      {viewingHospital.fullAddress}
+                      {viewingHospital.address}
                     </td>
                   </tr>
                   <tr className="border-b">
                     <td className="px-4 py-2 font-semibold text-gray-700">
-                      Thana
+                      Upzilla
                     </td>
                     <td className="px-4 py-2 text-gray-600">
-                      {viewingHospital.than}
+                      {viewingHospital.thana?.name} উপজেলা
                     </td>
                   </tr>
                   <tr className="border-b">
                     <td className="px-4 py-2 font-semibold text-gray-700">
                       Status
                     </td>
-                    <td className="px-4 py-2">
-                      <p
-                        className={`${
-                          viewingHospital.status === "Active"
-                            ? "text-green-600"
-                            : "text-red-600"
-                        } text-lg font-medium`}
-                      >
-                        {viewingHospital.status}
-                      </p>
+                    <td
+                      className={`p-3 text-center font-medium  ${
+                        viewingHospital.status
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      {viewingHospital.status ? "Active" : "Unactive"}
                     </td>
                   </tr>
                 </tbody>

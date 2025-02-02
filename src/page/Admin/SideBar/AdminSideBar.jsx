@@ -46,7 +46,11 @@ const AdminSideBar = () => {
       {/* Top Header */}
       <header className="bg-white shadow-md px-5 py-3 flex items-center justify-between fixed top-0 left-0 right-0 z-50 h-[64px]">
         <div className="flex items-center gap-3">
-          <img src={logo} alt="logo" className="w-[130px] cursor-pointer" />
+          <Link to="/">
+            {" "}
+            <img src={logo} alt="logo" className="w-[130px] cursor-pointer" />
+          </Link>
+
           <div className="relative">
             <input
               className="px-4 py-2 border border-border rounded-md pl-[40px] outline-none focus:border-primary"

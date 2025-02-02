@@ -8,9 +8,11 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Provider } from "react-redux";
 import store from "./app/store.js";
+import GoogleTranslate from "./components/GoogleTranslate.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <App />
+    <GoogleTranslate />
   </Provider>
 );

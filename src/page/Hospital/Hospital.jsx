@@ -9,7 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa";
 import Modal from "../../components/Modal/Modal";
 import Tooltip from "../../components/Tooltip/Tooltip";
-import { createHospital } from "../../features/health/helathSliceApi";
+import {
+  createHospital,
+  getAllHospital,
+} from "../../features/health/helathSliceApi";
 import { createToast } from "../../utils/Toastify";
 import { setMessageEmpty } from "../../features/health/healthSlice";
 
@@ -68,7 +71,28 @@ const Hospital = () => {
   // Form Submit Handler
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createHospital(hospital_Data));
+    dispatch(createHospital(hospital_Data))
+      .unwrap()
+      .then(() => {
+        dispatch(getAllHospital()); // ✅ নতুন ডাটা ফেচ করো
+
+        // ✅ সফল হলে ইনপুট ফিল্ড খালি করো
+        sethospital_Data({
+          name: "",
+          email: "",
+          address: "",
+          photo: "",
+          thana: "",
+          licenseNumber: "",
+        });
+
+        // ✅ মডাল বন্ধ করো
+        setIsPopupOpen(false);
+        createToast(message, "success");
+      })
+      .catch((error) => {
+        createToast(error, "error");
+      });
   };
 
   const handleViewHospital = (id) => {
@@ -146,32 +170,39 @@ const Hospital = () => {
               return (
                 <div
                   key={`${item.id}  ${item.name}`}
-                  className="bg-white shadow-lg rounded-lg overflow-hidden"
+                  className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col justify-between"
                 >
                   <div className="max-w-full ">
                     <img
                       className="w-full h-40 object-fill"
-                      src={item.photo ? item.photo : `${hospitalimg}`}
+                      src={
+                        item.photo
+                          ? item.photo
+                          : `https://static.vecteezy.com/system/resources/previews/038/252/707/non_2x/hospital-building-illustration-medical-clinic-isolated-on-white-background-vector.jpg`
+                      }
                       alt={item.name || "Doctor"}
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src = hospitalimg;
+                        e.target.src = `https://static.vecteezy.com/system/resources/previews/038/252/707/non_2x/hospital-building-illustration-medical-clinic-isolated-on-white-background-vector.jpg`;
                       }}
                     />
                     <div className="px-2 pt-3">
                       <h1 className="text-md text-center font-bold text-red-800 mb-2">
                         {item.name}
                       </h1>
-                      <p className="text-[14px] text-gray-600 mb-2">
-                        <strong>Email: </strong>
-                        {item.email}
-                      </p>
+                      {item.email && (
+                        <p className="text-[14px] text-gray-600 mb-2">
+                          <strong>Email: </strong>
+                          {item.email}
+                        </p>
+                      )}
+
                       <p className="text-[14px] text-gray-600 mb-2">
                         <strong>Phone: </strong>
                         {item.phone}
                       </p>
                       <p className="text-[14px] text-gray-600 mb-2">
-                        <strong>Upzilla : </strong> {item?.thana?.name}
+                        <strong>Upzilla : </strong> {item?.thana?.name} উপজেলা
                       </p>
                       <p className="text-[14px] text-gray-600 mb-2">
                         <strong>Address: </strong>
@@ -181,7 +212,6 @@ const Hospital = () => {
                   </div>
 
                   <div className="px-4 pb-4">
-                    <p className="pb-2">{item.profileDescription}</p>
                     <div className="flex justify-between items-center gap-2">
                       <a
                         href={`tel:${item.phone}`}

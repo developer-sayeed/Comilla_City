@@ -6,7 +6,8 @@ import CustomHeading from "../../../components/CustomHeading/CustomHeading";
 import { IoEyeOutline } from "react-icons/io5";
 import { createToast } from "../../../utils/Toastify";
 import { DoctorInitialData } from "./Data";
-import doctor from "../../../assets/001-doctor.png";
+import doctorimg from "../../../assets/001-doctor.png";
+import { useSelector } from "react-redux";
 
 // 📌 Initial Data
 
@@ -16,7 +17,7 @@ const Doctors = () => {
   const [formData, setFormData] = useState({
     name: "",
     specialization: "",
-    education: "",
+    qualifications: "",
     status: "Active",
     rogiDekharSomoy: "",
     personalPhone: "",
@@ -30,6 +31,7 @@ const Doctors = () => {
   const [editingId, setEditingId] = useState(null);
   const [search, setSearch] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  const AllDoctor = useSelector((state) => state.health.doctor);
 
   // 📌 Handle Search
   const filteredData = data.filter((item) =>
@@ -139,11 +141,11 @@ const Doctors = () => {
           onClick={() => setIsModalOpen(true)}
           className="w-full md:w-auto rounded-md border border-[#0FABCA] bg-[#0FABCA] text-white hover:text-[#0FABCA] hover:bg-white hover:border-[#0FABCA] transition duration-300 px-6 py-2 text-sm font-bold"
         >
-          ডাক্তার যোগ করুন
+          Add Doctor
         </button>
         {/* 📌 Search Bar */}
         <input
-          placeholder="অনুসন্ধান করুন..."
+          placeholder="Searching...."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full md:w-1/3 py-2.5 px-4 border border-gray-300 rounded-md outline-none focus:border-blue-400"
@@ -188,10 +190,10 @@ const Doctors = () => {
                 onClick={() => handleSort("specialization")}
               >
                 <div className="flex items-center gap-1 justify-center">
-                  Education
+                  qualifications
                   <HiOutlineArrowsUpDown
                     className={`text-[1.2rem] ${
-                      sortConfig.key === "education" ? "text-blue-500" : ""
+                      sortConfig.key === "qualifications" ? "text-blue-500" : ""
                     }`}
                   />
                 </div>
@@ -215,18 +217,22 @@ const Doctors = () => {
 
           {/* Table Body */}
           <tbody>
-            {sortedData.map((item, index) => (
+            {AllDoctor?.map((item, index) => (
               <tr
                 key={item.id}
                 className={`${
                   index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                } hover:bg-gray-100 border-t border-gray-200`}
+                } hover:bg-gray-100 border-t border-gray-200 `}
               >
                 <td className="p-3 text-center text-gray-700">{index + 1}</td>
                 <td className="p-3 text-left text-gray-700 flex items-center gap-3">
                   <img
-                    src={item.photo && doctor} // Replace with the actual image URL
-                    alt={item.name}
+                    src={item.photo ? item.photo : doctorimg}
+                    alt={item.name || "Doctor"}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = doctorimg;
+                    }}
                     className="w-12 h-12 rounded-full object-cover border-2 border-gray-300" // Circle the image, and add a border for aesthetics
                   />
                   <span>{item.name}</span>
@@ -234,25 +240,25 @@ const Doctors = () => {
                 </td>
 
                 <td className="p-3 text-center text-gray-700">
-                  {item.specialization}
+                  {item?.specializationDetails?.[0]?.name}
                 </td>
                 <td className="p-3 text-center text-gray-700">
-                  {item.education}
+                  {item.qualifications}
                 </td>
                 <td
-                  className={`p-3 text-center font-medium ${
-                    item.status === "Active" ? "text-green-600" : "text-red-600"
+                  className={`p-3 text-center font-medium  ${
+                    item.status ? "text-green-600" : "text-red-600"
                   }`}
                 >
-                  {item.status}
+                  {item.status ? "Active" : "Unactive"}
                 </td>
-                <td className="p-3 text-center">
-                  <button
+                <td className=" text-center">
+                  {/* <button
                     onClick={() => handleEdit(item)}
                     className="text-blue-600 hover:bg-blue-50 rounded-md p-1 mx-1"
                   >
                     <MdOutlineEdit />
-                  </button>
+                  </button> */}
                   <button
                     onClick={() => handleDelete(item.id)}
                     className="text-red-600 hover:bg-red-50 rounded-md p-1 mx-1"
@@ -295,11 +301,11 @@ const Doctors = () => {
             </div>
 
             <div className="mb-4">
-              <label className="block mb-1">Education</label>
+              <label className="block mb-1">Qualifications</label>
               <input
                 type="text"
-                name="education"
-                value={formData.education}
+                name="qualifications"
+                value={formData.qualifications}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-md"
                 required
